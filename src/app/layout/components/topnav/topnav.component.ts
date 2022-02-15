@@ -33,6 +33,7 @@ export class TopnavComponent implements OnInit {
 
     onLoggedout() {
         localStorage.removeItem('token');
+        localStorage.removeItem('2FA');
         this.router.navigate(['/login']);
     }
 

@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
         this.fillflix.login(user).subscribe(res=>{
             this.toaster.success('Login successfully','Great')
             localStorage.setItem('token', res.token);
-            this.router.navigate(['/features/users']);
+            this.router.navigate(['/features/phone']);
         },err=>{
             this.toaster.error(err.error,'Error')
         })

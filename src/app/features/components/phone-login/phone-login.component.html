@@ -1,0 +1,35 @@
+<div [hidden]="authenticated">
+
+  <div class="alert alert-warning" role="alert">
+   You need to authenticate your phone number to be able to view other pages ,
+   so please enter your number below with required format ..
+  </div>
+
+    <h1>Sign In with Your Phone Number(2FA)</h1>
+
+    <strong for="phone">Phone Number</strong><br>
+    <input class="form-control my-2 w-50" type="text" minlength="12" maxlength="12" [(ngModel)]="phone" placeholder="Enter phone number ex:201002883308"/>
+    
+    <div id="recaptcha-container"></div>
+  
+    <button (click)="sendLoginCode()" class="btn btn-primary my-2">SMS Text Login Code</button>
+  
+    <div *ngIf="windowRef.confirmationResult">
+      <hr>
+      <strong for="code">Enter your Verification Code Here</strong><br>
+      <input class="form-control w-25 my-2 d-inline-block" type="text" name="code" [(ngModel)]="verificationCode">
+  
+      <button (click)="verifyLoginCode()" class="btn btn-success mx-2">Verify</button>
+    </div>
+  
+</div>
+  
+  <div *ngIf="authenticated">
+    <div class="alert alert-success" role="alert">
+      <h4 class="alert-heading">Well done!</h4>
+      <p>Aww yeah, Two Factor Authentication Successfully Done.</p>
+      <hr>
+      <p class="mb-0">Now you can feel free to access other pages .</p>
+    </div>
+  
+  </div>
