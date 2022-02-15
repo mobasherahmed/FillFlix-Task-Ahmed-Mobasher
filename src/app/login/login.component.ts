@@ -11,8 +11,8 @@ import { FillflixService } from '../shared/services/fillflix.service';
 })
 export class LoginComponent implements OnInit {
     
-    email = new FormControl('eve.holt@reqres.in', [Validators.required, Validators.email]) //eve.holt@reqres.in
-    password = new FormControl('cityslicka', Validators.required) //cityslicka
+    email = new FormControl('', [Validators.required, Validators.email]) //eve.holt@reqres.in
+    password = new FormControl('', Validators.required) //cityslicka
     constructor(private router: Router,private fb:FormBuilder,private fillflix:FillflixService,
         private toaster:ToastrService) { }
 
@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
             localStorage.setItem('token', res.token);
             this.router.navigate(['/features/phone']);
         },err=>{
-            this.toaster.error(err.error,'Error')
+            this.toaster.error(err.error.error,'Error')
         })
     }
 }
