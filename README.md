@@ -53,7 +53,7 @@ after login token stored to localstorgae ..
 
 Second page to authenticate phone number user should add his number correctly with format required 12 number ex:201002883308 ..
 
-**Note**  User cannot access any page of appliaction until complete 2FA step .
+**Note**  User cannot access any page of application until complete 2FA step .
 
 after complete this step he now verified to access other pages of appliaction and another key stored in localstorage 
 that he complete all authentication steps successfully ..  
