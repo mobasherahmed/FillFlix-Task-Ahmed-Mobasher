@@ -1,0 +1,49 @@
+<h2 mat-dialog-title> {{this.mode === 'add' ? 'Add User' : 'Update User'}}</h2>
+<mat-dialog-content class="mat-typography">
+    <form [formGroup]="Form">
+        <div class="form-row">
+            <div class="col-md-12">
+                <label for=""> <em class="text-danger">*</em> Name</label>
+                <input type="text" formControlName="name" class="form-control"  
+                [ngClass]="{
+                    'input-error':
+                      Form.controls.name.touched &&
+                      Form.controls.name.invalid
+                  }">
+                <em
+                *ngIf="
+                  Form.controls.name.touched &&
+                  Form.controls.name.errors?.required
+                "
+                class="text-danger"
+              >
+              This field is required
+                </em>
+            </div>
+            <div class="col-md-12 my-2">
+                
+                <label for=""><em class="text-danger">*</em> Job</label>
+                <input type="text" formControlName="job" class="form-control" 
+                [ngClass]="{
+                    'input-error':
+                    Form.controls.job.touched &&
+                    Form.controls.job.invalid
+                }">
+                <em
+                *ngIf="
+                Form.controls.job.touched &&
+                Form.controls.job.errors?.required
+                "
+                class="text-danger"
+            >
+            This field is required
+            </em>
+            </div>
+       </div>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="this.Form.value" cdkFocusInitial [disabled]="Form.invalid" (click)="submitForm()">{{this.mode === 'add' ? 'Add' : 'Update'}}</button>
+</mat-dialog-actions>
+
