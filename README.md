@@ -16,7 +16,8 @@ Provides fast, reliable and extensible starter for the development of Angular pr
 *   angular/material-v9.2.0
 *   angular/cdk-v9.2.0
 *   angular/flex-layout-v9.0.0-beta.29
-*   [ngx-translate-v11.0.1](https://github.com/ngx-translate)
+*   [ngx-translate-v11.0.1](https://github.com/ngx-translate).
+*   Two Factor authentication with firebase.
 *   Following the best practices.
 *   Ahead-of-Time compilation support.
 *   Official Angular i18n support.
@@ -30,7 +31,7 @@ Provides fast, reliable and extensible starter for the development of Angular pr
 In order to start the project use:
 
 ```bash
-$ git clone https://github.com/start-javascript/sb-admin-material.git
+$ git clone https://github.com/mobasherahmed/FillFlix-Task-Ahmed-Mobasher
 $ cd FillFlixTask-AhmedMobasher
 # install the project's dependencies
 $ npm install
