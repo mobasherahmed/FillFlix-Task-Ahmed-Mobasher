@@ -6,6 +6,7 @@ import { MaterialModule } from '../shared/modules/material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
+import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 
 
 
@@ -18,7 +19,8 @@ import { TranslateModule } from '@ngx-translate/core';
     FormsModule,
     TranslateModule.forChild(),
     FlexLayoutModule.withConfig({ addFlexToParent: false }),
-    RegisterRoutingModule
+    RegisterRoutingModule,
+    NgxIntlTelInputModule,
   ]
 })
 export class RegisterModule { }

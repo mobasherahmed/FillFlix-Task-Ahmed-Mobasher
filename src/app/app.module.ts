@@ -11,6 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FillflixService } from './shared/services/fillflix.service';
 import { ToastrModule } from 'ngx-toastr';
 import { SharedModule } from './shared/shared.module';
+import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 
 // This import loads the firebase namespace along with all its type information.
 import firebase from 'firebase/app';
@@ -62,6 +63,7 @@ export function HttpLoaderFactory(http: HttpClient) {
             },
           }),
         ToastrModule.forRoot(),
+        NgxIntlTelInputModule
     ],
     providers: [FillflixService],
     bootstrap: [AppComponent]

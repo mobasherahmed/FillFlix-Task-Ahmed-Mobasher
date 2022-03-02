@@ -1,9 +1,16 @@
 .register-page {
+
     display: flex;
     align-items: center;
     justify-content: center;
     height: 100%;
     position: relative;
+    #phone{
+    border: none;
+    box-shadow: none;
+    border-bottom: 1px solid;
+    width: 160%;
+    }
     .content {
         z-index: 1;
         display: flex;

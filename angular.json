@@ -41,9 +41,11 @@
               "src/favicon.ico"
             ],
             "styles": [
-                "src/styles/styles.scss",
-                "node_modules/ngx-toastr/toastr.css",
-                "node_modules/bootstrap/dist/css/bootstrap.min.css"
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "./node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
+              "src/styles/styles.scss",
+              "node_modules/ngx-toastr/toastr.css",
+              "node_modules/intl-tel-input/build/css/intlTelInput.css"
             ],
             "scripts": [
               "node_modules/chart.js/dist/Chart.js"
@@ -108,7 +110,9 @@
               "node_modules/chart.js/dist/Chart.js"
             ],
             "styles": [
-                "styles.scss"
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "./node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
+              "styles.scss"
             ],
             "assets": [
               "src/assets",
@@ -152,7 +156,7 @@
           "options": {
             "tsConfig": "e2e/tsconfig.e2e.json",
             "exclude": [
-                "**/node_modules/**"
+              "**/node_modules/**"
             ]
           }
         }
