@@ -2,7 +2,13 @@
     <div class="content">
         <form class="login-form" fxFlex >
             <div class="text-center">
-                <h2 class="app-name">FillFlix Task</h2>
+                <h2 class="app-name">Xapp</h2>
+                <div class="d-sm-block text-center">
+                    <span class="mr-2">{{"Don't have an account?" }}</span>
+                    <a routerLink="/register" class="font-size-16 kit__utils__link">
+                      {{'Sign up' | translate }}
+                    </a>
+                  </div>
             </div>
             <div fxFlex  fxlayout="row" fxlayout.lt-md="column">
                 <div fxFlexFill>
@@ -16,7 +22,7 @@
                 <div fxFlexFill>
                     <mat-form-field class="w-100">
                         <input matInput type="password" placeholder="Password" [formControl]="password" required>
-                        <mat-error *ngIf="password.invalid">required</mat-error>
+                        <mat-error *ngIf="password.invalid">{{'Password required' | translate}}</mat-error>
                     </mat-form-field>
                 </div>
             </div>

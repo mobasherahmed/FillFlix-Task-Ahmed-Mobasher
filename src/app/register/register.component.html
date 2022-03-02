@@ -1,0 +1,53 @@
+<div class="register-page">
+    <div class="content">
+        <form class="register-form" fxFlex  [formGroup]="RegisterForm">
+            <div class="text-center">
+                <h2 class="app-name">Xapp</h2>
+                <div class="d-sm-block text-center">
+                    <span class="mr-2">{{"Have an account?" }}</span>
+                    <a routerLink="/login" class="font-size-16 kit__utils__link">
+                      {{'Login' | translate }}
+                    </a>
+                  </div>
+            </div>
+            <div fxFlex  fxlayout="row" fxlayout.lt-md="column">
+                <div fxFlexFill>
+                    <mat-form-field class="w-100">
+                        <input matInput placeholder="Email"  [formControl]="email" required>
+                        <mat-error *ngIf="email.invalid">{{getEmailErrorMessage()}}</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div fxFlex  fxLayout="row" fxLayout.lt-md="column">
+                <div fxFlexFill>
+                    <mat-form-field class="w-100">
+                        <input matInput type="number" placeholder="Phone" formControlName="phone"  required>
+                        <mat-error *ngIf="RegisterForm.controls.phone.invalid">required</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div fxFlex  fxLayout="row" fxLayout.lt-md="column">
+                <div fxFlexFill>
+                    <mat-form-field class="w-100">
+                        <input matInput type="password" placeholder="Password" [formControl]="password" required>
+                        <mat-error *ngIf="password.invalid">required</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div fxFlex  fxLayout="row" fxLayout.lt-md="column">
+                <div fxFlexFill>
+                    <mat-form-field class="w-100">
+                        <input matInput type="password" placeholder="Password" [formControl]="password" required>
+                        <mat-error *ngIf="password.invalid">required</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div fxFlex  fxLayout="row" fxLayout.lt-md="column">
+                <div fxFlexFill>
+                    <button mat-raised-button color="primary" class="w-100" (click)="onRegister()" [disabled]="checkDisable()">Register</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>

@@ -3,7 +3,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,6 +18,8 @@ import firebase from 'firebase/app';
 // These imports load individual services into the firebase namespace.
 import 'firebase/auth';
 import 'firebase/database';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 const firebaseConfig = {
     apiKey: "AIzaSyAmSAFsKhV1h28beWOC-XRNrMNW0CJBOjM",
@@ -33,7 +35,11 @@ const firebaseConfig = {
   // Initialize Firebase
 const app = firebase.initializeApp(firebaseConfig);
 
-
+// AoT requires an exported function for factories
+export function HttpLoaderFactory(http: HttpClient) {
+    const path = window.location.origin + '/assets/i18n/';
+    return new TranslateHttpLoader(http, path, '.json');
+}
 
 @NgModule({
     declarations: [AppComponent],
@@ -47,6 +53,14 @@ const app = firebase.initializeApp(firebaseConfig);
         LayoutModule,
         OverlayModule,
         HttpClientModule,
+        TranslateModule.forRoot(),
+        TranslateModule.forRoot({
+            loader: {
+              provide: TranslateLoader,
+              useFactory: HttpLoaderFactory,
+              deps: [HttpClient]
+            },
+          }),
         ToastrModule.forRoot(),
     ],
     providers: [FillflixService],
