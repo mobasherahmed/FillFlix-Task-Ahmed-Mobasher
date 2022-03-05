@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
-import { FillflixService } from '../shared/services/fillflix.service';
+import { XappApiService } from '../shared/services/xapp-api.service';
 
 @Component({
     selector: 'app-login',
@@ -12,10 +12,13 @@ import { FillflixService } from '../shared/services/fillflix.service';
 })
 export class LoginComponent implements OnInit {
     
-    email = new FormControl('', [Validators.required, Validators.email]) //eve.holt@reqres.in
-    password = new FormControl('', Validators.required) //cityslicka
-    constructor(private router: Router,private fb:FormBuilder,private fillflix:FillflixService,
-        private toaster:ToastrService,private translate:TranslateService) { }
+    email = new FormControl('eve.holt@reqres.in', [Validators.required, Validators.email]) //eve.holt@reqres.in
+    password = new FormControl('cityslicka', Validators.required) //cityslicka
+    constructor(private router: Router,private fb:FormBuilder,private xapp:XappApiService,
+        private toaster:ToastrService,private translate:TranslateService) {
+            this.translate.use('en');
+            localStorage.setItem('lang','en');
+         }
 
     ngOnInit() { 
     }
@@ -37,7 +40,7 @@ export class LoginComponent implements OnInit {
             email : this.email.value,
             password : this.password.value,
         }
-        this.fillflix.login(user).subscribe(res=>{
+        this.xapp.login(user).subscribe(res=>{
             this.toaster.success('Login successfully','Great')
             localStorage.setItem('token', res.token);
             this.router.navigate(['/features/phone']);

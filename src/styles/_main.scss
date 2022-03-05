@@ -5,14 +5,30 @@ body {
     font-family: 'Fontil Sans';
 }
 
-.main-container {
-    position: absolute;
-    top: 64px;
-    left: 250px;
-    right: 0;
-    bottom: 0;
-    padding: 20px;
+body[main-theme-layout="rtl"]{
+    .main-container {
+        position: absolute;
+        top: 64px;
+        left: 0;
+        right: 250px;
+        bottom: 0;
+        padding: 20px;
+        text-align: right;
+    }
 }
+body[main-theme-layout="ltr"]{
+    .main-container {
+        position: absolute;
+        top: 64px;
+        left: 250px;
+        right: 0;
+        bottom: 0;
+        padding: 20px;
+        text-align: left;
+
+    }
+}
+
 
 .mb-20 {
     margin-bottom: 20px;

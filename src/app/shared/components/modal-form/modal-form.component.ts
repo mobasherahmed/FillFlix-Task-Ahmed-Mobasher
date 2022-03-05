@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { addedUser } from '../../interfaces/added-user-interface';
-import { FillflixService } from '../../services/fillflix.service';
+import { XappApiService } from '../../services/xapp-api.service';
 
 export interface DialogData {
   type : string;
@@ -22,7 +22,7 @@ export class ModalFormComponent implements OnInit {
   mode: string = 'add';
   constructor(public dialogRef: MatDialogRef<ModalFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
-    private fb:FormBuilder,private fillflix:FillflixService,
+    private fb:FormBuilder,private xapp:XappApiService,
     private toaster:ToastrService,private dialog: MatDialog) {
     this.Form = this.fb.group({
       name:['',Validators.required],
@@ -46,7 +46,7 @@ export class ModalFormComponent implements OnInit {
   }
   
   addUser(){
-    this.fillflix.addUser(this.Form.value).subscribe(res=>{
+    this.xapp.addUser(this.Form.value).subscribe(res=>{
       this.toaster.success('User added successfully','Great');
     },err=>{
       this.toaster.error(err.error)
@@ -54,7 +54,7 @@ export class ModalFormComponent implements OnInit {
   }
   
   updateUser(){
-    this.fillflix.updateUser(this.Form.value).subscribe(res=>{
+    this.xapp.updateUser(this.Form.value).subscribe(res=>{
       this.toaster.success('User Updated successfully','Great');
     },err=>{
       this.toaster.error(err.error)

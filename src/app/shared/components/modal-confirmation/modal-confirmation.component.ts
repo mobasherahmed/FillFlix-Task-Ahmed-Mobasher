@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { FillflixService } from "../../services/fillflix.service";
+import { XappApiService } from "../../services/xapp-api.service";
 
 @Component({
     selector: "app-modal-confirmation",
@@ -11,7 +11,7 @@ export class ModalConfirmationComponent implements OnInit {
     message: string = "Are you sure?";
     confirmButtonText = "Yes";
     cancelButtonText = "Cancel";
-    constructor(private fillflix:FillflixService,
+    constructor(private xapp:XappApiService,
         @Inject(MAT_DIALOG_DATA) private data: any,
         private dialogRef: MatDialogRef<ModalConfirmationComponent>
     ) {
@@ -27,7 +27,7 @@ export class ModalConfirmationComponent implements OnInit {
     }
 
     onConfirmClick(): void {
-      this.fillflix.deleteUser().subscribe(res=>{
+      this.xapp.deleteUser().subscribe(res=>{
         this.dialogRef.close(true);
       },err=>{
         this.dialogRef.close(false);

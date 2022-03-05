@@ -12,17 +12,18 @@ const routes: Routes = [
     {
         path:'users',
         component:UsersComponent,
-        canActivate: [AuthGuard,TwoFactorAuthenticationGuard]
+        canActivate: [AuthGuard]
+        // TwoFactorAuthenticationGuard
     },
     {
         path:'user',
         component:UserComponent,
-        canActivate: [AuthGuard,TwoFactorAuthenticationGuard]
+        canActivate: [AuthGuard]
     },
     {
         path:'cud',
         component:CudMethodsComponent,
-        canActivate: [AuthGuard,TwoFactorAuthenticationGuard]
+        canActivate: [AuthGuard]
     },
     {
         path:'phone',

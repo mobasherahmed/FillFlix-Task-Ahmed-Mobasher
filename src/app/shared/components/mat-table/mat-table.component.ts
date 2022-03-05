@@ -2,7 +2,7 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { User } from '../../interfaces/user-interface';
-import { FillflixService } from '../../services/fillflix.service';
+import { XappApiService } from '../../services/xapp-api.service';
 
 @Component({
   selector: 'app-mat-table',
@@ -15,8 +15,8 @@ export class MatTableComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   dataSource: MatTableDataSource<User>;
 
-  constructor(private fillflix:FillflixService) { 
-   this.fillflix.users.subscribe(users=>{
+  constructor(private xapp:XappApiService) { 
+   this.xapp.users.subscribe(users=>{
       this.dataSource = new MatTableDataSource(users);
     })
   }

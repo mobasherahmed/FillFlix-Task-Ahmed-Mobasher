@@ -7,7 +7,7 @@ import { User } from '../interfaces/user-interface';
 @Injectable({
   providedIn: 'root'
 })
-export class FillflixService {
+export class XappApiService {
   url :string = 'https://reqres.in/api';
   users = new BehaviorSubject<User[]>([])
   

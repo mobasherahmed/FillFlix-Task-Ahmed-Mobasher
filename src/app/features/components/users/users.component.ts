@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { FillflixService } from 'src/app/shared/services/fillflix.service';
+import { XappApiService } from 'src/app/shared/services/xapp-api.service';
 
 @Component({
   selector: 'app-users',
@@ -9,7 +9,7 @@ import { FillflixService } from 'src/app/shared/services/fillflix.service';
 })
 export class UsersComponent implements OnInit {
 
-  constructor(private fillflix:FillflixService,private toaster:ToastrService) {
+  constructor(private xapp:XappApiService,private toaster:ToastrService) {
    this.listUsers();
   }
 
@@ -18,8 +18,8 @@ export class UsersComponent implements OnInit {
  }
 
  listUsers(){
-  this.fillflix.listUsers().subscribe(res=>{
-    this.fillflix.users.next(res.data);
+  this.xapp.listUsers().subscribe(res=>{
+    this.xapp.users.next(res.data);
     },err=>{
         this.toaster.error(err.error)
     })

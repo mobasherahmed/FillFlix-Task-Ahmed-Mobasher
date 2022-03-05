@@ -8,7 +8,6 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FillflixService } from './shared/services/fillflix.service';
 import { ToastrModule } from 'ngx-toastr';
 import { SharedModule } from './shared/shared.module';
 import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
@@ -21,6 +20,7 @@ import 'firebase/auth';
 import 'firebase/database';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { XappApiService } from './shared/services/xapp-api.service';
 
 const firebaseConfig = {
     apiKey: "AIzaSyAmSAFsKhV1h28beWOC-XRNrMNW0CJBOjM",
@@ -65,7 +65,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         ToastrModule.forRoot(),
         NgxIntlTelInputModule
     ],
-    providers: [FillflixService],
+    providers: [XappApiService],
     bootstrap: [AppComponent]
 })
 export class AppModule {}
