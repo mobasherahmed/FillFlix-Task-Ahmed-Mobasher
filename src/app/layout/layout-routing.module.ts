@@ -9,12 +9,12 @@ const routes: Routes = [
         component: LayoutComponent,
         children: [
             {
-                path: '',
-                redirectTo: 'features'
-            },
-            {
                 path: 'features',
                 loadChildren: () => import('../features/features.module').then(m => m.FeaturesModule)
+            },
+            {
+                path: 'management',
+                loadChildren: () => import('../management-system/management-system.module').then(m => m.ManagementSystemModule)
             },
             
         ]

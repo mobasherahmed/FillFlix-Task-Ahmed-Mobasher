@@ -1,0 +1,118 @@
+<div class="card">
+    <div class="card-header">
+        <strong>{{'addAccessRule' | translate}}</strong>
+    </div>
+    <div class="card-body">
+        <form [formGroup]="Form">
+            <div class="form-row">
+                <div class="col-md-12">
+                    <label for=""> <em class="text-danger">*</em>{{'Name' | translate}}</label>
+                    <input type="text" formControlName="name" class="form-control"  
+                    [ngClass]="{
+                        'input-error':
+                          Form.controls.name.touched &&
+                          Form.controls.name.invalid
+                      }">
+                    <em
+                    *ngIf="
+                      Form.controls.name.touched &&
+                      Form.controls.name.errors?.required
+                    "
+                    class="text-danger"
+                  >
+                  {{'requiredMsg' | translate}}
+                    </em>
+                </div>
+                <div class="col-md-12 my-2">
+                    
+                    <label for=""><em class="text-danger">*</em>{{'PermissionType' | translate}}</label>
+
+                    <mat-radio-group aria-label="Select an option" class="mx-3" formControlName="permissionType">
+                        <mat-radio-button class="mx-2" value="1">SCREEN</mat-radio-button>
+                        <mat-radio-button class="mx-2" value="2">BUTTON</mat-radio-button>
+                      </mat-radio-group>
+
+                </div>
+                <div class="col-md-12 my-2">
+                    
+                    <label for=""><em class="text-danger">*</em>{{'Permissions' | translate}}</label>
+                    <ng-multiselect-dropdown
+                    [placeholder]="'ChoosePermissions' | translate"
+                    [settings]="dropdownSettings"
+                    [data]="permissions"
+                    formControlName="permission"
+                    [ngClass]="{'input-error': Form.controls.permission.touched
+                    &&  Form.controls.permission.invalid}"
+                  > </ng-multiselect-dropdown>
+                    <em
+                    *ngIf="
+                    Form.controls.permission.touched &&
+                    Form.controls.permission.errors?.required
+                    "
+                    class="text-danger"
+                >
+                {{'requiredMsg' | translate}}
+                </em>
+                </div>
+                <div class="form-row" [hidden]="this.Form.controls.permissionType.value == 1">
+                    <div class="col-md-6 my-2">
+                        
+                        <label for=""><em class="text-danger">*</em>{{'Screen' | translate}}</label>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Favorite food</mat-label>
+                            <mat-select formControlName="screenId" [ngClass]="{
+                                'input-error':
+                                Form.controls.screenId.touched &&
+                                Form.controls.screenId.invalid
+                            }">
+                              <mat-option *ngFor="let food of permissions" [value]="food.value">
+                                {{food.name}}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                   
+                        <em
+                        *ngIf="
+                        Form.controls.screenId.touched &&
+                        Form.controls.screenId.errors?.required
+                        "
+                        class="text-danger"
+                    >
+                    {{'requiredMsg' | translate}}
+                    </em>
+                    </div>
+                    <div class="col-md-6 my-2">
+                        
+                        <label for=""><em class="text-danger">*</em>{{'Buttons' | translate}}</label>
+                        <ng-multiselect-dropdown
+                        [placeholder]="'ChoosePermissions' | translate"
+                        [settings]="dropdownSettings"
+                        [data]="permissions"
+                        formControlName="permission"
+                        [ngClass]="{'input-error': Form.controls.permission.touched
+                        &&  Form.controls.permission.invalid}"
+                      > </ng-multiselect-dropdown>
+                   
+                        <em
+                        *ngIf="
+                        Form.controls.buttons.touched &&
+                        Form.controls.buttons.errors?.required
+                        "
+                        class="text-danger"
+                    >
+                    {{'requiredMsg' | translate}}
+                    </em>
+                    </div>
+                </div>
+           </div>
+           <div class="form-row">
+            <button mat-raised-button color="primary" class="w-100 mt-3 mb-1"
+             (click)="addRule()" [disabled]="checkDisable()">{{'Add' | translate}}
+             <mat-icon>add_circle</mat-icon> 
+            </button>
+            <button mat-raised-button color="primary" class="w-100"
+             (click)="cancel()" [disabled]="checkDisable()">{{'Cancel' | translate}}</button>
+           </div>
+        </form>
+    </div>
+</div>

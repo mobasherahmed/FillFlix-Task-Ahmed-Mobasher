@@ -21,6 +21,8 @@ import 'firebase/database';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { XappApiService } from './shared/services/xapp-api.service';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { ManagementSystemModule } from './management-system/management-system.module';
 
 const firebaseConfig = {
     apiKey: "AIzaSyAmSAFsKhV1h28beWOC-XRNrMNW0CJBOjM",
@@ -54,6 +56,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         LayoutModule,
         OverlayModule,
         HttpClientModule,
+        ManagementSystemModule,
+        NgMultiSelectDropDownModule.forRoot(),
         TranslateModule.forRoot(),
         TranslateModule.forRoot({
             loader: {

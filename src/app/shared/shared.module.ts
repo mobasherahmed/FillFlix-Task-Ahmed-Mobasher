@@ -15,7 +15,7 @@ import { RouterModule } from "@angular/router";
 
     declarations:[MatTableComponent, ModalFormComponent, ModalConfirmationComponent,FooterComponent,BreadcrumbComponent,FeatherIconsComponent],
     imports:[MaterialModule,ReactiveFormsModule,FormsModule,CommonModule,TranslateModule,RouterModule],
-    exports:[MatTableComponent, ModalFormComponent, ModalConfirmationComponent,FooterComponent,BreadcrumbComponent,FeatherIconsComponent]
+    exports:[MatTableComponent, ModalFormComponent,MaterialModule, ModalConfirmationComponent,FooterComponent,BreadcrumbComponent,FeatherIconsComponent]
 })
 
 export class SharedModule {}
