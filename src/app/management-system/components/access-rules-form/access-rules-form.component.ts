@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { ThrowStmt } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -20,7 +21,7 @@ export class AccessRulesFormComponent implements OnInit {
   permissions:multiSelectionDto[];
 
   constructor(private fb:FormBuilder,private management:ManagementSystemService,
-    private toaster:ToastrService,private share:SharedDataService) {
+    private toaster:ToastrService,private share:SharedDataService,private location:Location) {
     this.Form = this.fb.group({
       name:['',Validators.required],
       permissionType:['1',Validators.required],
@@ -33,11 +34,18 @@ export class AccessRulesFormComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    // screen of application;
     this.getPermissions();
     this.watchPermissionTypeControlValue();
+    // this.setValues()
   }
 
+  setValues(){
+    this.Form.controls.name.setValue('')
+    this.Form.controls.permissionType.setValue('')
+    this.Form.controls.permission.setValue('')
+    this.Form.controls.screenId.setValue('')
+    this.Form.controls.buttons.setValue('')
+  }
   getPermissions(){
     this.management.getPermissions().subscribe(res=>{
       console.log("r",res);
@@ -53,16 +61,14 @@ export class AccessRulesFormComponent implements OnInit {
 
   watchPermissionTypeControlValue(){
     this.Form.controls.permissionType.valueChanges.subscribe(type=>{
-      console.log(type);
-      
-      type == 1 ? this.toggleControlsRequired('unrequired') :
-      this.toggleControlsRequired('required');
+      this.toggleControlsRequired(type);
     })
   }
 
+
   toggleControlsRequired(type){
-    console.log('validation');
-    if(type === 'required'){
+    if(type == 2){
+      console.log('validation');
       this.Form.controls.screenId.setValidators([Validators.required])
       this.Form.controls.buttons.setValidators([Validators.required])
       this.Form.controls.permission.setValidators(null)
@@ -82,8 +88,6 @@ export class AccessRulesFormComponent implements OnInit {
 
   getScreenButtons(){
     const screenId : number = this.Form.controls.screenId.value;
-    console.log("screenId",screenId);
-    
     this.management.getScreenButtons(screenId).subscribe(res=>{
       console.log("buttons",res);
       
@@ -92,7 +96,7 @@ export class AccessRulesFormComponent implements OnInit {
   }
 
   cancel(){
-
+    this.location.back();
   }
 
   addRule(){

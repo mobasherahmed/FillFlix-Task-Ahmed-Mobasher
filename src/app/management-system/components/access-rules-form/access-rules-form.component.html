@@ -41,30 +41,15 @@
                     [settings]="dropdownSettings"
                     [data]="permissions"
                     formControlName="permission"
-                    [ngClass]="{'input-error': Form.controls.permission.touched
-                    &&  Form.controls.permission.invalid}"
                   > </ng-multiselect-dropdown>
-                    <em
-                    *ngIf="
-                    Form.controls.permission.touched &&
-                    Form.controls.permission.errors?.required
-                    "
-                    class="text-danger"
-                >
-                {{'requiredMsg' | translate}}
-                </em>
                 </div>
                 <div class="form-row w-100" [hidden]="this.Form.controls.permissionType.value == 1">
-                    <div class="col-md-6 my-2">
+                    <div class="col-md-6">
                         
-                        <!-- <label for="" class="d-block"><em class="text-danger">*</em>{{'Screen' | translate}}</label> -->
+                        <label for="" class="d-block mb-0"><em class="text-danger">*</em>{{'Screen' | translate}}</label>
                         <mat-form-field appearance="fill">
                             <mat-label>Choose Screen</mat-label>
-                            <mat-select (ngModelChange)="getScreenButtons()" formControlName="screenId" [ngClass]="{
-                                'input-error':
-                                Form.controls.screenId.touched &&
-                                Form.controls.screenId.invalid
-                            }" required>
+                            <mat-select (ngModelChange)="getScreenButtons()" formControlName="screenId">
                               <mat-option *ngFor="let item of permissions" [value]="item.id">
                                 {{item.name}}
                               </mat-option>
@@ -85,16 +70,6 @@
                               </mat-option>
                             </mat-select>
                           </mat-form-field>
-                   
-                        <em
-                        *ngIf="
-                        Form.controls.screenId.touched &&
-                        Form.controls.screenId.errors?.required
-                        "
-                        class="text-danger"
-                    >
-                    {{'requiredMsg' | translate}}
-                    </em>
                     </div>
                     <div class="col-md-6 my-2">
                         
@@ -103,20 +78,8 @@
                         [placeholder]="'ChooseButtons' | translate"
                         [settings]="dropdownSettings"
                         [data]="permissions"
-                        formControlName="permission"
-                        [ngClass]="{'input-error': Form.controls.permission.touched
-                        &&  Form.controls.permission.invalid}"
+                        formControlName="buttons"
                       > </ng-multiselect-dropdown>
-                   
-                        <em
-                        *ngIf="
-                        Form.controls.buttons.touched &&
-                        Form.controls.buttons.errors?.required
-                        "
-                        class="text-danger"
-                    >
-                    {{'requiredMsg' | translate}}
-                    </em>
                     </div>
                 </div>
            </div>
