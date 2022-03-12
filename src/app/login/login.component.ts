@@ -36,6 +36,9 @@ export class LoginComponent implements OnInit {
         if(this.email.invalid || this.password.invalid) return true;
         return false;
     }
+    showResetPassword(){
+        
+    }
     onLogin() {
         let user = {
             email : this.email.value,

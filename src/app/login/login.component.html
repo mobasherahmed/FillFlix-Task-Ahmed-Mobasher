@@ -28,6 +28,13 @@
             </div>
             <div fxFlex  fxLayout="row" fxLayout.lt-md="column">
                 <div fxFlexFill>
+                  
+                    <p style="cursor: pointer; color: blue;" (click)="showResetPassword()">{{'Forget Password ?' | translate}}</p>
+                    
+                </div>
+            </div>
+            <div fxFlex  fxLayout="row" fxLayout.lt-md="column">
+                <div fxFlexFill>
                     <button mat-raised-button color="primary" class="w-100" (click)="onLogin()" [disabled]="checkDisable()">Login</button>
                 </div>
             </div>
