@@ -8,3 +8,7 @@ export interface permission{
     permissionType: number,
     permissionTypeName: string
 }
+export interface multiSelectionDto{
+    id: number,
+    name: string,
+}

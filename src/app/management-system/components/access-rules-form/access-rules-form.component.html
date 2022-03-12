@@ -23,7 +23,7 @@
                   {{'requiredMsg' | translate}}
                     </em>
                 </div>
-                <div class="col-md-12 my-2">
+                <div class="col-md-12 my-3">
                     
                     <label for=""><em class="text-danger">*</em>{{'PermissionType' | translate}}</label>
 
@@ -33,7 +33,7 @@
                       </mat-radio-group>
 
                 </div>
-                <div class="col-md-12 my-2">
+                <div class="col-md-12 my-2"  [hidden]="this.Form.controls.permissionType.value == 2">
                     
                     <label for=""><em class="text-danger">*</em>{{'Permissions' | translate}}</label>
                     <ng-multiselect-dropdown
@@ -54,19 +54,34 @@
                 {{'requiredMsg' | translate}}
                 </em>
                 </div>
-                <div class="form-row" [hidden]="this.Form.controls.permissionType.value == 1">
+                <div class="form-row w-100" [hidden]="this.Form.controls.permissionType.value == 1">
                     <div class="col-md-6 my-2">
                         
-                        <label for=""><em class="text-danger">*</em>{{'Screen' | translate}}</label>
+                        <!-- <label for="" class="d-block"><em class="text-danger">*</em>{{'Screen' | translate}}</label> -->
                         <mat-form-field appearance="fill">
-                            <mat-label>Favorite food</mat-label>
-                            <mat-select formControlName="screenId" [ngClass]="{
+                            <mat-label>Choose Screen</mat-label>
+                            <mat-select (ngModelChange)="getScreenButtons()" formControlName="screenId" [ngClass]="{
                                 'input-error':
                                 Form.controls.screenId.touched &&
                                 Form.controls.screenId.invalid
-                            }">
-                              <mat-option *ngFor="let food of permissions" [value]="food.value">
-                                {{food.name}}
+                            }" required>
+                              <mat-option *ngFor="let item of permissions" [value]="item.id">
+                                {{item.name}}
+                              </mat-option>
+                              <mat-option *ngFor="let item of permissions" [value]="item.id">
+                                {{item.name}}
+                              </mat-option>
+                              <mat-option *ngFor="let item of permissions" [value]="item.id">
+                                {{item.name}}
+                              </mat-option>
+                              <mat-option *ngFor="let item of permissions" [value]="item.id">
+                                {{item.name}}
+                              </mat-option>
+                              <mat-option *ngFor="let item of permissions" [value]="item.id">
+                                {{item.name}}
+                              </mat-option>
+                              <mat-option *ngFor="let item of permissions" [value]="item.id">
+                                {{item.name}}
                               </mat-option>
                             </mat-select>
                           </mat-form-field>
@@ -85,7 +100,7 @@
                         
                         <label for=""><em class="text-danger">*</em>{{'Buttons' | translate}}</label>
                         <ng-multiselect-dropdown
-                        [placeholder]="'ChoosePermissions' | translate"
+                        [placeholder]="'ChooseButtons' | translate"
                         [settings]="dropdownSettings"
                         [data]="permissions"
                         formControlName="permission"
@@ -107,7 +122,7 @@
            </div>
            <div class="form-row action-btn-container">
             <button mat-raised-button color="primary" class="w-30"
-            (click)="cancel()" [disabled]="checkDisable()">
+            (click)="cancel()">
             <mat-icon> cancel_presentation</mat-icon>
             {{'Cancel' | translate}}
            </button>

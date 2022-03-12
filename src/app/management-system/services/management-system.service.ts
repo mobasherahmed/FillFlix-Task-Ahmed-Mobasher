@@ -13,7 +13,36 @@ export class ManagementSystemService {
   constructor(private http:HttpClient) { }
 
   getPermissions():Observable<any>{
-   return this.http.get('getPermissions').pipe(take(1))
+    let obj ={
+      HasError: false,
+      Value: [
+        {
+          id: 1,
+          permissionName: "Users",
+          permissionType: 1,
+          permissionTypeName: "Screen"
+        }
+      ]
+    }
+    let resObs = of(obj)
+    return resObs
+  //  return this.http.get('getPermissions').pipe(take(1))
+  }
+  getScreenButtons(screenId:number):Observable<any>{
+    let obj ={
+      HasError: false,
+      Value: [
+        {
+          id: 1,
+          permissionName: "Users",
+          permissionType: 1,
+          permissionTypeName: "Screen"
+        }
+      ]
+    }
+    let resObs = of(obj)
+    return resObs
+    // return this.http.get('screenActions/'+screenId).pipe(take(1))
   }
 
 }

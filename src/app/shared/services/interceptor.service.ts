@@ -20,7 +20,8 @@ export class InterceptorService implements HttpInterceptor {
 
         const urlarr = req.url.split('://');
 
-        const token: string = localStorage.getItem('token');
+        const token: string = '';
+        // localStorage.getItem('token')
         const lang: string = localStorage.getItem('lang');
 
         // const token: any = this.share.getToken().value;
