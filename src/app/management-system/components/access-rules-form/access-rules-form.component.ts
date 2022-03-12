@@ -39,6 +39,8 @@ export class AccessRulesFormComponent implements OnInit {
 
   getPermissions(){
     this.management.getPermissions().subscribe(res=>{
+      console.log("r",res);
+      
       this.permissions = res.Value
     })
   }

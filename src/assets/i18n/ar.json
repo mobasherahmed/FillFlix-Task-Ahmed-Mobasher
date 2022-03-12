@@ -51,7 +51,7 @@
   "Entity Name": "اسم الكيان",
   "Main Sectors": "القطاعات الرئيسيه",
   "Insert-company ": "إضافه شركه",
-  "errMsg": "هذا الحقل مطلوب",
+  "requiredMsg": "هذا الحقل مطلوب",
   "subsector": "القطاعات الفرعيه",
   "Commercial Registration No": "رقم السجل التجاري",
   "Legal Form": "استمارة قانونية",

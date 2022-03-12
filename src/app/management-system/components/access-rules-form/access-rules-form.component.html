@@ -105,13 +105,18 @@
                     </div>
                 </div>
            </div>
-           <div class="form-row">
-            <button mat-raised-button color="primary" class="w-100 mt-3 mb-1"
-             (click)="addRule()" [disabled]="checkDisable()">{{'Add' | translate}}
+           <div class="form-row action-btn-container">
+            <button mat-raised-button color="primary" class="w-30"
+            (click)="cancel()" [disabled]="checkDisable()">
+            <mat-icon> cancel_presentation</mat-icon>
+            {{'Cancel' | translate}}
+           </button>
+            <button mat-raised-button color="primary" class="w-30"
+             (click)="addRule()" [disabled]="checkDisable()">
              <mat-icon>add_circle</mat-icon> 
+             {{'Add' | translate}}
             </button>
-            <button mat-raised-button color="primary" class="w-100"
-             (click)="cancel()" [disabled]="checkDisable()">{{'Cancel' | translate}}</button>
+        
            </div>
         </form>
     </div>

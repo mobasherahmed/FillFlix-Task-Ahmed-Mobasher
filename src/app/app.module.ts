@@ -3,7 +3,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -23,6 +23,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { XappApiService } from './shared/services/xapp-api.service';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { ManagementSystemModule } from './management-system/management-system.module';
+import { InterceptorService } from './shared/services/interceptor.service';
 
 const firebaseConfig = {
     apiKey: "AIzaSyAmSAFsKhV1h28beWOC-XRNrMNW0CJBOjM",
@@ -40,8 +41,10 @@ const app = firebase.initializeApp(firebaseConfig);
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
+  console.log("http",http);
     const path = window.location.origin + '/assets/i18n/';
     return new TranslateHttpLoader(http, path, '.json');
+
 }
 
 @NgModule({
@@ -60,6 +63,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         NgMultiSelectDropDownModule.forRoot(),
         TranslateModule.forRoot(),
         TranslateModule.forRoot({
+          defaultLanguage: 'en',
             loader: {
               provide: TranslateLoader,
               useFactory: HttpLoaderFactory,
@@ -69,7 +73,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         ToastrModule.forRoot(),
         NgxIntlTelInputModule
     ],
-    providers: [XappApiService],
+    providers: [XappApiService,
+      { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true }],
     bootstrap: [AppComponent]
 })
 export class AppModule {}

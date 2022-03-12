@@ -52,6 +52,8 @@ export class TopnavComponent implements OnInit {
             document.getElementsByTagName('html')[0].setAttribute('lang', 'en');
 
         }
+        console.log("lang",this.translate.currentLang);
+        
     }
 
     customizeLayoutType(val) {

@@ -3,6 +3,9 @@ body {
     height: 100%;
     margin: 0;
     font-family: 'Fontil Sans';
+    .input-error{
+        border: 2px solid #dc3545;
+    }
 }
 
 body[main-theme-layout="rtl"]{
@@ -15,6 +18,13 @@ body[main-theme-layout="rtl"]{
         padding: 20px;
         text-align: right;
     }
+    .action-btn-container{
+        float: left;
+        margin: 10px 0;
+        button{
+            margin: 0 10px;
+        }
+    }
 }
 body[main-theme-layout="ltr"]{
     .main-container {
@@ -26,6 +36,13 @@ body[main-theme-layout="ltr"]{
         padding: 20px;
         text-align: left;
 
+    }
+    .action-btn-container{
+        float: right;
+        margin: 10px 0;
+        button{
+            margin: 0 10px;
+        }
     }
 }
 

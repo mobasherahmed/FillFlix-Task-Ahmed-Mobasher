@@ -14,7 +14,7 @@ import { RouterModule } from "@angular/router";
 @NgModule({
 
     declarations:[MatTableComponent, ModalFormComponent, ModalConfirmationComponent,FooterComponent,BreadcrumbComponent,FeatherIconsComponent],
-    imports:[MaterialModule,ReactiveFormsModule,FormsModule,CommonModule,TranslateModule,RouterModule],
+    imports:[MaterialModule,ReactiveFormsModule,FormsModule,CommonModule,TranslateModule.forChild(),RouterModule],
     exports:[MatTableComponent, ModalFormComponent,MaterialModule, ModalConfirmationComponent,FooterComponent,BreadcrumbComponent,FeatherIconsComponent]
 })
 

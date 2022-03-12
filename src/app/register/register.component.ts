@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { CountryISO, PhoneNumberFormat, SearchCountryField } from 'ngx-intl-tel-input';
+import { LoginService } from '../login/login.service';
 import { ValidationService } from '../shared/services/validation.service';
 
 @Component({
@@ -15,39 +16,51 @@ export class RegisterComponent implements OnInit {
 	CountryISO = CountryISO;
   PhoneNumberFormat = PhoneNumberFormat;
 	preferredCountries: CountryISO[] = [CountryISO.UnitedStates, CountryISO.UnitedKingdom];
-	phoneForm = new FormGroup({
-		phone: new FormControl(undefined, [Validators.required])
-	});
+  hide:boolean=true;
 
 	changePreferredCountries() {
 		this.preferredCountries = [CountryISO.India, CountryISO.Canada];
 	}
   
   RegisterForm:FormGroup
-  email = new FormControl('', [Validators.required, Validators.email]) //eve.holt@reqres.in
-  password = new FormControl('', Validators.required) //cityslicka
-  constructor(private fb:FormBuilder,private translate:TranslateService,private validation:ValidationService) { 
-    this.translate.use('en')
+  confirmPassword = new FormControl('', Validators.required) 
+  constructor(private fb:FormBuilder,private translate:TranslateService,private validation:ValidationService,
+    private _auth:LoginService) { 
+   
     this.RegisterForm = fb.group({
+    name:  ['',Validators.required],
     email:  ['',[Validators.required,Validators.pattern(validation.email)]],
-    phone:  ['',[Validators.required,Validators.pattern(validation.phone)]],
+    phoneNumber:  ['',[Validators.required,Validators.pattern(validation.phone)]],
     password:  ['',[Validators.required,Validators.pattern(validation.password)]],
-    confirmPassword:  ['',Validators.required],
-
     })
   }
 
 
   ngOnInit(): void {
+    this.watchPassworsValues();
   }
 
   onRegister(){
-
+    const body = this.RegisterForm.value;
+    this._auth.Register(body).subscribe(res=>{
+      console.log("res",res);
+      
+    })
   }
 
-  getEmailErrorMessage(){}
+  watchPassworsValues(){
+    this.RegisterForm.controls.password.valueChanges.subscribe(password=>{
+      this.confirmPassword.reset();
+     
+    })
+    this.confirmPassword.valueChanges.subscribe(password=>{
+      if(password === this.RegisterForm.controls.password.value) return;
+      this.confirmPassword.setErrors({match:true}); 
+    })
+  }
 
   checkDisable(){
-
+    if(this.RegisterForm.invalid || this.confirmPassword.invalid) return true
+    return false;
   }
 }

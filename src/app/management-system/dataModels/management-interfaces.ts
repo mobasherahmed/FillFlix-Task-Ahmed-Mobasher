@@ -1,7 +1,10 @@
 export interface permissions{
-    Value:permission[]
+    Value:permission[],
+    HasError:boolean
 }
 export interface permission{
-    name:string,
-    id:number
+    id: number,
+    permissionName: string,
+    permissionType: number,
+    permissionTypeName: string
 }

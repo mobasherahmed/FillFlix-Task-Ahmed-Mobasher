@@ -58,9 +58,11 @@
 .w-100 {
     width: 100%;
 }
-
+mat-icon{
+    cursor: pointer;
+}
 @media screen and (max-width: 500px) {
-    .login-form{
+    .register-form{
         width: 350px !important;
     }
 }
