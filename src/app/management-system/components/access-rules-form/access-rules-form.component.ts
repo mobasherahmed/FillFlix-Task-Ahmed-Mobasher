@@ -1,12 +1,10 @@
 import { Location } from '@angular/common';
-import { ThrowStmt } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { dropdownSettings } from 'src/app/shared/interfaces/multi-selection-interfaces';
 import { SharedDataService } from 'src/app/shared/services/shared-data.service';
-import { XappApiService } from 'src/app/shared/services/xapp-api.service';
-import { multiSelectionDto, permission, permissions } from '../../dataModels/management-interfaces';
+import { createRoleAndItsPermissionsRequestDto, multiSelectionDto } from '../../dataModels/management-interfaces';
 import { ManagementSystemService } from '../../services/management-system.service';
 
 @Component({
@@ -19,6 +17,8 @@ export class AccessRulesFormComponent implements OnInit {
   Form:FormGroup;
   dropdownSettings:dropdownSettings;
   permissions:multiSelectionDto[];
+  screenButtons: multiSelectionDto[];
+  ruleId: number;
 
   constructor(private fb:FormBuilder,private management:ManagementSystemService,
     private toaster:ToastrService,private share:SharedDataService,private location:Location) {
@@ -90,7 +90,9 @@ export class AccessRulesFormComponent implements OnInit {
     const screenId : number = this.Form.controls.screenId.value;
     this.management.getScreenButtons(screenId).subscribe(res=>{
       console.log("buttons",res);
-      
+      this.screenButtons = res.Value.map(p=>{
+        return {id:p.id,name:p.permissionName}
+      })
     })
    
   }
@@ -99,9 +101,29 @@ export class AccessRulesFormComponent implements OnInit {
     this.location.back();
   }
 
+  getPermissionsIds(){
+    if(this.Form.controls.permissionType.value == 1){
+      return this.Form.value.permission.map(p=>p.id)
+    }else{
+      return this.Form.value.buttons.map(p=>p.id)
+
+    }
+  }
+
   addRule(){
 console.log(this.Form.valid);
 console.log(this.Form);
+let body:createRoleAndItsPermissionsRequestDto={
+  name:this.Form.value.name,
+ permissionId : this.getPermissionsIds(),
+ roleId:this.ruleId?this.ruleId:null
+};
+
+
+this.management.createRoleAndItsPermissions(body).subscribe(res=>{
+  console.log(res);
+  
+})
 
   }
 

@@ -21,3 +21,16 @@ table {
 .mb-20 {
     margin-bottom: 20px;
 }
+
+ol{
+    max-height: 100px;
+    overflow: auto;
+    margin-bottom: 0;
+    padding-left: 20px;
+    li{
+        mat-icon{
+            vertical-align: middle;
+            color: #3f51b5;
+        }
+    }
+}

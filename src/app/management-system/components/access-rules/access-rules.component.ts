@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-
 @Component({
   selector: 'app-access-rules',
   templateUrl: './access-rules.component.html',
@@ -12,4 +11,6 @@ export class AccessRulesComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  
+ 
 }

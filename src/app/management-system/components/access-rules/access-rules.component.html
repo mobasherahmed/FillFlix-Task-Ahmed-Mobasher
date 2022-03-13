@@ -1,1 +1,9 @@
-<p>access-rules works!</p>
+<div class="header d-flex justify-space-between">
+    <strong>{{"AccessRulesAndIt'sPermissions" | translate}}</strong>
+    <button mat-raised-button color="primary" class="w-30"
+    routerLink="/management/addAccessRule">
+    <mat-icon>add_circle</mat-icon> 
+    {{'AddNewAccessRule' | translate}}
+    </button>
+</div>
+<app-mat-table></app-mat-table>

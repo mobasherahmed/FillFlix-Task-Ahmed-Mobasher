@@ -53,7 +53,9 @@ export class InterceptorService implements HttpInterceptor {
             (res: HttpResponse<any>) => {
               if (res instanceof HttpResponse) {
                 observer.next(res);
-                this._notify.SuccessMsg(res)
+                if(req.method !== 'GET'){
+                  this._notify.SuccessMsg(res)
+                }
               }
             },
             (err: HttpErrorResponse) => {

@@ -24,6 +24,6 @@ export class HandleApiResponseService {
     }
 
     public SuccessMsg(res:any) {
-        this.toastrs.success('Success');
+        this.toastrs.success(res.message);
     }
 }

@@ -1,7 +1,9 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { ManagementSystemService } from 'src/app/management-system/services/management-system.service';
 import { User } from '../../interfaces/user-interface';
+import { SharedDataService } from '../../services/shared-data.service';
 import { XappApiService } from '../../services/xapp-api.service';
 
 @Component({
@@ -11,19 +13,22 @@ import { XappApiService } from '../../services/xapp-api.service';
 })
 export class MatTableComponent implements OnInit {
 
-  displayedColumns = ['id','avatar', 'name', 'email'];
+  displayedColumns = ['no', 'name', 'permissions','actions'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   dataSource: MatTableDataSource<User>;
 
-  constructor(private xapp:XappApiService) { 
-   this.xapp.users.subscribe(users=>{
-      this.dataSource = new MatTableDataSource(users);
+  constructor(private management:ManagementSystemService,private share:SharedDataService) { 
+   this.management.getRoles().subscribe(res=>{
+      this.dataSource = new MatTableDataSource(res.Value);
     })
   }
   
   ngOnInit(): void {
   }
 
+  openDeleteDialog(){
+    this.share.openDeleteDialog()
+  }
  
 
 }
