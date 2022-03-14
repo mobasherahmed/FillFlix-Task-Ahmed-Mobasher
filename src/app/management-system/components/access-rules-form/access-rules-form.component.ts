@@ -110,4 +110,8 @@ export class AccessRulesFormComponent implements OnInit {
 
   }
 
+  ngOnDestroy(){
+    this.share.updateItem.next({})
+    
+  }
 }
