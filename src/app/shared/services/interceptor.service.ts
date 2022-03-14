@@ -51,14 +51,18 @@ export class InterceptorService implements HttpInterceptor {
         return new Observable((observer) => {
           next.handle(req).subscribe(
             (res: HttpResponse<any>) => {
+              
               if (res instanceof HttpResponse) {
+                console.log("response",res);
                 observer.next(res);
                 if(req.method !== 'GET'){
-                  this._notify.SuccessMsg(res)
+                  // this._notify.SuccessMsg(res.body.message)
                 }
               }
             },
             (err: HttpErrorResponse) => {
+              console.log("eeeee",err);
+              
               this._notify.handleError(err);
             }
           );

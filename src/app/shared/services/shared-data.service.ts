@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
+import { BehaviorSubject } from 'rxjs';
+import { ManagementSystemService } from 'src/app/management-system/services/management-system.service';
 import { ModalConfirmationComponent } from '../components/modal-confirmation/modal-confirmation.component';
 import { dropdownSettings } from '../interfaces/multi-selection-interfaces';
 
@@ -9,6 +11,7 @@ import { dropdownSettings } from '../interfaces/multi-selection-interfaces';
 })
 export class SharedDataService {
 
+  updateItem:BehaviorSubject<any> = new BehaviorSubject({})
   public dropdownSettings:dropdownSettings = {
     singleSelection: false,
     idField: 'id',
@@ -32,7 +35,6 @@ export class SharedDataService {
     });
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
         if (confirmed) {
-            this.toaster.success("User deleted successfully", "Great");
         }
     });
 }

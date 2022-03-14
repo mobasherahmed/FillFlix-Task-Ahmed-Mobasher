@@ -10,18 +10,14 @@
                 <td mat-cell *matCellDef="let element"> {{element.name}} </td>
             </ng-container>
             <ng-container matColumnDef="actions">
-                <th mat-header-cell *matHeaderCellDef>Actions </th>
-                <td mat-cell *matCellDef="let element">    
-                  
-                    <button mat-raised-button color="primary" class="w-30" routerLink="/management/addAccessRule">
-                     <mat-icon>add_circle</mat-icon> 
-                     {{'Add' | translate}}
-                    </button>
-                    <button mat-raised-button color="primary" class="w-30 mx-2" routerLink="/management/addAccessRule">
+                <th mat-header-cell *matHeaderCellDef class="text-center">Actions </th>
+                <td mat-cell *matCellDef="let element" class="text-center">    
+                
+                    <button mat-raised-button color="primary" class="w-30 mx-2" (click)="editRoles(element)">
                     <mat-icon>edit</mat-icon>
                      {{'Edit' | translate}}
                     </button>
-                    <button mat-raised-button color="accent" class="w-30 " (click)="openDeleteDialog()">
+                    <button mat-raised-button color="accent" class="w-30 " (click)="openDeleteDialog(element.id)">
                         <mat-icon> cancel_presentation</mat-icon>
                         {{'Delete' | translate}}
                        </button>
@@ -34,9 +30,9 @@
                         <li *ngFor="let p of element.permissions">
                             <mat-icon *ngIf="p.permissionType == 1">screen_lock_landscape</mat-icon>
                             <mat-icon  *ngIf="p.permissionType == 2"> edit_attributes</mat-icon>
-
-
-                             {{p.permissionName}} - {{p.permissionTypeName}}</li>
+                            <span *ngIf="p.permissionType == 1"> {{p.permissionName}} {{p.permissionTypeName}} </span>   
+                            <span *ngIf="p.permissionType == 2"> {{p.permissionName}} {{p.permissionTypeName}} in {{p.screenName}} Screen</span>   
+                            </li>
                     </ol>
                 </td>
             </ng-container>

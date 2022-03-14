@@ -1,10 +1,13 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { ManagementSystemService } from 'src/app/management-system/services/management-system.service';
 import { User } from '../../interfaces/user-interface';
 import { SharedDataService } from '../../services/shared-data.service';
 import { XappApiService } from '../../services/xapp-api.service';
+import { ModalConfirmationComponent } from '../modal-confirmation/modal-confirmation.component';
 
 @Component({
   selector: 'app-mat-table',
@@ -15,10 +18,12 @@ export class MatTableComponent implements OnInit {
 
   displayedColumns = ['no', 'name', 'permissions','actions'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  dataSource: MatTableDataSource<User>;
+  dataSource: MatTableDataSource<any>;
+  roles: any;
 
-  constructor(private management:ManagementSystemService,private share:SharedDataService) { 
+  constructor(private management:ManagementSystemService,private share:SharedDataService,private router:Router,public dialog: MatDialog) { 
    this.management.getRoles().subscribe(res=>{
+     this.roles = res.Value;
       this.dataSource = new MatTableDataSource(res.Value);
     })
   }
@@ -26,9 +31,29 @@ export class MatTableComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  openDeleteDialog(){
-    this.share.openDeleteDialog()
+  openDeleteDialog(roleId:number){
+    const dialogRef = this.dialog.open(ModalConfirmationComponent, {
+      data: {
+          message: "Are you sure want to delete?",
+          buttonText: {
+              ok: "Ok",
+              cancel: "No",
+          },
+      },
+  });
+    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+      if (confirmed) {
+        this.management.deleteRole(roleId).subscribe(res=>{
+         this.roles = this.roles.filter(item=>item.id !== roleId);
+         this.dataSource = new MatTableDataSource(this.roles)
+        })
+      }
+  });
   }
  
+  editRoles(item){
+    this.share.updateItem.next(item);
+    this.router.navigate(['/management/AccessRuleForm'])
+  }
 
 }

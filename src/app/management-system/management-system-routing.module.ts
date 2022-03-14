@@ -6,7 +6,7 @@ import { AccessRulesComponent } from './components/access-rules/access-rules.com
 
 const routes: Routes = [
     {
-        path: 'addAccessRule',
+        path: 'AccessRuleForm',
         component: AccessRulesFormComponent,
         canActivate: [AuthGuard],
    

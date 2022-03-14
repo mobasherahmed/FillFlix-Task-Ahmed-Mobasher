@@ -1,6 +1,6 @@
 <div class="card">
     <div class="card-header">
-        <strong>{{'addAccessRule' | translate}}</strong>
+        <strong>{{'AccessRuleForm' | translate}}</strong>
     </div>
     <div class="card-body">
         <form [formGroup]="Form">
@@ -23,17 +23,7 @@
                   {{'requiredMsg' | translate}}
                     </em>
                 </div>
-                <div class="col-md-12 my-3">
-                    
-                    <label for=""><em class="text-danger">*</em>{{'PermissionType' | translate}}</label>
-
-                    <mat-radio-group aria-label="Select an option" class="mx-3" formControlName="permissionType">
-                        <mat-radio-button class="mx-2" value="1">SCREEN</mat-radio-button>
-                        <mat-radio-button class="mx-2" value="2">BUTTON</mat-radio-button>
-                      </mat-radio-group>
-
-                </div>
-                <div class="col-md-12 my-2"  [hidden]="this.Form.controls.permissionType.value == 2">
+                <div class="col-md-12 my-2"  >
                     
                     <label for=""><em class="text-danger">*</em>{{'Permissions' | translate}}</label>
                     <ng-multiselect-dropdown
@@ -41,22 +31,10 @@
                     [settings]="dropdownSettings"
                     [data]="permissions"
                     formControlName="permission"
+                    (ngModelChange)="getScreenButtons()"
                   > </ng-multiselect-dropdown>
                 </div>
-                <div class="form-row w-100" [hidden]="this.Form.controls.permissionType.value == 1">
-                    <div class="col-md-6">
-                        
-                        <label for="" class="d-block mb-0"><em class="text-danger">*</em>{{'Screen' | translate}}</label>
-                        <mat-form-field appearance="fill">
-                            <mat-label>Choose Screen</mat-label>
-                            <mat-select (ngModelChange)="getScreenButtons()" formControlName="screenId">
-                              <mat-option *ngFor="let item of permissions" [value]="item.id">
-                                {{item.name}}
-                              </mat-option>
-                            </mat-select>
-                          </mat-form-field>
-                    </div>
-                    <div class="col-md-6 my-2">
+                  <div class="col-md-12 my-2">
                         
                         <label for=""><em class="text-danger">*</em>{{'Buttons' | translate}}</label>
                         <ng-multiselect-dropdown
@@ -66,7 +44,7 @@
                         formControlName="buttons"
                       > </ng-multiselect-dropdown>
                     </div>
-                </div>
+                
            </div>
            <div class="form-row action-btn-container">
             <button mat-raised-button color="primary" class="w-30"
@@ -77,7 +55,7 @@
             <button mat-raised-button color="primary" class="w-30"
              (click)="addRule()" [disabled]="checkDisable()">
              <mat-icon>add_circle</mat-icon> 
-             {{'Add' | translate}}
+             {{'Save' | translate}}
             </button>
         
            </div>

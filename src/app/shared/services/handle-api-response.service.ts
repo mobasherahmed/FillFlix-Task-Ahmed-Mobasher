@@ -23,7 +23,7 @@ export class HandleApiResponseService {
       }
     }
 
-    public SuccessMsg(res:any) {
-        this.toastrs.success(res.message);
+    public SuccessMsg(message) {
+        this.toastrs.success(message);
     }
 }

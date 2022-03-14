@@ -24,9 +24,7 @@ export class AccessRulesFormComponent implements OnInit {
     private toaster:ToastrService,private share:SharedDataService,private location:Location) {
     this.Form = this.fb.group({
       name:['',Validators.required],
-      permissionType:['1',Validators.required],
       permission:['',Validators.required],
-      screenId:[''],
       buttons:[''],
     })
     this.dropdownSettings = this.share.dropdownSettings
@@ -35,20 +33,32 @@ export class AccessRulesFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.getPermissions();
-    this.watchPermissionTypeControlValue();
-    // this.setValues()
+    this.getSelectedScreensId();
+    this.setValues()
   }
 
+  
+
   setValues(){
-    this.Form.controls.name.setValue('')
-    this.Form.controls.permissionType.setValue('')
-    this.Form.controls.permission.setValue('')
-    this.Form.controls.screenId.setValue('')
-    this.Form.controls.buttons.setValue('')
+    this.share.updateItem.subscribe(item=>{
+      if(Object.keys(item).length != 0){
+       this.ruleId = item.id;
+       this.Form.controls.name.setValue(item.name)
+        let screens = item.permissions.filter(p=>p.permissionType === 1).map(s=>{
+          return {id:s.permissionId,name:s.permissionName}
+        });
+        let buttons = item.permissions.filter(p=>p.permissionType === 2).map(s=>{
+          return {id:s.permissionId,name:s.permissionName}
+        });
+        this.Form.controls.permission.setValue(screens)
+        this.Form.controls.buttons.setValue(buttons)
+
+      }
+    })
   }
+ 
   getPermissions(){
     this.management.getPermissions().subscribe(res=>{
-      console.log("r",res);
       this.permissions = res.Value.map(p=>{
         return {id:p.id,name:p.permissionName}
       })
@@ -59,39 +69,18 @@ export class AccessRulesFormComponent implements OnInit {
     return this.Form.invalid
   }
 
-  watchPermissionTypeControlValue(){
-    this.Form.controls.permissionType.valueChanges.subscribe(type=>{
-      this.toggleControlsRequired(type);
-    })
-  }
-
-
-  toggleControlsRequired(type){
-    if(type == 2){
-      console.log('validation');
-      this.Form.controls.screenId.setValidators([Validators.required])
-      this.Form.controls.buttons.setValidators([Validators.required])
-      this.Form.controls.permission.setValidators(null)
-      this.Form.controls.permission.updateValueAndValidity();
-      this.Form.controls.screenId.updateValueAndValidity();
-      this.Form.controls.buttons.updateValueAndValidity();
-    }else{
-      this.Form.controls.screenId.setValidators(null)
-      this.Form.controls.buttons.setValidators(null)
-      this.Form.controls.permission.setValidators([Validators.required])
-      this.Form.controls.permission.updateValueAndValidity();
-      this.Form.controls.screenId.updateValueAndValidity();
-      this.Form.controls.buttons.updateValueAndValidity();
+  getSelectedScreensId(){
+    if(this.Form.controls.permission.valid){
+      return this.Form.controls.permission.value.map(p=>p.id);
     }
-
   }
+
 
   getScreenButtons(){
-    const screenId : number = this.Form.controls.screenId.value;
+    const screenId : number[] = this.getSelectedScreensId();
     this.management.getScreenButtons(screenId).subscribe(res=>{
-      console.log("buttons",res);
       this.screenButtons = res.Value.map(p=>{
-        return {id:p.id,name:p.permissionName}
+        return {id:p.id,name:p.permissionName + '-' + p.screenName}
       })
     })
    
@@ -102,28 +91,22 @@ export class AccessRulesFormComponent implements OnInit {
   }
 
   getPermissionsIds(){
-    if(this.Form.controls.permissionType.value == 1){
-      return this.Form.value.permission.map(p=>p.id)
-    }else{
-      return this.Form.value.buttons.map(p=>p.id)
-
-    }
+   const screenIds= this.Form.controls.permission.value.map(s=>s.id);
+   const buttonIds = this.Form.controls.buttons.value.map(b=>b.id);
+   const permissionIds = [...screenIds,...buttonIds];
+   return permissionIds;
   }
 
   addRule(){
-console.log(this.Form.valid);
-console.log(this.Form);
-let body:createRoleAndItsPermissionsRequestDto={
-  name:this.Form.value.name,
- permissionId : this.getPermissionsIds(),
- roleId:this.ruleId?this.ruleId:null
-};
+    let body:createRoleAndItsPermissionsRequestDto={
+      name:this.Form.value.name,
+      permissionId : this.getPermissionsIds(),
+      roleId:this.ruleId?this.ruleId:null
+    };
 
-
-this.management.createRoleAndItsPermissions(body).subscribe(res=>{
-  console.log(res);
-  
-})
+    this.management.createRoleAndItsPermissions(body).subscribe(res=>{
+      this.cancel();
+     })
 
   }
 
