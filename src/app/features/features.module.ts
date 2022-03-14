@@ -7,16 +7,18 @@ import { CudMethodsComponent } from './components/cud-methods/cud-methods.compon
 import { SharedModule } from '../shared/shared.module';
 import { MaterialModule } from '../shared/modules/material/material.module';
 import { PhoneLoginComponent } from './components/phone-login/phone-login.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
+import { UsersFormComponent } from './components/users-form/users-form.component';
 
 
 
 @NgModule({
-  declarations: [UsersComponent, UserComponent, CudMethodsComponent, PhoneLoginComponent],
+  declarations: [UsersComponent, UserComponent, CudMethodsComponent, PhoneLoginComponent, UsersFormComponent],
   imports: [
     CommonModule,
     FeaturesRoutingModule,
+    ReactiveFormsModule,
     SharedModule,
     FormsModule,
     MaterialModule,

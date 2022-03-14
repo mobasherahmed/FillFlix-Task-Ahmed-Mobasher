@@ -1,0 +1,159 @@
+
+
+
+    <div class="card">
+        <div class="card-header">
+            <strong>{{'UserForm' | translate}}</strong>
+        </div>
+        <div class="card-body">
+            <form [formGroup]="Form">
+                <div class="form-row">
+                    <div class="col-md-6 my-1">
+                        <label for=""> <em class="text-danger">*</em>{{'Name' | translate}}</label>
+                        <input type="text" formControlName="name" class="form-control"  
+                        [ngClass]="{
+                            'input-error':
+                              Form.controls.name.touched &&
+                              Form.controls.name.invalid
+                          }">
+                        <em
+                        *ngIf="
+                          Form.controls.name.touched &&
+                          Form.controls.name.errors?.required
+                        "
+                        class="text-danger"
+                      >
+                      {{'requiredMsg' | translate}}
+                        </em>
+                    </div>
+                    <div class="col-md-6 my-1">
+                        <label for=""> <em class="text-danger">*</em>{{'Email' | translate}}</label>
+                        <input type="email" formControlName="email" class="form-control"  
+                        [ngClass]="{
+                            'input-error':
+                              Form.controls.email.touched &&
+                              Form.controls.email.invalid
+                          }">
+                        <em
+                        *ngIf="
+                          Form.controls.email.touched &&
+                          Form.controls.email.errors?.required
+                        "
+                        class="text-danger"
+                      >
+                      {{'requiredMsg' | translate}}
+                        </em>
+                        <em *ngIf="Form.controls.email.errors?.pattern">{{'emailVaidationErrorMsg' | translate}}</em>
+
+                    </div>
+                    <div class="col-md-6 my-1">
+                        <label for=""> <em class="text-danger">*</em>{{'Phone' | translate}}</label>
+                        <input type="text" formControlName="phoneNumber" class="form-control"  
+                        [ngClass]="{
+                            'input-error':
+                              Form.controls.phoneNumber.touched &&
+                              Form.controls.phoneNumber.invalid
+                          }">
+                        <em
+                        *ngIf="
+                          Form.controls.phoneNumber.touched &&
+                          Form.controls.phoneNumber.errors?.required
+                        "
+                        class="text-danger"
+                      >
+                      {{'requiredMsg' | translate}}
+                        </em>
+                        <em *ngIf="Form.controls.phoneNumber.errors?.pattern">{{'phoneVaidationErrorMsg' | translate}}</em>
+
+                    </div>
+                    <div class="col-md-6 my-1">
+                        <label for=""> <em class="text-danger">*</em>{{'Role' | translate}}</label>
+                        <select class="form-control" name="roleId" id="roleId" formControlName="roleId">
+                            <option value="" disabled selected hidden>{{'select' | translate}}</option>
+                            <option [value]="item.id" *ngFor="let item of roles">{{item.name}}</option>
+                        </select>
+                        <em
+                        *ngIf="
+                        Form.controls.roleId.touched &&
+                        Form.controls.roleId.errors?.required
+                        "
+                        class="text-danger"
+                      >
+                      {{'requiredMsg' | translate}}
+                        </em>
+                    </div>                  
+                    <div class="col-md-6 my-1">
+                        <label for=""> <em class="text-danger">*</em>{{'Password' | translate}}</label>
+                        <div class="input-group">
+                            <input [type]="hide ? 'password' : 'text'" formControlName="password" class="form-control"  
+                            [ngClass]="{
+                                'input-error':
+                                  Form.controls.password.touched &&
+                                  Form.controls.password.invalid
+                              }">
+                            <div class="input-group-append">
+                              <span class="input-group-text">
+                                <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                              </span>
+                           </div>
+                         </div>
+                        <em
+                        *ngIf="
+                          Form.controls.password.touched &&
+                          Form.controls.password.errors?.required
+                        "
+                        class="text-danger"
+                      >
+                      {{'requiredMsg' | translate}}
+                        </em>
+                        <em *ngIf="Form.controls.password.errors?.pattern">{{'passwordVaidationErrorMsg' | translate}}</em>
+
+                    </div>
+                    <div class="col-md-6 my-1">
+                        <label for=""> <em class="text-danger">*</em>{{'Confirm Password' | translate}}</label>
+                        <div class="input-group">
+                            <input [type]="hide ? 'password' : 'text'" formControlName="confirmPassword" class="form-control"  
+                            [ngClass]="{
+                                'input-error':
+                                confirmPassword.touched &&
+                                confirmPassword.invalid
+                              }">
+                            <div class="input-group-append">
+                              <span class="input-group-text">
+                                <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                              </span>
+                           </div>
+                         </div>
+            
+                        <em
+                        *ngIf="
+                        confirmPassword.touched &&
+                        confirmPassword.errors?.required
+                        "
+                        class="text-danger"
+                      >
+                      {{'requiredMsg' | translate}}
+                        </em>
+                        <em *ngIf="confirmPassword.errors?.match">{{'passwordMatchigErrorMsg' | translate}}</em>
+                        <em *ngIf="confirmPassword.touched && confirmPassword.errors?.required">{{'requiredMsg' | translate}}</em>
+
+                    </div>                  
+                
+                    
+               </div>
+               <div class="form-row action-btn-container">
+                <button mat-raised-button color="primary" class="w-30"
+                (click)="cancel()">
+                <mat-icon> cancel_presentation</mat-icon>
+                {{'Cancel' | translate}}
+               </button>
+                <button mat-raised-button color="primary" class="w-30"
+                 (click)="addUser()" [disabled]="checkDisable()">
+                 <mat-icon>add_circle</mat-icon> 
+                 {{'Save' | translate}}
+                </button>
+            
+               </div>
+            </form>
+        </div>
+    </div>

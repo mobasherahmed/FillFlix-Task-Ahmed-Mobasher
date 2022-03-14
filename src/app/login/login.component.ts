@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit {
         }
         this._login.login(user).subscribe(res=>{
             localStorage.setItem('token', res.accessToken);
-            this.router.navigate(['/features/phone']);
+            this.router.navigate(['/features/users']);
         })
     }
 }
