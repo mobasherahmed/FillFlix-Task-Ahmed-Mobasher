@@ -56,7 +56,7 @@ export class InterceptorService implements HttpInterceptor {
                 console.log("response",res);
                 observer.next(res);
                 if(req.method !== 'GET'){
-                  // this._notify.SuccessMsg(res.body.message)
+                  this._notify.SuccessMsg(res.body.message)
                 }
               }
             },

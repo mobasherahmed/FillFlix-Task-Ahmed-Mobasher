@@ -1,5 +1,7 @@
 import { Component, Inject, OnInit } from "@angular/core";
+import { FormControl, Validators } from "@angular/forms";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { ManagementSystemService } from "src/app/management-system/services/management-system.service";
 import { XappApiService } from "../../services/xapp-api.service";
 
 @Component({
@@ -12,7 +14,7 @@ export class ModalConfirmationComponent implements OnInit {
     confirmButtonText = "Yes";
     cancelButtonText = "Cancel";
     constructor(private xapp:XappApiService,
-        @Inject(MAT_DIALOG_DATA) private data: any,
+        @Inject(MAT_DIALOG_DATA) private data: any,private _management:ManagementSystemService,
         private dialogRef: MatDialogRef<ModalConfirmationComponent>
     ) {
         if (data) {
@@ -27,12 +29,14 @@ export class ModalConfirmationComponent implements OnInit {
     }
 
     onConfirmClick(): void {
-      this.xapp.deleteUser().subscribe(res=>{
         this.dialogRef.close(true);
-      },err=>{
-        this.dialogRef.close(false);
-      })
+    //   this.xapp.deleteUser().subscribe(res=>{
+    //     this.dialogRef.close(true);
+    //   },err=>{
+    //     this.dialogRef.close(false);
+    //   })
     }
 
     ngOnInit(): void {}
+
 }

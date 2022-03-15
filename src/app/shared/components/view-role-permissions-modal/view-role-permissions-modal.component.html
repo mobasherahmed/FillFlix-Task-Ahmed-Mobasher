@@ -1,0 +1,21 @@
+<div class="container">
+    <div class="row">
+        <h2 mat-dialog-title>{{message}}</h2>
+        <div class="col-md-12 my-3" mat-dialog-content>
+            <ol>
+                <li *ngFor="let p of permissions">
+                <!-- <span *ngFor="let p of permissions;let i=index"> -->
+                    <!-- <span> {{i+1}} - </span> -->
+                    <mat-icon *ngIf="p.permissionType == 1">screen_lock_landscape</mat-icon>
+                    <mat-icon  *ngIf="p.permissionType == 2"> edit_attributes</mat-icon>
+                    <span *ngIf="p.permissionType == 1"> {{p.permissionName}} {{p.permissionTypeName}}</span>  
+                    <span *ngIf="p.permissionType == 2"> {{p.permissionName}} {{p.permissionTypeName}} in {{p.screenName}} Screen </span>    
+                    <!-- </span> -->
+                    </li>
+            </ol>
+        </div>   
+        <div mat-dialog-actions>
+          <button mat-raised-button color="primary" (click)="onConfirmClick()" tabindex="1">{{confirmButtonText}}</button>
+          </div> 
+    </div>
+</div>

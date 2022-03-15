@@ -10,11 +10,12 @@ import { PhoneLoginComponent } from './components/phone-login/phone-login.compon
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { UsersFormComponent } from './components/users-form/users-form.component';
+import { UsersListMatTableComponent } from './components/users-list-mat-table/users-list-mat-table.component';
 
 
 
 @NgModule({
-  declarations: [UsersComponent, UserComponent, CudMethodsComponent, PhoneLoginComponent, UsersFormComponent],
+  declarations: [UsersComponent, UserComponent, CudMethodsComponent, PhoneLoginComponent, UsersFormComponent, UsersListMatTableComponent],
   imports: [
     CommonModule,
     FeaturesRoutingModule,

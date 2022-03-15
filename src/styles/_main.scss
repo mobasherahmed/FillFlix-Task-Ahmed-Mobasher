@@ -25,6 +25,10 @@ body[main-theme-layout="rtl"]{
             margin: 0 10px;
         }
     }
+    .mat-dialog-container{
+        direction: rtl;
+        text-align: right;
+    }
 }
 body[main-theme-layout="ltr"]{
     .main-container {

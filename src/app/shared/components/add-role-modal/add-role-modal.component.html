@@ -1,0 +1,25 @@
+<div class="container">
+    <div class="row">
+        <h2 mat-dialog-title>{{message}}</h2>
+        <div class="col-md-12 my-3" mat-dialog-content>
+            <label for=""> <em class="text-danger">*</em>{{'Role' | translate}}</label>
+            <select class="form-control" name="roleId" id="roleId" [formControl]="roleId">
+                <option value="" disabled selected hidden>{{'select' | translate}}</option>
+                <option [value]="item.id" *ngFor="let item of roles">{{item.name}}</option>
+            </select>
+            <em
+            *ngIf="
+            roleId.touched &&
+            roleId.errors?.required
+            "
+            class="text-danger"
+          >
+          {{'requiredMsg' | translate}}
+            </em>
+        </div>   
+        <div mat-dialog-actions>
+            <button mat-raised-button mat-dialog-close tabindex="-1">{{cancelButtonText}}</button>
+            <button mat-raised-button color="primary" (click)="onConfirmClick()" tabindex="1" [disabled]="roleId.invalid">{{confirmButtonText}}</button>
+          </div> 
+    </div>
+</div>

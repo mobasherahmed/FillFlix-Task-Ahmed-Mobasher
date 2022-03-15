@@ -8,6 +8,7 @@ import { User } from '../../interfaces/user-interface';
 import { SharedDataService } from '../../services/shared-data.service';
 import { XappApiService } from '../../services/xapp-api.service';
 import { ModalConfirmationComponent } from '../modal-confirmation/modal-confirmation.component';
+import { ViewRolePermissionsModalComponent } from '../view-role-permissions-modal/view-role-permissions-modal.component';
 
 @Component({
   selector: 'app-mat-table',
@@ -16,7 +17,7 @@ import { ModalConfirmationComponent } from '../modal-confirmation/modal-confirma
 })
 export class MatTableComponent implements OnInit {
 
-  displayedColumns = ['no', 'name', 'permissions','actions'];
+  displayedColumns = ['no', 'name','actions'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   dataSource: MatTableDataSource<any>;
   roles: any;
@@ -49,6 +50,14 @@ export class MatTableComponent implements OnInit {
         })
       }
   });
+  }
+
+  ViewPermissions(item){
+    const dialogRef = this.dialog.open(ViewRolePermissionsModalComponent, {data: item});
+  //   dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+  //     if (confirmed) {
+  //     }
+  // });
   }
  
   editRoles(item){

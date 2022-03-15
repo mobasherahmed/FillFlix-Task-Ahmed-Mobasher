@@ -10,10 +10,12 @@ import { BreadcrumbComponent } from "./components/breadcrumb/breadcrumb.componen
 import { FeatherIconsComponent } from "./components/feather-icons/feather-icons.component";
 import { TranslateModule } from "@ngx-translate/core";
 import { RouterModule } from "@angular/router";
+import { AddRoleModalComponent } from './components/add-role-modal/add-role-modal.component';
+import { ViewRolePermissionsModalComponent } from './components/view-role-permissions-modal/view-role-permissions-modal.component';
 
 @NgModule({
 
-    declarations:[MatTableComponent, ModalFormComponent, ModalConfirmationComponent,FooterComponent,BreadcrumbComponent,FeatherIconsComponent],
+    declarations:[MatTableComponent, ModalFormComponent, ModalConfirmationComponent,FooterComponent,BreadcrumbComponent,FeatherIconsComponent, AddRoleModalComponent, ViewRolePermissionsModalComponent],
     imports:[MaterialModule,ReactiveFormsModule,FormsModule,CommonModule,TranslateModule.forChild(),RouterModule],
     exports:[MatTableComponent, ModalFormComponent,MaterialModule, ModalConfirmationComponent,FooterComponent,BreadcrumbComponent,FeatherIconsComponent]
 })

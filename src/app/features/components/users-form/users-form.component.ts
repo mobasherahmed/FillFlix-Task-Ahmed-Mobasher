@@ -19,6 +19,7 @@ export class UsersFormComponent implements OnInit {
   confirmPassword = new FormControl('', Validators.required) 
   roles: any;
   hidePasswords: boolean = false;
+  userId: number;
   constructor(private fb:FormBuilder,private translate:TranslateService,private validation:ValidationService,
     private _feature:FeatureService,private _management:ManagementSystemService,private location:Location,private share:SharedDataService) { 
    
@@ -41,10 +42,11 @@ export class UsersFormComponent implements OnInit {
   setValues(){
     this.share.updateItem.subscribe(item=>{
       if(Object.keys(item).length != 0){
+        this.userId = item.id;
        this.Form.controls.name.setValue(item.name)
         this.Form.controls.email.setValue(item.email)
         this.Form.controls.phoneNumber.setValue(item.phoneNumber)
-        this.Form.controls.roleId.setValue(item.roleId)
+        this.Form.controls.roleId.setValue(item.role)
         this.Form.controls.password.setValidators(null);
         this.confirmPassword.setValidators(null);
         this.confirmPassword.updateValueAndValidity();
@@ -58,9 +60,20 @@ export class UsersFormComponent implements OnInit {
      })
   }
 
+  submitForm(){
+    if(Object.keys(this.share.updateItem).length === 0) this.addUser();
+    this.updateUser()
+  }
   addUser(){
     const body = this.Form.value;
     this._feature.addUser(body).subscribe(res=>{
+      console.log("res",res);
+      this.cancel();
+    })
+  }
+  updateUser(){
+    const body = this.Form.value;
+    this._feature.updateUser(this.userId,body).subscribe(res=>{
       console.log("res",res);
       this.cancel();
     })
