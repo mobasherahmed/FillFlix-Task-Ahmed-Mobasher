@@ -11,7 +11,7 @@ import { dropdownSettings } from '../interfaces/multi-selection-interfaces';
 })
 export class SharedDataService {
 
-  updateItem:BehaviorSubject<any> = new BehaviorSubject({})
+  updateItem:BehaviorSubject<any> = new BehaviorSubject({name:'test'})
   public dropdownSettings:dropdownSettings = {
     singleSelection: false,
     idField: 'id',

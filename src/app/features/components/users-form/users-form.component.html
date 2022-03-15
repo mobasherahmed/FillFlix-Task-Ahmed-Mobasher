@@ -81,63 +81,55 @@
                       >
                       {{'requiredMsg' | translate}}
                         </em>
-                    </div>                  
-                    <div class="col-md-6 my-1">
-                        <label for=""> <em class="text-danger">*</em>{{'Password' | translate}}</label>
-                        <div class="input-group">
-                            <input [type]="hide ? 'password' : 'text'" formControlName="password" class="form-control"  
-                            [ngClass]="{
-                                'input-error':
-                                  Form.controls.password.touched &&
-                                  Form.controls.password.invalid
-                              }">
-                            <div class="input-group-append">
-                              <span class="input-group-text">
-                                <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                              </span>
+                    </div>    
+                    <ng-container *ngIf="!hidePasswords">
+                      <div class="col-md-6 my-1">
+                          <label for=""> <em class="text-danger">*</em>{{'Password' | translate}}</label>
+                          <div class="input-group">
+                              <input [type]="hide ? 'password' : 'text'" formControlName="password" class="form-control"  
+                              [ngClass]="{
+                                  'input-error':
+                                    Form.controls.password.touched &&
+                                    Form.controls.password.invalid
+                                }">
+                              <div class="input-group-append">
+                                <span class="input-group-text">
+                                  <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                </span>
+                             </div>
                            </div>
-                         </div>
-                        <em
-                        *ngIf="
-                          Form.controls.password.touched &&
-                          Form.controls.password.errors?.required
-                        "
-                        class="text-danger"
-                      >
-                      {{'requiredMsg' | translate}}
-                        </em>
-                        <em *ngIf="Form.controls.password.errors?.pattern">{{'passwordVaidationErrorMsg' | translate}}</em>
-
-                    </div>
-                    <div class="col-md-6 my-1">
-                        <label for=""> <em class="text-danger">*</em>{{'Confirm Password' | translate}}</label>
-                        <div class="input-group">
-                            <input [type]="hide ? 'password' : 'text'" formControlName="confirmPassword" class="form-control"  
-                            [ngClass]="{
-                                'input-error':
-                                confirmPassword.touched &&
-                                confirmPassword.invalid
-                              }">
-                            <div class="input-group-append">
-                              <span class="input-group-text">
-                                <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                              </span>
+                          <em
+                          *ngIf="
+                            Form.controls.password.touched &&
+                            Form.controls.password.errors?.required
+                          "
+                          class="text-danger"
+                        >
+                        {{'requiredMsg' | translate}}
+                          </em>
+                          <em *ngIf="Form.controls.password.errors?.pattern">{{'passwordVaidationErrorMsg' | translate}}</em>
+  
+                      </div>
+                      <div class="col-md-6 my-1">
+                          <label for=""> <em class="text-danger">*</em>{{'Confirm Password' | translate}}</label>
+                          <div class="input-group">
+                              <input [type]="hide ? 'password' : 'text'" [formControl]="confirmPassword" class="form-control"  
+                              [ngClass]="{
+                                  'input-error':
+                                  confirmPassword.touched &&
+                                  confirmPassword.invalid
+                                }">
+                              <div class="input-group-append">
+                                <span class="input-group-text">
+                                  <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                </span>
+                             </div>
                            </div>
-                         </div>
-            
-                        <em
-                        *ngIf="
-                        confirmPassword.touched &&
-                        confirmPassword.errors?.required
-                        "
-                        class="text-danger"
-                      >
-                      {{'requiredMsg' | translate}}
-                        </em>
-                        <em *ngIf="confirmPassword.errors?.match">{{'passwordMatchigErrorMsg' | translate}}</em>
-                        <em *ngIf="confirmPassword.touched && confirmPassword.errors?.required">{{'requiredMsg' | translate}}</em>
-
-                    </div>                  
+                          <em *ngIf="confirmPassword.touched && confirmPassword.errors?.match">{{'passwordMatchigErrorMsg' | translate}}</em>
+                          <em *ngIf="confirmPassword.touched && confirmPassword.errors?.required">{{'requiredMsg' | translate}}</em>
+  
+                      </div>                  
+                    </ng-container>              
                 
                     
                </div>

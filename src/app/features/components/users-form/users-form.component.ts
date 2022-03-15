@@ -1,8 +1,10 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { CountryISO, PhoneNumberFormat, SearchCountryField } from 'ngx-intl-tel-input';
 import { ManagementSystemService } from 'src/app/management-system/services/management-system.service';
+import { SharedDataService } from 'src/app/shared/services/shared-data.service';
 import { ValidationService } from 'src/app/shared/services/validation.service';
 import { FeatureService } from '../../services/feature.service';
 
@@ -16,8 +18,9 @@ export class UsersFormComponent implements OnInit {
   Form:FormGroup
   confirmPassword = new FormControl('', Validators.required) 
   roles: any;
+  hidePasswords: boolean = false;
   constructor(private fb:FormBuilder,private translate:TranslateService,private validation:ValidationService,
-    private _feature:FeatureService,private _management:ManagementSystemService) { 
+    private _feature:FeatureService,private _management:ManagementSystemService,private location:Location,private share:SharedDataService) { 
    
     this.Form = fb.group({
     name:  ['',Validators.required],
@@ -31,22 +34,35 @@ export class UsersFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.watchPassworsValues();
-   this.getRoles();
+    this.getRoles();
+    this.setValues()
   }
 
+  setValues(){
+    this.share.updateItem.subscribe(item=>{
+      if(Object.keys(item).length != 0){
+       this.Form.controls.name.setValue(item.name)
+        this.Form.controls.email.setValue(item.email)
+        this.Form.controls.phoneNumber.setValue(item.phoneNumber)
+        this.Form.controls.roleId.setValue(item.roleId)
+        this.Form.controls.password.setValidators(null);
+        this.confirmPassword.setValidators(null);
+        this.confirmPassword.updateValueAndValidity();
+        this.hidePasswords = true;
+      }
+    })
+  }
   getRoles(){
     this._management.getRoles().subscribe(res=>{
-      this.roles = res.Value;
-      console.log(this.roles);
-      
+      this.roles = res.Value; 
      })
   }
 
-  onRegister(){
+  addUser(){
     const body = this.Form.value;
     this._feature.addUser(body).subscribe(res=>{
       console.log("res",res);
-      
+      this.cancel();
     })
   }
 
@@ -66,7 +82,12 @@ export class UsersFormComponent implements OnInit {
     return false;
   }
 
-  cancel(){}
-  addUser(){}
+  cancel(){
+    this.location.back();
+  }
+
+  ngOnDestroy(){
+    this.share.updateItem.next({})
+  }
 
 }
