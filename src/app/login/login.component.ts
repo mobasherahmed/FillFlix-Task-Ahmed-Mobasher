@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
+import { AuthService } from '../authentication/services/auth.service';
 import { XappApiService } from '../shared/services/xapp-api.service';
 import { LoginService } from './login.service';
 
@@ -15,7 +16,7 @@ export class LoginComponent implements OnInit {
     
     email = new FormControl('xapp@gmail.com', [Validators.required, Validators.email]) //eve.holt@reqres.in
     password = new FormControl('123456', Validators.required) //cityslicka
-    constructor(private router: Router,private fb:FormBuilder,private xapp:XappApiService,
+    constructor(private router: Router,private fb:FormBuilder,private xapp:XappApiService,private _auth:AuthService,
         private toaster:ToastrService,private translate:TranslateService,private _login:LoginService) {
             this.translate.use('en');
             localStorage.setItem('lang','en');
@@ -36,10 +37,18 @@ export class LoginComponent implements OnInit {
         if(this.email.invalid || this.password.invalid) return true;
         return false;
     }
-    showResetPassword(){
-        
+    forgetPassword(){
+        if(this.email.valid){
+            const body = {'email':this.email.value}
+            this._auth.forgetPassword(body).subscribe(res=>{
+                this.router.navigate(['/authentication/forgetPassword'])
+            })
+        }else{
+            this.toaster.error('Please Enter your valid email');
+        }
     }
     onLogin() {
+        this._auth.userEmail.next(this.email.value);
         let user = {
             email : this.email.value,
             password : this.password.value,

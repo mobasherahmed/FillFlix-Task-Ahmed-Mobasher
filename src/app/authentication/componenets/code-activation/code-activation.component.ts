@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-code-activation',
@@ -8,14 +10,24 @@ import { FormGroup } from '@angular/forms';
 })
 export class CodeActivationComponent implements OnInit {
 
-  verifyForm:FormGroup;
-  constructor() { }
+  activationCode = new FormControl('',Validators.required)
+  constructor(private _auth:AuthService,private router:Router) { }
 
   ngOnInit(): void {
   }
+ 
+  veifyCode(code){
+    this._auth.activeUser(code).subscribe(verify=>{
+      this.router.navigate(['/login'])
+    })
+  }
 
-  resendEmail(){}
-
-  veifyCode(value){}
+  resendEmail(){
+    const body = {"email": this._auth.userEmail.getValue()};
+    console.log(body);
+    
+    this._auth.resendEmail(body).subscribe(result => {
+    })
+  }
 
 }

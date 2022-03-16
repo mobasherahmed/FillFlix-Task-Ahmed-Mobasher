@@ -68,14 +68,14 @@
                     </div>
                     <div class="col-md-6 my-1">
                         <label for=""> <em class="text-danger">*</em>{{'Role' | translate}}</label>
-                        <select class="form-control" name="roleId" id="roleId" formControlName="roleId">
+                        <select class="form-control" name="role" id="role" formControlName="role">
                             <option value="" disabled selected hidden>{{'select' | translate}}</option>
                             <option [value]="item.id" *ngFor="let item of roles">{{item.name}}</option>
                         </select>
                         <em
                         *ngIf="
-                        Form.controls.roleId.touched &&
-                        Form.controls.roleId.errors?.required
+                        Form.controls.role.touched &&
+                        Form.controls.role.errors?.required
                         "
                         class="text-danger"
                       >
@@ -140,7 +140,7 @@
                 {{'Cancel' | translate}}
                </button>
                 <button mat-raised-button color="primary" class="w-30"
-                 (click)="addUser()" [disabled]="checkDisable()">
+                 (click)="submitForm()" [disabled]="checkDisable()">
                  <mat-icon>add_circle</mat-icon> 
                  {{'Save' | translate}}
                 </button>

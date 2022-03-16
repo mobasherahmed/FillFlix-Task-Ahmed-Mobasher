@@ -28,7 +28,7 @@ export class UsersFormComponent implements OnInit {
     email:  ['',[Validators.required,Validators.pattern(validation.email)]],
     phoneNumber:  ['',[Validators.required,Validators.pattern(validation.phone)]],
     password:  ['',[Validators.required,Validators.pattern(validation.password)]],
-    roleId:  ['',Validators.required],
+    role:  ['',Validators.required],
     })
   }
 
@@ -46,7 +46,7 @@ export class UsersFormComponent implements OnInit {
        this.Form.controls.name.setValue(item.name)
         this.Form.controls.email.setValue(item.email)
         this.Form.controls.phoneNumber.setValue(item.phoneNumber)
-        this.Form.controls.roleId.setValue(item.role)
+        this.Form.controls.role.setValue(item.role)
         this.Form.controls.password.setValidators(null);
         this.confirmPassword.setValidators(null);
         this.confirmPassword.updateValueAndValidity();
@@ -72,7 +72,8 @@ export class UsersFormComponent implements OnInit {
     })
   }
   updateUser(){
-    const body = this.Form.value;
+    let body = this.Form.value;
+    delete body.password;
     this._feature.updateUser(this.userId,body).subscribe(res=>{
       console.log("res",res);
       this.cancel();

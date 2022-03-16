@@ -45,3 +45,12 @@ table {
     width: 100%;
     justify-content: end;
 }
+
+@media screen and (max-width: 500px) {
+    .login-form{
+        width: 350px !important;
+    }
+}
+.cursor-pointer{
+    cursor: pointer;
+}

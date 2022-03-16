@@ -4,6 +4,7 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse
 import { Observable } from 'rxjs';
 import { SharedDataService } from './shared-data.service';
 import { HandleApiResponseService } from './handle-api-response.service';
+import { Router } from '@angular/router';
 
 @Injectable({
     providedIn: 'root'
@@ -11,7 +12,8 @@ import { HandleApiResponseService } from './handle-api-response.service';
 
 export class InterceptorService implements HttpInterceptor {
 
-    constructor(private share: SharedDataService,private injector:Injector,private _notify: HandleApiResponseService) { }
+    constructor(private share: SharedDataService,private router:Router,
+      private injector:Injector,private _notify: HandleApiResponseService) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
@@ -62,8 +64,10 @@ export class InterceptorService implements HttpInterceptor {
             },
             (err: HttpErrorResponse) => {
               console.log("eeeee",err);
-              
               this._notify.handleError(err);
+              if(err.error.message === 'Please, confirm your email'){
+                this.router.navigate(['/authentication/activateEmail'])
+              }
             }
           );
         });

@@ -1,40 +1,38 @@
-<div class="page-wrapper">
-	<div class="auth-bg">
-		<div class="authentication-box">
-			<div class="text-center"><img src="assets/images/ucx/ucx_logo.png" alt="" class="ucx-logo"></div>
-			<div class="card mt-4">
-				<div class="card-body">
-					<div class="text-center">
-						<h4>Verify Email</h4>
-						<div class="d-sm-block text-center">
-							Please enter code that you recieved to verify your email
-						  </div>
-						  <a (click)="resendEmail()" class="text-primary cursor-pointer">Resend Activation Code</a>
-					</div>
-					<form class="theme-form" [formGroup]="verifyForm">
-						<div class="form-group">
-							<label class="col-form-label pt-0">Code</label>
-							<input class="form-control" formControlName="activationCode" type="text" required
-							[ngClass]="{'input-error': verifyForm.controls.activationCode.touched &&  verifyForm.controls.activationCode.invalid}">
-							<em *ngIf="verifyForm.controls.activationCode.touched && verifyForm.controls.activationCode.errors?.required"
-								class="text text-danger mt-1">
-								Code is required
-						      </em>
-						</div>
-
-						<div class="form-group form-row mt-3 mb-0">
-							<button class="btn btn-primary btn-block btn-lg"
-								[disabled]="verifyForm.invalid" (click)="veifyCode(verifyForm.value)"
-								type="submit"><span>
-									Verify Code
-
-								</span>
-							</button>
-						</div>
-
-					</form>
+<div class="login-page">
+	<div class="content">
+		<div class="card mt-4">
+			<div class="card-body">
+				<div class="text-center">
+					<h4>Verify Email</h4>
+					<div class="d-sm-block text-center">
+						Please enter code that you recieved to verify your email
+					  </div>
+					  <a (click)="resendEmail()" class="text-primary cursor-pointer">Resend Activation Code</a>
 				</div>
+				<div class="form-group">
+					    <em class="text-danger">* </em>
+						<label class="col-form-label pt-0">Code</label>
+						<input class="form-control" [formControl]="activationCode" placeholder="Enter code" type="text" required
+						[ngClass]="{'input-error': activationCode.touched &&  activationCode.invalid}">
+						<em *ngIf="activationCode.touched && activationCode.errors?.required"
+							class="text text-danger mt-1">
+							Code is required
+						  </em>
+					</div>
+
+					<div class="form-group form-row mt-3 mb-0">
+						<button class="btn btn-primary btn-block btn-lg"
+							[disabled]="activationCode.invalid" (click)="veifyCode(activationCode.value)"
+							type="submit"><span>
+								Verify Code
+
+							</span>
+						</button>
+					</div>
+
+			
 			</div>
-		</div>
-	</div>
 </div>
+		</div>
+		</div>
+
