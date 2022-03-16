@@ -54,3 +54,9 @@ table {
 .cursor-pointer{
     cursor: pointer;
 }
+
+.multiselect-dropdown .dropdown-btn .selected-item-container .selected-item{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

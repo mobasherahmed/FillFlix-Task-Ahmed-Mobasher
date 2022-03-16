@@ -18,7 +18,7 @@ export class SharedDataService {
     textField: 'name',
     selectAllText: 'Select All',
     unSelectAllText: 'UnSelect All',
-    itemsShowLimit: 3,
+    itemsShowLimit: 10,
     allowSearchFilter: true
   };
   constructor(public dialog: MatDialog, private toaster: ToastrService) { }
