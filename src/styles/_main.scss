@@ -31,11 +31,16 @@ body[main-theme-layout="rtl"]{
     }
     .menu-ul{
         text-align: right;
+        padding-right: 10px;
+
         .ltr-mat-icon{
             display: none;
         }
         .rtl-mat-icon{
             display: inline-block;
+        }
+        .childernUl{
+            padding-right: 0;
         }
     }
 }
