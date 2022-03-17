@@ -29,6 +29,15 @@ body[main-theme-layout="rtl"]{
         direction: rtl;
         text-align: right;
     }
+    .menu-ul{
+        text-align: right;
+        .ltr-mat-icon{
+            display: none;
+        }
+        .rtl-mat-icon{
+            display: inline-block;
+        }
+    }
 }
 body[main-theme-layout="ltr"]{
     .main-container {
@@ -46,6 +55,15 @@ body[main-theme-layout="ltr"]{
         margin: 10px 0;
         button{
             margin: 0 10px;
+        }
+    }
+    .menu-ul{
+        text-align: left;
+        .rtl-mat-icon{
+            display: none;
+        }
+        .ltr-mat-icon{
+            display: inline-block;
         }
     }
 }

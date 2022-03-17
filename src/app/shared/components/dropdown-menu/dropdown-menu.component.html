@@ -1,0 +1,23 @@
+<div class="btn-group visible-md" dropdown #dropdown="bs-dropdown" [autoClose]="false">
+    <button id="button-basic" dropdownToggle type="button" 
+       class="btn btn-light dropdown-toggle"
+       aria-controls="dropdown-basic">
+    </button>
+    <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
+       role="menu" aria-labelledby="button-basic">
+       <li role="menuitem">
+           <a class="dropdown-item" href="javascript:void(0)">   
+           <mat-icon>remove_red_eye</mat-icon>
+             {{'ViewPermissions' | translate}}
+            </a>
+        </li>
+       <li role="menuitem"><a class="dropdown-item" href="#"> 
+           <mat-icon>edit</mat-icon>
+        {{'Edit' | translate}}</a></li>
+       <li class="divider dropdown-divider"></li>
+       <li role="menuitem"><a class="dropdown-item" href="#"> 
+        <mat-icon> cancel_presentation</mat-icon>
+        {{'Delete' | translate}}</a></li>
+     
+    </ul>
+  </div>

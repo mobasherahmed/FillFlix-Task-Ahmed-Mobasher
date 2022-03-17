@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../authentication/services/auth.service';
+import { NavService } from '../shared/services/nav.service';
 import { XappApiService } from '../shared/services/xapp-api.service';
 import { LoginService } from './login.service';
 
@@ -17,7 +18,7 @@ export class LoginComponent implements OnInit {
     email = new FormControl('xapp@gmail.com', [Validators.required, Validators.email]) //eve.holt@reqres.in
     password = new FormControl('123456', Validators.required) //cityslicka
     constructor(private router: Router,private fb:FormBuilder,private xapp:XappApiService,private _auth:AuthService,
-        private toaster:ToastrService,private translate:TranslateService,private _login:LoginService) {
+        private toaster:ToastrService,private translate:TranslateService,private _login:LoginService,private _navService:NavService) {
             this.translate.use('en');
             localStorage.setItem('lang','en');
          }
@@ -55,6 +56,7 @@ export class LoginComponent implements OnInit {
         }
         this._login.login(user).subscribe(res=>{
             localStorage.setItem('token', res.accessToken);
+            this._navService.items.next(res.leftMenu)
             this.router.navigate(['/features/users']);
         })
     }

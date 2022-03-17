@@ -16,6 +16,8 @@
 mat-icon{
     // color: #3f51b5;
     cursor: pointer;
+    vertical-align: middle;
+
 }
 em{
     color: #f44336;
@@ -59,4 +61,14 @@ table {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.header{
+    box-shadow: 0 0 6px #ccc;
+    padding: 10px;
+    border-radius: 6px;
+}
+
+ul{
+    list-style: none;
 }

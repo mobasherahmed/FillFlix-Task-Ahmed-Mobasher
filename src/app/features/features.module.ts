@@ -11,6 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { UsersFormComponent } from './components/users-form/users-form.component';
 import { UsersListMatTableComponent } from './components/users-list-mat-table/users-list-mat-table.component';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 
 
@@ -23,6 +24,7 @@ import { UsersListMatTableComponent } from './components/users-list-mat-table/us
     SharedModule,
     FormsModule,
     MaterialModule,
+    BsDropdownModule,
     TranslateModule.forChild()
   ]
 })

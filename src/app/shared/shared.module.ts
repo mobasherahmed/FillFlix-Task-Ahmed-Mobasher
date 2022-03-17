@@ -12,11 +12,15 @@ import { TranslateModule } from "@ngx-translate/core";
 import { RouterModule } from "@angular/router";
 import { AddRoleModalComponent } from './components/add-role-modal/add-role-modal.component';
 import { ViewRolePermissionsModalComponent } from './components/view-role-permissions-modal/view-role-permissions-modal.component';
+import { BsDropdownModule } from "ngx-bootstrap/dropdown";
+import { LoaderComponent } from './components/loader/loader.component';
+import { DropdownMenuComponent } from './components/dropdown-menu/dropdown-menu.component';
 
 @NgModule({
 
-    declarations:[MatTableComponent, ModalFormComponent, ModalConfirmationComponent,FooterComponent,BreadcrumbComponent,FeatherIconsComponent, AddRoleModalComponent, ViewRolePermissionsModalComponent],
-    imports:[MaterialModule,ReactiveFormsModule,FormsModule,CommonModule,TranslateModule.forChild(),RouterModule],
+    declarations:[MatTableComponent, ModalFormComponent, ModalConfirmationComponent,FooterComponent,BreadcrumbComponent,FeatherIconsComponent, AddRoleModalComponent, ViewRolePermissionsModalComponent, LoaderComponent, DropdownMenuComponent],
+    imports:[BsDropdownModule ,
+        MaterialModule,ReactiveFormsModule,FormsModule,CommonModule,TranslateModule.forChild(),RouterModule],
     exports:[MatTableComponent, ModalFormComponent,MaterialModule, ModalConfirmationComponent,FooterComponent,BreadcrumbComponent,FeatherIconsComponent]
 })
 

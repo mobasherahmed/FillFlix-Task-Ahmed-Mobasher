@@ -9,6 +9,7 @@ import { SharedModule } from '../shared/shared.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { ManagementSystemRoutingModule } from './management-system-routing.module';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 @NgModule({
   declarations: [AccessRulesComponent, RulesPermissionsComponent, RulesPermissionsFormComponent, AccessRulesFormComponent],
@@ -18,7 +19,8 @@ import { ManagementSystemRoutingModule } from './management-system-routing.modul
     SharedModule,
     TranslateModule.forChild(),
     NgMultiSelectDropDownModule.forRoot(),
-    ManagementSystemRoutingModule
+    ManagementSystemRoutingModule,
+    BsDropdownModule
 
   ]
 })

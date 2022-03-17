@@ -43,3 +43,10 @@
         display: none;
     }
 }
+
+#sidebar.hide{
+    transform: translate3d(-100%, 0, 0);
+}
+#sidebar.show{
+    transform: none;
+}

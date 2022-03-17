@@ -30,6 +30,15 @@ export class TopnavComponent implements OnInit {
 
     toggleSidebar() {
         const dom: any = document.querySelector('body');
+        const el: any = document.getElementById('sidebar');
+        el.classList.toggle(this.pushRightClass)
+        // el.style.transform = 'translate3d(-100%, 0, 0)' : 'none';
+        // console.log("el",el.style.left);
+        // this.translate.currentLang = localStorage.getItem('lang');
+        // console.log("el",this.translate.currentLang );
+        // if(this.translate.currentLang === 'en'){
+        //     el.style.left === '0px' ? el.style.left = "-250px" : el.style.left = '0px';
+        // }
         dom.classList.toggle(this.pushRightClass);
     }
 
