@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
+import { CustomizerService } from '../shared/services/customizer.service';
 
 @Component({
     selector: 'app-layout',
@@ -11,7 +13,11 @@ import { Component, OnInit } from '@angular/core';
     `
 })
 export class LayoutComponent implements OnInit {
-    constructor() { }
+    constructor(private translate:TranslateService,private customize:CustomizerService) {
+        translate.setDefaultLang('en');
+        customize.setLayoutType('ltr')
+        localStorage.setItem('lang','en')
+    }
 
     ngOnInit() { }
 }

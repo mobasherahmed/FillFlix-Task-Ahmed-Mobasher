@@ -14,14 +14,14 @@
                 <div fxFlex  fxlayout="row" fxlayout.lt-md="column">
                     <div fxFlexFill>
                         <mat-form-field class="w-100">
-                            <input matInput placeholder="Your name" formControlName="name"  required>
+                            <input matInput [placeholder]="'Your name' | translate" formControlName="name"  required>
                             <mat-error *ngIf="RegisterForm.controls.name.invalid">{{'requiredMsg' | translate}}</mat-error>
                         </mat-form-field>
                     </div>
                 </div>
                 <div fxFlexFill>
                     <mat-form-field class="w-100">
-                        <input matInput placeholder="Your email" formControlName="email" required>
+                        <input matInput [placeholder]="'Your email' | translate" formControlName="email" required>
                         <mat-error *ngIf="RegisterForm.controls.email.errors?.required">{{'requiredMsg' | translate}}</mat-error>
                         <mat-error *ngIf="RegisterForm.controls.email.errors?.pattern">{{'emailVaidationErrorMsg' | translate}}</mat-error>
 
@@ -39,7 +39,7 @@
             <div fxFlex  fxLayout="row" fxLayout.lt-md="column">
                 <div fxFlexFill>
                     <mat-form-field class="w-100">
-                        <input matInput type="string" placeholder="Your phone" formControlName="phoneNumber"  required>
+                        <input matInput type="string" [placeholder]="'Your phone' | translate" formControlName="phoneNumber"  required>
                         <mat-error *ngIf="RegisterForm.controls.phoneNumber.errors?.required">{{'requiredMsg' | translate}}</mat-error>
                         <mat-error *ngIf="RegisterForm.controls.phoneNumber.errors?.pattern">{{'phoneVaidationErrorMsg' | translate}}</mat-error>
                         
@@ -49,7 +49,7 @@
             <div fxFlex  fxLayout="row" fxLayout.lt-md="column">
                 <div fxFlexFill>
                     <mat-form-field class="w-100">
-                        <input matInput [type]="hide ? 'password' : 'text'" placeholder="Your password" formControlName="password"  required>
+                        <input matInput [type]="hide ? 'password' : 'text'" [placeholder]="'Your password' | translate" formControlName="password"  required>
                         <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                         <mat-error *ngIf="RegisterForm.controls.password.errors?.required">{{'requiredMsg' | translate}}</mat-error>
                         <mat-error *ngIf="RegisterForm.controls.password.errors?.pattern">{{'passwordVaidationErrorMsg' | translate}}</mat-error>
@@ -59,7 +59,7 @@
             <div fxFlex  fxLayout="row" fxLayout.lt-md="column">
                 <div fxFlexFill>
                     <mat-form-field class="w-100">
-                        <input matInput [type]="hide ? 'password' : 'text'" placeholder="Retype your password" [formControl]="confirmPassword" required>
+                        <input matInput [type]="hide ? 'password' : 'text'" [placeholder]="'Retype your password' | translate" [formControl]="confirmPassword" required>
                         <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                         <mat-error *ngIf="confirmPassword.errors?.required">{{'requiredMsg' | translate}}</mat-error>
                         <mat-error *ngIf="confirmPassword.errors?.match">{{'passwordMatchigErrorMsg' | translate}}</mat-error>
@@ -68,7 +68,7 @@
             </div>
             <div fxFlex  fxLayout="row" fxLayout.lt-md="column">
                 <div fxFlexFill>
-                    <button mat-raised-button color="primary" class="w-100" (click)="onRegister()" [disabled]="checkDisable()">Register</button>
+                    <button mat-raised-button color="primary" class="w-100" (click)="onRegister()" [disabled]="checkDisable()">{{'Register' | translate}}</button>
                 </div>
             </div>
 

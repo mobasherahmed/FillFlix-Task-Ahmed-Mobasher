@@ -13,7 +13,7 @@
             <div fxFlex  fxlayout="row" fxlayout.lt-md="column">
                 <div fxFlexFill>
                     <mat-form-field class="w-100">
-                        <input matInput placeholder="Email"  [formControl]="email" required>
+                        <input matInput [placeholder]="'Email' | translate"  [formControl]="email" required>
                         <mat-error *ngIf="email.invalid">{{getEmailErrorMessage()}}</mat-error>
                     </mat-form-field>
                 </div>
@@ -21,7 +21,7 @@
             <div fxFlex  fxLayout="row" fxLayout.lt-md="column">
                 <div fxFlexFill>
                     <mat-form-field class="w-100">
-                        <input matInput type="password" placeholder="Password" [formControl]="password" required>
+                        <input matInput type="password" [placeholder]="'Password' | translate" [formControl]="password" required>
                         <mat-error *ngIf="password.invalid">{{'Password required' | translate}}</mat-error>
                     </mat-form-field>
                 </div>
@@ -35,7 +35,7 @@
             </div>
             <div fxFlex  fxLayout="row" fxLayout.lt-md="column">
                 <div fxFlexFill>
-                    <button mat-raised-button color="primary" class="w-100" (click)="onLogin()" [disabled]="checkDisable()">Login</button>
+                    <button mat-raised-button color="primary" class="w-100" (click)="onLogin()" [disabled]="checkDisable()">{{'Login' | translate}}</button>
                 </div>
             </div>
 

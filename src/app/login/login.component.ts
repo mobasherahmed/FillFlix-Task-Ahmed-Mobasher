@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../authentication/services/auth.service';
+import { CustomizerService } from '../shared/services/customizer.service';
 import { NavService } from '../shared/services/nav.service';
 import { XappApiService } from '../shared/services/xapp-api.service';
 import { LoginService } from './login.service';
@@ -17,10 +18,11 @@ export class LoginComponent implements OnInit {
     
     email = new FormControl('xapp@gmail.com', [Validators.required, Validators.email]) //eve.holt@reqres.in
     password = new FormControl('123456', Validators.required) //cityslicka
-    constructor(private router: Router,private fb:FormBuilder,private xapp:XappApiService,private _auth:AuthService,
+    constructor(private router: Router,private fb:FormBuilder,private xapp:XappApiService,private _auth:AuthService,private customize:CustomizerService,
         private toaster:ToastrService,private translate:TranslateService,private _login:LoginService,private _navService:NavService) {
-            this.translate.use('en');
-            localStorage.setItem('lang','en');
+            translate.setDefaultLang('en');
+            customize.setLayoutType('ltr')
+            localStorage.setItem('lang','en')
          }
 
     ngOnInit() { 

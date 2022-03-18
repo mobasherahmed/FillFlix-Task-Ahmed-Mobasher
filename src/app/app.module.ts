@@ -63,8 +63,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         NgMultiSelectDropDownModule.forRoot(),
         TranslateModule.forRoot(),
         TranslateModule.forRoot({
-          defaultLanguage: 'en',
-            loader: {
+          loader: {
               provide: TranslateLoader,
               useFactory: HttpLoaderFactory,
               deps: [HttpClient]

@@ -51,11 +51,13 @@ export class TopnavComponent implements OnInit {
     changeLang(){
         if(localStorage.getItem('lang') === 'en'){
             this.translate.use('ar');
+            this.translate.setDefaultLang('ar');
             localStorage.setItem('lang','ar');
             this.customizeLayoutType('rtl');
             document.getElementsByTagName('html')[0].setAttribute('lang', 'ar');
         }else{
             this.translate.use('en');
+            this.translate.setDefaultLang('en');
             localStorage.setItem('lang','en');
             this.customizeLayoutType('ltr');
             document.getElementsByTagName('html')[0].setAttribute('lang', 'en');
