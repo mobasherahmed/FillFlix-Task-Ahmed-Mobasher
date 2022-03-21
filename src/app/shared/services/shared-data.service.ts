@@ -46,7 +46,6 @@ export class SharedDataService {
 
 getBtnGuard(Screen:string,Btn:string){
   let btnGuard:buttonsGuard = this.buttons.getValue();
-  console.log("Ss",btnGuard[Screen][Btn]);
    return btnGuard[Screen][Btn];
 }
 
