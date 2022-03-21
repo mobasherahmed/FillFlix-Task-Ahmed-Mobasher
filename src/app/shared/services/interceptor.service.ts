@@ -55,7 +55,6 @@ export class InterceptorService implements HttpInterceptor {
             (res: HttpResponse<any>) => {
               
               if (res instanceof HttpResponse) {
-                console.log("response",res);
                 observer.next(res);
                 if(req.method !== 'GET'){
                   this._notify.SuccessMsg(res.body.message)
@@ -63,7 +62,6 @@ export class InterceptorService implements HttpInterceptor {
               }
             },
             (err: HttpErrorResponse) => {
-              console.log("eeeee",err);
               this._notify.handleError(err);
               if(err.error.message === 'Please, confirm your email'){
                 this.router.navigate(['/authentication/activateEmail'])

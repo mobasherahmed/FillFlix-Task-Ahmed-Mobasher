@@ -17,6 +17,7 @@ export interface Menu {
 	children?: Menu[];
 }
 
+
 @Injectable({
 	providedIn: 'root'
 })
@@ -40,48 +41,12 @@ export class NavService {
 		this.screenWidth = window.innerWidth;
 	}
 
-	MENUITEMS: Menu[] = [
-		{	
-			name:'Home',
-			icon:'home',
-			url: '/features/users',
-		},
-		{	
-			name:'Users',
-			icon:'supervisor_account',
-			children:[
-				{
-				name:'Users-List',
-				icon:'list',
-				url: '/features/users'
-				},
-				{
-				name:'Add-User',
-				icon:'add_circle',
-				url: '/features/UserForm'
-				},
-			]
-		},
-		{
-			name:'Management',
-			icon:'https',
-			children: [
-				{
-					name:'Access Rules',
-					icon:'settings',
-					url: '/management/AccessRules',
-				},
-				{
-					name:'Add Access Rules',
-					icon:'add_circle',
-					url: '/management/AccessRuleForm',
-				},
-			]
-		}
+	MENUITEMS: Menu[] = []
+	URLS: string[] = ['/features/users','/login']
 	
-]
 	// Array
 	items = new BehaviorSubject<Menu[]>(this.MENUITEMS);
+	urls = new BehaviorSubject<string[]>(this.URLS);
 
 
 }
