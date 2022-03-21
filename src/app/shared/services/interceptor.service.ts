@@ -22,11 +22,11 @@ export class InterceptorService implements HttpInterceptor {
 
         const urlarr = req.url.split('://');
 
-        const token: string = '';
+        // const token: string = '';
         // localStorage.getItem('token')
         const lang: string = localStorage.getItem('lang');
 
-        // const token: any = this.share.token.getValue();
+        const token: any = this.share.token.getValue();
 
         if (urlarr.length > 1) {
             req = req.clone({

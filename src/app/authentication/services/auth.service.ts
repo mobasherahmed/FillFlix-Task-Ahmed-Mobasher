@@ -14,9 +14,6 @@ export class AuthService {
   activeUser(code):Observable<any>{
    return this.http.post('activateUser',{activationCode:code}).pipe(take(1));
   }
-  resendEmail(body):Observable<any>{
-    return this.http.post('/resendActivationEmail',body).pipe(take(1))
-  }
   resetPassword(body):Observable<any>{
     return this.http.post('resetPassword',body).pipe(take(1))
   }

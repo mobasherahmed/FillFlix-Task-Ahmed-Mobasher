@@ -24,7 +24,7 @@ export class CodeActivationComponent implements OnInit {
 
   resendEmail(){
     const body = {"email": this._auth.userEmail.getValue()};
-    this._auth.resendEmail(body).subscribe(result => {
+    this._auth.forgetPassword(body).subscribe(result => {
     })
   }
 
