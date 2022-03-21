@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject } from 'rxjs';
 import { ManagementSystemService } from 'src/app/management-system/services/management-system.service';
 import { ModalConfirmationComponent } from '../components/modal-confirmation/modal-confirmation.component';
+import { buttonsGuard } from '../interfaces/buttons-guard-interface';
 import { dropdownSettings } from '../interfaces/multi-selection-interfaces';
 
 @Injectable({
@@ -12,6 +13,10 @@ import { dropdownSettings } from '../interfaces/multi-selection-interfaces';
 export class SharedDataService {
 
   updateItem:BehaviorSubject<any> = new BehaviorSubject({})
+	urls:BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
+	buttons:BehaviorSubject<any> = new BehaviorSubject<any>([]);
+	token:BehaviorSubject<any> = new BehaviorSubject<any>('');
+
   public dropdownSettings:dropdownSettings = {
     singleSelection: false,
     idField: 'id',
@@ -37,5 +42,12 @@ export class SharedDataService {
         if (confirmed) {
         }
     });
+  }
+
+getBtnGuard(Screen:string,Btn:string){
+  let btnGuard:buttonsGuard = this.buttons.getValue();
+  console.log("Ss",btnGuard[Screen][Btn]);
+   return btnGuard[Screen][Btn];
 }
+
 }

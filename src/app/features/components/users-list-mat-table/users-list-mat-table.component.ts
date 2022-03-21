@@ -30,8 +30,9 @@ export class UsersListMatTableComponent implements OnInit {
   }
   ngOnInit(): void {
   }
+ 
   ngOnChanges(){
-    console.log("onchanges...");
+   
     
   }
 
@@ -42,7 +43,6 @@ export class UsersListMatTableComponent implements OnInit {
   
  listUsers(){
   this._feature.listUsers().subscribe(res=>{
-  console.log("res",res);
   this.users = res.Value;
   this.dataSource = new MatTableDataSource(res.Value);
   this.filterUsers();
@@ -51,8 +51,6 @@ export class UsersListMatTableComponent implements OnInit {
 }
 
 editUser(item){
-  console.log("ite",item);
-  
   this.share.updateItem.next(item);
   this.router.navigate(['/features/UserForm'])
 }
@@ -80,8 +78,6 @@ openDeleteDialog(userId:number){
 addRoleToUserBeforeApprove(userId,status){
   const dialogRef = this.dialog.open(AddRoleModalComponent);
   dialogRef.afterClosed().subscribe((roleId:number)=>{
-    console.log("rooole",roleId);
-    
     if(roleId){
       this.updateUserRole(userId,roleId,status)
     }
@@ -95,10 +91,7 @@ this._feature.updateUserRole(userId,roleId).subscribe(res=>{
 }
 updateUserStatus(userId,status){
   this._feature.updateUserStatus(userId,status).subscribe(res=>{
-      console.log("res",res);
       this.listUsers();
-      console.log("users",this.users);
-  
   })
   
 }

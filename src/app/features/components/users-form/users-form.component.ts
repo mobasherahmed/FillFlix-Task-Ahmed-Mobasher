@@ -67,7 +67,6 @@ export class UsersFormComponent implements OnInit {
   addUser(){
     const body = this.Form.value;
     this._feature.addUser(body).subscribe(res=>{
-      console.log("res",res);
       this.cancel();
     })
   }
@@ -75,7 +74,6 @@ export class UsersFormComponent implements OnInit {
     let body = this.Form.value;
     delete body.password;
     this._feature.updateUser(this.userId,body).subscribe(res=>{
-      console.log("res",res);
       this.cancel();
     })
   }

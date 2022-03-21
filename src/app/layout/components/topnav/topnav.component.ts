@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { CustomizerService } from 'src/app/shared/services/customizer.service';
+import { SharedDataService } from 'src/app/shared/services/shared-data.service';
 
 @Component({
     selector: 'app-topnav',
@@ -11,7 +12,7 @@ import { CustomizerService } from 'src/app/shared/services/customizer.service';
 export class TopnavComponent implements OnInit {
     public pushRightClass: string;
 
-    constructor(public router: Router,private translate:TranslateService,private customize:CustomizerService) {
+    constructor(public router: Router,private translate:TranslateService,private customize:CustomizerService,private share:SharedDataService) {
         this.router.events.subscribe(val => {
             if (val instanceof NavigationEnd && window.innerWidth <= 992 && this.isToggled()) {
                 this.toggleSidebar();
@@ -32,17 +33,11 @@ export class TopnavComponent implements OnInit {
         const dom: any = document.querySelector('body');
         const el: any = document.getElementById('sidebar');
         el.classList.toggle(this.pushRightClass)
-        // el.style.transform = 'translate3d(-100%, 0, 0)' : 'none';
-        // console.log("el",el.style.left);
-        // this.translate.currentLang = localStorage.getItem('lang');
-        // console.log("el",this.translate.currentLang );
-        // if(this.translate.currentLang === 'en'){
-        //     el.style.left === '0px' ? el.style.left = "-250px" : el.style.left = '0px';
-        // }
         dom.classList.toggle(this.pushRightClass);
     }
 
     onLoggedout() {
+        this.share.token.next('')
         localStorage.removeItem('token');
         localStorage.removeItem('2FA');
         this.router.navigate(['/login']);
@@ -63,8 +58,6 @@ export class TopnavComponent implements OnInit {
             document.getElementsByTagName('html')[0].setAttribute('lang', 'en');
 
         }
-        console.log("lang",this.translate.currentLang);
-        
     }
 
     customizeLayoutType(val) {

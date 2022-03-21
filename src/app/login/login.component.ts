@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../authentication/services/auth.service';
 import { CustomizerService } from '../shared/services/customizer.service';
 import { NavService } from '../shared/services/nav.service';
+import { SharedDataService } from '../shared/services/shared-data.service';
 import { XappApiService } from '../shared/services/xapp-api.service';
 import { LoginService } from './login.service';
 
@@ -18,7 +19,8 @@ export class LoginComponent implements OnInit {
     
     email = new FormControl('xapp@gmail.com', [Validators.required, Validators.email]) //eve.holt@reqres.in
     password = new FormControl('123456', Validators.required) //cityslicka
-    constructor(private router: Router,private fb:FormBuilder,private xapp:XappApiService,private _auth:AuthService,private customize:CustomizerService,
+    constructor(private share:SharedDataService,
+        private router: Router,private fb:FormBuilder,private xapp:XappApiService,private _auth:AuthService,private customize:CustomizerService,
         private toaster:ToastrService,private translate:TranslateService,private _login:LoginService,private _navService:NavService) {
             translate.setDefaultLang('en');
             customize.setLayoutType('ltr')
@@ -58,8 +60,11 @@ export class LoginComponent implements OnInit {
         }
         this._login.login(user).subscribe(res=>{
             localStorage.setItem('token', res.accessToken);
+            this.share.token.next(res.accessToken)
             this._navService.items.next(res.leftMenu);
-            this._navService.urls.next(res.urls);
+            this.share.urls.next(res.urls);
+            this.share.urls.next(res.urls);
+            this.share.buttons.next(res.actions[0]);
             this.router.navigate(['/features/users']);
         })
     }

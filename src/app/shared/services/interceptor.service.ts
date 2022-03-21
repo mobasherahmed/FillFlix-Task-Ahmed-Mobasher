@@ -26,7 +26,7 @@ export class InterceptorService implements HttpInterceptor {
         // localStorage.getItem('token')
         const lang: string = localStorage.getItem('lang');
 
-        // const token: any = this.share.getToken().value;
+        // const token: any = this.share.token.getValue();
 
         if (urlarr.length > 1) {
             req = req.clone({

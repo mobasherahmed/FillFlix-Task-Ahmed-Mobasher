@@ -20,33 +20,38 @@
                         </button>
                         <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
                            role="menu" aria-labelledby="button-basic">
-                           <li role="menuitem">
+                           <li role="menuitem" *ngIf="share.getBtnGuard('AccessRules','Insert')"> 
                                <a class="dropdown-item" href="javascript:void(0)" (click)="ViewPermissions(element)">   
                                <mat-icon>remove_red_eye</mat-icon>
                                  {{'ViewPermissions' | translate}}
                                 </a>
                             </li>
-                           <li role="menuitem"><a class="dropdown-item" href="javascript:void(0)" (click)="editRoles(element)"> 
+                           <li role="menuitem"><a class="dropdown-item" href="javascript:void(0)" (click)="editRoles(element)"
+                            *ngIf="share.getBtnGuard('AccessRules','Insert')"> 
                                <mat-icon>edit</mat-icon>
                             {{'Edit' | translate}}</a></li>
                            <li class="divider dropdown-divider"></li>
-                           <li role="menuitem"><a class="dropdown-item text-danger" href="javascript:void(0)" (click)="openDeleteDialog(element.id)"> 
+                           <li role="menuitem"><a class="dropdown-item text-danger" href="javascript:void(0)" 
+                            (click)="openDeleteDialog(element.id)" *ngIf="share.getBtnGuard('AccessRules','Insert')"> 
                             <mat-icon> cancel_presentation</mat-icon>
                             {{'Delete' | translate}}</a></li>
                          
                         </ul>
                       </div>
                    
-                    <button mat-raised-button color="primary" class="w-30 mx-2 visible-lg" (click)="ViewPermissions(element)">
+                    <button mat-raised-button color="primary" class="w-30 mx-2 visible-lg" (click)="ViewPermissions(element)"
+                    *ngIf="share.getBtnGuard('AccessRules','Insert')">
                         <mat-icon>remove_red_eye</mat-icon>
 
                      {{'ViewPermissions' | translate}}
                     </button>
-                    <button mat-raised-button color="primary" class="w-30 mx-2 visible-lg" (click)="editRoles(element)">
+                    <button mat-raised-button color="primary" class="w-30 mx-2 visible-lg" (click)="editRoles(element)"
+                    *ngIf="share.getBtnGuard('AccessRules','Insert')">
                     <mat-icon>edit</mat-icon>
                      {{'Edit' | translate}}
                     </button>
-                    <button mat-raised-button color="accent" class="w-30 visible-lg" (click)="openDeleteDialog(element.id)">
+                    <button mat-raised-button color="accent" class="w-30 visible-lg" (click)="openDeleteDialog(element.id)"
+                    *ngIf="share.getBtnGuard('AccessRules','Insert')">
                         <mat-icon> cancel_presentation</mat-icon>
                         {{'Delete' | translate}}
                        </button>

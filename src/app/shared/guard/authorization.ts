@@ -2,30 +2,17 @@ import { Injectable } from '@angular/core';
 import { CanActivate, NavigationEnd } from '@angular/router';
 import { Router } from '@angular/router';
 import { NavService } from '../services/nav.service';
+import { SharedDataService } from '../services/shared-data.service';
 
 @Injectable()
 export class Authorization implements CanActivate {
-    constructor(private router: Router,private nav:NavService) {
+    constructor(private router: Router,private share:SharedDataService) {
    
     }
     
 
     canActivate() {
-        let urls:string[] = this.nav.urls.getValue();
-        
-        this.router.events.subscribe(event=>{
-            if(event instanceof NavigationEnd){    
-                console.log("event",event.url);
-                        
-              if(urls.includes(event.url)){
-                return true;
-              }
-              
-            this.router.navigate(['/login']);
-            return false;
-              
-            }
-        })
+        let urls:string[] = this.share.urls.getValue();
         return true;
     
     }

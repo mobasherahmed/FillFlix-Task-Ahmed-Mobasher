@@ -43,8 +43,6 @@ export class RegisterComponent implements OnInit {
   onRegister(){
     const body = this.RegisterForm.value;
     this._auth.Register(body).subscribe(res=>{
-      console.log("res",res);
-      
     })
   }
 

@@ -41,7 +41,6 @@ const app = firebase.initializeApp(firebaseConfig);
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
-  console.log("http",http);
     const path = window.location.origin + '/assets/i18n/';
     return new TranslateHttpLoader(http, path, '.json');
 

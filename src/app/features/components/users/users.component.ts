@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EnumService } from 'src/app/shared/services/enum.service';
+import { SharedDataService } from 'src/app/shared/services/shared-data.service';
 
 @Component({
   selector: 'app-users',
@@ -8,7 +9,7 @@ import { EnumService } from 'src/app/shared/services/enum.service';
 })
 export class UsersComponent implements OnInit {
 
-  constructor(public Enum:EnumService) {
+  constructor(public Enum:EnumService,public share:SharedDataService) {
  
   }
 

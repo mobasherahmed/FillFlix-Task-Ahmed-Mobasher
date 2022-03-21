@@ -41,12 +41,11 @@ export class NavService {
 		this.screenWidth = window.innerWidth;
 	}
 
-	MENUITEMS: Menu[] = []
-	URLS: string[] = ['/features/users','/login']
+	MENUITEMS: Menu[] = [];
 	
 	// Array
 	items = new BehaviorSubject<Menu[]>(this.MENUITEMS);
-	urls = new BehaviorSubject<string[]>(this.URLS);
+
 
 
 }
