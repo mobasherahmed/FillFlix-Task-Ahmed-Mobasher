@@ -24,6 +24,7 @@ import { XappApiService } from './shared/services/xapp-api.service';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { ManagementSystemModule } from './management-system/management-system.module';
 import { InterceptorService } from './shared/services/interceptor.service';
+import { TasksModule } from './tasks/tasks.module';
 
 const firebaseConfig = {
     apiKey: "AIzaSyAmSAFsKhV1h28beWOC-XRNrMNW0CJBOjM",
@@ -60,7 +61,6 @@ export function HttpLoaderFactory(http: HttpClient) {
         HttpClientModule,
         ManagementSystemModule,
         NgMultiSelectDropDownModule.forRoot(),
-        TranslateModule.forRoot(),
         TranslateModule.forRoot({
           loader: {
               provide: TranslateLoader,

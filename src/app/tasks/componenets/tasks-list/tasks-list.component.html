@@ -1,0 +1,9 @@
+<div class="d-flex justify-content-between align-items-center my-3 header">
+    <strong>{{"Tasks" | translate}}</strong>
+    <button mat-raised-button color="primary" class="w-30"
+    routerLink="/tasks/TaskForm" *ngIf="share.getBtnGuard('TasksList','Insert')">
+    <mat-icon>add_circle</mat-icon> 
+    {{'AddNewTask' | translate}}
+    </button>
+</div>
+<!-- <app-tasks-list-mat-table></app-tasks-list-mat-table> -->
