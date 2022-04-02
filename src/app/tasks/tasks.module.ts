@@ -12,7 +12,6 @@ import { TasksRoutingModule } from './tasks-routing.module';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 
 
-
 @NgModule({
   declarations: [TasksListComponent, TasksFormComponent, TasksListMatTableComponent],
   imports: [
@@ -23,6 +22,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MaterialModule,
     MatDatepickerModule,
     BsDropdownModule,
+    
     TranslateModule.forChild(),
     TasksRoutingModule
   ]

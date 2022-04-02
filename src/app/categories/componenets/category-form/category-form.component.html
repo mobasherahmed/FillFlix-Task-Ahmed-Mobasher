@@ -1,0 +1,104 @@
+<div class="card">
+    <div class="card-header">
+        <strong>{{"AddCategoryAndItsSubs" | translate }}</strong>
+    </div>
+    <div class="card-body">
+        <form [formGroup]="categoriesForm">
+            <ng-container formArrayName="categories">
+              <section class="col-md-10 categories-grid" *ngFor="let p of categories().controls ; let categoryIndex = index">
+                <ng-container [formGroupName]="categoryIndex">
+                    <section class="col-md-12">
+                        <div class="row">
+                          <div class="counter">
+                            <strong>{{categoryIndex+1}}</strong>
+                          </div>
+                          <div class="col-md-4">
+                            <em class="text-danger">*</em>
+                            <label for="name">{{'Name' | translate}}</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="name"
+                              placeholder="Enter category name"
+                              formControlName="name"
+                            />
+                          </div>
+                          <div class="col-md-4">
+                            <label for="description">{{'Description' | translate}}</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="description"
+                              placeholder="Enter Category description"
+                              formControlName="description"
+                
+                            />
+                          </div>
+                          <div class="col-md-3 buttons">
+                                 <mat-icon (click)="addCategory(categoryIndex+1)" class="addIcon">add_circle</mat-icon> 
+                              
+                                  <mat-icon  (click)="deleteCategory(categoryIndex)" class="deleteIcon">delete_forever</mat-icon>
+              
+                            
+                          </div>
+                        </div>
+                     </section>
+                  <ng-container formArrayName="sub">
+                    <section class="col-md-10 child"  *ngFor="let sub of sub(categoryIndex).controls; let subIndex=index">
+                        <div class="row">
+                            <ng-container [formGroupName]="subIndex">
+                              <div class="counter">
+                                <strong>{{subIndex+1}}</strong>
+                              </div>
+                            <div class="col-md-4">
+                              <em class="text-danger">*</em>
+                              <label for="name">{{'Name' | translate}}</label>
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="name"
+                                placeholder="Enter sub category name"
+                                formControlName="name"
+                              />
+                            </div>
+                            <div class="col-md-4">
+                              <label for="description">{{'Description' | translate}}</label>
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="description"
+                                placeholder="Enter sub category description"
+                                formControlName="description"
+                              />
+                            </div>
+                            <div class="col-md-3 buttons">
+                                    <mat-icon (click)="addSubCategory(categoryIndex)" class="addIcon">add_circle</mat-icon> 
+                              
+                                    <mat-icon  (click)="deleteSubCategory(categoryIndex,subIndex)" class="deleteIcon">delete_forever</mat-icon>
+                
+                            </div>
+                            </ng-container>
+                        </div>
+                    </section>
+                  </ng-container>
+                </ng-container>
+              </section>
+          </ng-container>
+          <div class="form-row action-btn-container">
+            <button mat-raised-button color="primary" class="w-30"
+            (click)="cancel()">
+            <mat-icon> cancel_presentation</mat-icon>
+            {{'Cancel' | translate}}
+           </button>
+            <button mat-raised-button color="primary" class="w-30"
+             (click)="submitForm()" [disabled]="checkDisable()">
+             <mat-icon>add_circle</mat-icon> 
+             {{'Save' | translate}}
+            </button>
+        
+           </div>
+            </form>
+    </div>
+</div>
+
+    

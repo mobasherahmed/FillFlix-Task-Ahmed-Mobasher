@@ -28,6 +28,7 @@
                     </div>
                     <div class="col-md-6 my-1">
                         <label for=""> <em class="text-danger">*</em>{{'TaskCategory' | translate}}</label>
+                       
                         <select class="form-control" name="TaskCategory" id="TaskCategory" formControlName="taskCategory">
                             <option value="" disabled selected hidden>{{'select' | translate}}</option>
                             <option [value]="item.id" *ngFor="let item of categories">{{item.name}}</option>

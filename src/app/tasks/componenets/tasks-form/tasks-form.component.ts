@@ -19,6 +19,7 @@ export class TasksFormComponent implements OnInit {
   categories: any;
   projects: any;
   taskId: number;
+  selectedNode;
   range = new FormGroup({
     start: new FormControl(),
     end: new FormControl(),

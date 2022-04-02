@@ -28,7 +28,7 @@
       <ul class="menu-ul">
           <li *ngFor="let item of menuItems" [routerLink]="[item.url]">
             <mat-icon>{{item.icon}}</mat-icon>
-            <span [routerLink]="[item.url]"> {{item.name | translate}} </span> 
+            <span [routerLink]="[item.url]" (click)="item.collapsed=!item.collapsed"> {{item.name | translate}} </span> 
              <mat-icon class="ltr-mat-icon" *ngIf="item.children" (click)="item.collapsed=true" [hidden]="item.collapsed">keyboard_arrow_right</mat-icon>
              <mat-icon class="rtl-mat-icon" *ngIf="item.children" (click)="item.collapsed=true" [hidden]="item.collapsed">keyboard_arrow_left</mat-icon>
              <mat-icon *ngIf="item.children && item.collapsed"  (click)="item.collapsed=false" >keyboard_arrow_down</mat-icon>

@@ -1,0 +1,59 @@
+<div class="d-flex justify-content-between align-items-center my-3 header">
+    <strong>{{"Categories" | translate}}</strong>
+    <button mat-raised-button color="primary" class="w-30"
+    routerLink="/categories/CategoryForm" *ngIf="share.getBtnGuard('CategoriesList','Insert')">
+    <mat-icon>add_circle</mat-icon> 
+    {{'AddNewCategory' | translate}}
+    </button>
+</div>
+<div class="mb-20" flFlex flexLayout="row" flexLayout.lt-md="column">
+    <mat-accordion>
+        <mat-expansion-panel hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{"CategoryName" | translate}}
+            </mat-panel-title>
+            <!-- <mat-panel-description>
+              {{"CategoryDescription" | translate}}
+            </mat-panel-description> -->
+            <mat-panel-title>
+              {{"Actions" | translate}}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+        </mat-expansion-panel>
+        <mat-expansion-panel *ngFor="let category of categories">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{category.name}}
+            </mat-panel-title>
+            <!-- <mat-panel-description>
+              {{category.description}}
+            </mat-panel-description> -->
+            <mat-panel-title>
+                <button mat-raised-button color="primary" class="w-30 mx-2" 
+                (click)="editCategory(category)" *ngIf="share.getBtnGuard('CategoriesList','Update')">
+                <mat-icon>edit</mat-icon>
+                 {{'Edit' | translate}}
+                </button>
+                <button mat-raised-button color="accent" class="w-30 " 
+                (click)="openDeleteDialog(category.id)" *ngIf="share.getBtnGuard('CategoriesList','Delete')">
+                    <mat-icon> cancel_presentation</mat-icon>
+                    {{'Delete' | translate}}
+                   </button>
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-expansion-panel hideToggle *ngFor="let sub of category.sub">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                {{sub.name}}
+              </mat-panel-title>
+              <mat-panel-title>
+                   <mat-icon color="accent" (click)="openDeleteDialog(sub.id)" *ngIf="share.getBtnGuard('CategoriesList','Delete')" > cancel_presentation</mat-icon>
+
+            </mat-panel-title> 
+            </mat-expansion-panel-header>
+          </mat-expansion-panel>
+        
+        </mat-expansion-panel>
+      </mat-accordion>
+</div>

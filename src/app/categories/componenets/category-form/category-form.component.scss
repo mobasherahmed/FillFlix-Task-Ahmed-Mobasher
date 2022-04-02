@@ -1,0 +1,57 @@
+.categories-grid{
+    margin: 10px 0;
+    background-color: whitesmoke;
+    padding: 13px;
+    margin-left: 28px;
+    padding-left: 0;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 1px;
+    border-radius: 8px;
+    .buttons{
+        text-align: right;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+
+        .addIcon{
+            color: blue;
+            font-size: 30px;
+            margin:  0 4px;
+        }
+        .deleteIcon{
+            color: red;
+            font-size: 30px;
+
+        }
+    }
+    .child{
+        margin-left: 25px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        padding: 10px;
+        margin-top: 10px;
+    }
+    .counter{
+        float: left;
+        font-size: 15px;
+        margin-left: 5px;
+        border: 1px solid #cccc;
+        border-radius: 50%;
+        padding: 6px;
+        background-color: whitesmoke;
+        position: absolute;
+        top: -10px;
+        left: -12px;
+        }
+}
+
+
+@media screen and (max-width: 992px) {
+  .categories-grid{
+      margin-left: 0;
+      .child{
+        margin-left: 0;
+      }
+  }
+}
+
