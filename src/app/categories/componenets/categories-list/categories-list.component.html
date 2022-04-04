@@ -24,7 +24,9 @@
         <mat-expansion-panel *ngFor="let category of categories">
           <mat-expansion-panel-header>
             <mat-panel-title>
-              {{category.name}}
+              <span class="badge badge-primary">
+                {{category.name}}
+              </span>
             </mat-panel-title>
             <!-- <mat-panel-description>
               {{category.description}}
@@ -45,7 +47,9 @@
         <mat-expansion-panel hideToggle *ngFor="let sub of category.sub">
             <mat-expansion-panel-header>
               <mat-panel-title>
-                {{sub.name}}
+                <span class="badge badge-primary">
+                  {{sub.name}}
+                </span>
               </mat-panel-title>
               <mat-panel-title>
                    <mat-icon color="accent" (click)="openDeleteDialog(sub.id)" *ngIf="share.getBtnGuard('CategoriesList','Delete')" > cancel_presentation</mat-icon>

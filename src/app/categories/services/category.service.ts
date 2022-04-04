@@ -14,6 +14,9 @@ export class CategoryService {
   addCategory(category):Observable<any>{
     return this.http.post('createCategory',category).pipe(take(1))
   }
+  manageCategory(category):Observable<any>{
+    return this.http.post('manageCategory',category).pipe(take(1))
+  }
   getCategories():Observable<any>{
     return this.http.get('getAllCategories').pipe(take(1))
   }

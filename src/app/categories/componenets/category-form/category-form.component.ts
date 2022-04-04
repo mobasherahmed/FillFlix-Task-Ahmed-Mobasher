@@ -141,7 +141,7 @@ export class CategoryFormComponent implements OnInit {
     
       addCategories(){
         const categories = this.categoriesForm.value.categories;
-        this._category.addCategory(categories).subscribe(res=>{
+        this._category.manageCategory(categories).subscribe(res=>{
           this.cancel();
         })
       }

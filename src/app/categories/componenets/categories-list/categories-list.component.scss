@@ -1,0 +1,14 @@
+.mat-expansion-panel-header-title{
+    align-items: center;
+    min-width: 250px;
+    max-width: 250px;
+    span{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    }
+}
+.badge-primary {
+    background-color: #3f51b5 !important;
+}
+
