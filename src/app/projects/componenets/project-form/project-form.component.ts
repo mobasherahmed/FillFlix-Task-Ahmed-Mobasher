@@ -2,6 +2,7 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { CategoryService } from 'src/app/categories/services/category.service';
 import { ProjectsService } from '../../services/projects.service';
 
 @Component({
@@ -16,10 +17,11 @@ export class ProjectFormComponent implements OnInit {
     projectIndex: any;
     AccountType: string;
     AccountId: string;
-    
+    categories:any
 
     constructor(
         private _project:ProjectsService,
+        private _category:CategoryService,
         private fb:FormBuilder,
         private location:Location,
     ) {
@@ -29,9 +31,16 @@ export class ProjectFormComponent implements OnInit {
     }
 
     ngOnInit() { 
-     
-        // this.addProject(0);
         this.setValues();
+        this.getCategories();
+    }
+
+    getCategories(){
+      this._category.getCategories().subscribe(res=>{
+        this.categories = res.Value;
+        console.log("cccc",this.categories);
+        
+      })
     }
 
     setValues(){
@@ -42,6 +51,7 @@ export class ProjectFormComponent implements OnInit {
                     let elFormGroup = this.fb.group({
                         name:[project.name,Validators.required],
                         description:[project.description],
+                        category:[project.category],
                         id:[project.id],
                         isDeleted:[false],
                         tasks:this.fb.array([])
@@ -73,17 +83,18 @@ export class ProjectFormComponent implements OnInit {
     }
 
     addProject(projectIndex) {
-        this.projects().push(this.newproject());
-        this.addtasksproject(projectIndex);
+        this.projects().push(this.newProject());
+        this.addTask(projectIndex);
       }
 
-    addtasksproject(index) {
-        this.tasks(index).push(this.newtasks());
+    addTask(index) {
+        this.tasks(index).push(this.newTask());
       }
   
-    newproject(): FormGroup {
+    newProject(): FormGroup {
         return this.fb.group({
         name:[,Validators.required],
+        category:[,Validators.required],
         description:[],
         id:[null],
         isDeleted:[false],
@@ -91,7 +102,7 @@ export class ProjectFormComponent implements OnInit {
         });
     }
 
-    newtasks(): FormGroup {
+    newTask(): FormGroup {
         return this.fb.group({
          name:[,Validators.required],
          description:[],
@@ -100,32 +111,26 @@ export class ProjectFormComponent implements OnInit {
         });
     }
     
-      deleteproject(index){
-          if(!this.checkprojectDelete()){
+      deleteProject(index){
+          if(!this.checkProjectDelete()){
             let arr = this.projectsForm.get('projects') as FormArray;
-            // let item  = arr.at(index);
-            // console.log("item",item);
-            
-            // item.get('isDeleted').setValue(true);
-            // console.log("item",item);
-
             arr.removeAt(index);
             }
       }
 
-      deletetasksproject(projectIndex:number,tasksIndex:number) {
-          // if(!this.checktasksprojectDelete(projectIndex)){
+      deleteTask(projectIndex:number,tasksIndex:number) {
+          // if(!this.checkTaskDelete(projectIndex)){
               this.tasks(projectIndex).removeAt(tasksIndex);
           // }
       }
 
-      checkprojectDelete(){
+      checkProjectDelete(){
         let arr = this.projectsForm.get('projects') as FormArray;
        if(arr.length == 1) return true;
        return false;
       }
 
-      checktasksprojectDelete(packgeIndex){
+      checkTaskDelete(packgeIndex){
         let arr = this.projects().at(packgeIndex).get("tasks") as FormArray;
        if(arr.length == 1) return true;
        return false;
@@ -136,21 +141,14 @@ export class ProjectFormComponent implements OnInit {
         this.location.back()
       }
       submitForm(){
-        this.addprojects();
-        //  this.updateProject()
+        this.manageProject();
       }
     
-      addprojects(){
+      manageProject(){
         const projects = this.projectsForm.value.projects;
-        this._project.addProject(projects).subscribe(res=>{
+        this._project.manageProject(projects).subscribe(res=>{
           this.cancel();
         })
-      }
-
-      updateProject(){
-        const categorId = this._project.projects.getValue().id;
-        const projects = this.projectsForm.value.projects;
-        this._project.updateProject(categorId,projects).subscribe(res=>{})
       }
 
       checkDisable(){

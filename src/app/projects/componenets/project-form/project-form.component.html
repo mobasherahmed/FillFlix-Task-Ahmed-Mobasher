@@ -1,10 +1,10 @@
 <div class="card">
     <div class="card-header">
-        <strong>{{"AddCategoryAndItsSubs" | translate }}</strong>
+        <strong>{{"AddProjectAndItsTasks" | translate }}</strong>
     </div>
     <div class="card-body">
         <form [formGroup]="projectsForm">
-            <ng-container formArrayName="categories">
+            <ng-container formArrayName="projects">
               <section class="col-md-10 categories-grid" *ngFor="let p of projects().controls ; let projectIndex = index">
                 <ng-container [formGroupName]="projectIndex">
                     <section class="col-md-12">
@@ -12,7 +12,7 @@
                           <div class="counter">
                             <strong>{{projectIndex+1}}</strong>
                           </div>
-                          <div class="col-md-4">
+                          <div class="col-md-6">
                             <em class="text-danger">*</em>
                             <label for="name">{{'Name' | translate}}</label>
                             <input
@@ -23,53 +23,74 @@
                               formControlName="name"
                             />
                           </div>
-                          <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+                          <!-- <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
                             <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
                               <button mat-icon-button disabled></button>
                               <mat-checkbox class="checklist-leaf-node"
                                             [checked]="checklistSelection.isSelected(node)"
                                             (change)="todoLeafItemSelectionToggle(node)">{{node.item}}</mat-checkbox>
                             </mat-tree-node>
-                        </mat-tree>
+                        </mat-tree> -->
                           <div class="col-md-4">
+                            <em class="text-danger">*</em>
                             <label for="category">{{'Category' | translate}}</label>
-                            <select name="" id=""></select>
+                            <select class="form-control"
+                            id="category"
+                            placeholder="Enter Category"
+                            formControlName="category">
+                            <option value="" disabled selected hidden>{{'SelectCategory' | translate}}</option>
+                            <option [value]="category.id" *ngFor="let category of categories">{{category.name}}</option>
+                          </select>
+                          </div>
                          
-                            <input
-                              type="text"
-                              class="form-control"
-                              id="category"
-                              placeholder="Enter Category"
-                              formControlName="category"
-                
-                            />
+                          <div class="btn-group" dropdown #dropdown="bs-dropdown" [autoClose]="true">
+                            <button id="button-basic" dropdownToggle type="button" 
+                               class="btn btn-light dropdown-toggle"
+                               aria-controls="dropdown-basic">
+                               select Category
+                            </button>
+                            <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
+                               role="menu" aria-labelledby="button-basic">
+                              <li [value]="category.id" *ngFor="let category of categories">
+                                {{category.name}}
+                                
+                                <ul *ngFor="let sub of category.sub">
+                                  <li>{{sub.name}}</li>
+                                </ul>
+                              </li>
+
+                             
+                            </ul>
                           </div>
-                          <div class="col-md-4">
-                            <label for="description">{{'Description' | translate}}</label>
-                            <input
-                              type="text"
-                              class="form-control"
-                              id="description"
-                              placeholder="Enter Category description"
-                              formControlName="description"
-                
-                            />
-                          </div>
-                          <div class="col-md-3 buttons">
-                                 <mat-icon (click)="addCategory(projectIndex+1)" class="addIcon">add_circle</mat-icon> 
+                          <div class="col-md-2 buttons">
+                                 <mat-icon (click)="addProject(projectIndex+1)" class="addIcon">add_circle</mat-icon> 
                               
-                                  <mat-icon  (click)="deleteCategory(projectIndex)" class="deleteIcon">delete_forever</mat-icon>
+                                  <mat-icon  (click)="deleteProject(projectIndex)" [class.disabled]="p.value.id !== null" class="deleteIcon">delete_forever</mat-icon>
               
                             
                           </div>
+
+
+                          <div class="col-md-10">
+                            <label for="description">{{'Description' | translate}}</label>
+                            <textarea
+                             class="my-1"
+                              rows="5"
+                              cols="30"
+                              type="text"
+                              class="form-control"
+                              id="description"
+                              placeholder="Enter Project description"
+                              formControlName="description"></textarea>
+                          </div>
                         </div>
                      </section>
-                  <ng-container formArrayName="sub">
-                    <section class="col-md-10 child"  *ngFor="let sub of sub(projectIndex).controls; let subIndex=index">
+                  <ng-container formArrayName="tasks">
+                    <section class="col-md-10 child"  *ngFor="let task of tasks(projectIndex).controls; let taskIndex=index">
                         <div class="row">
-                            <ng-container [formGroupName]="subIndex">
+                            <ng-container [formGroupName]="taskIndex">
                               <div class="counter">
-                                <strong>{{subIndex+1}}</strong>
+                                <strong>{{taskIndex+1}}</strong>
                               </div>
                             <div class="col-md-4">
                               <em class="text-danger">*</em>
@@ -78,7 +99,7 @@
                                 type="text"
                                 class="form-control"
                                 id="name"
-                                placeholder="Enter sub category name"
+                                placeholder="Enter task name"
                                 formControlName="name"
                               />
                             </div>
@@ -88,14 +109,14 @@
                                 type="text"
                                 class="form-control"
                                 id="description"
-                                placeholder="Enter sub category description"
+                                placeholder="Enter task description"
                                 formControlName="description"
                               />
                             </div>
                             <div class="col-md-3 buttons">
-                                    <mat-icon (click)="addSubCategory(projectIndex)" class="addIcon">add_circle</mat-icon> 
+                                    <mat-icon (click)="addTask(projectIndex)" class="addIcon">add_circle</mat-icon> 
                               
-                                    <mat-icon  (click)="deleteSubCategory(projectIndex,subIndex)" class="deleteIcon">delete_forever</mat-icon>
+                                    <mat-icon  (click)="deleteTask(projectIndex,taskIndex)" [class.disabled]="task.value.id !== null" class="deleteIcon">delete_forever</mat-icon>
                 
                             </div>
                             </ng-container>

@@ -36,10 +36,8 @@
                           </div>
                           <div class="col-md-3 buttons">
                                  <mat-icon (click)="addCategory(categoryIndex+1)" class="addIcon">add_circle</mat-icon> 
-                              
-                                  <mat-icon  (click)="deleteCategory(categoryIndex)" class="deleteIcon">delete_forever</mat-icon>
-              
-                            
+
+                                  <mat-icon  (click)="deleteCategory(categoryIndex)" [class.disabled]="p.value.id !== null" class="deleteIcon">delete_forever</mat-icon>
                           </div>
                         </div>
                      </section>
@@ -74,7 +72,7 @@
                             <div class="col-md-3 buttons">
                                     <mat-icon (click)="addSubCategory(categoryIndex)" class="addIcon">add_circle</mat-icon> 
                               
-                                    <mat-icon  (click)="deleteSubCategory(categoryIndex,subIndex)" class="deleteIcon">delete_forever</mat-icon>
+                                    <mat-icon  (click)="deleteSubCategory(categoryIndex,subIndex)" [class.disabled]="sub.value.id !== null" class="deleteIcon">delete_forever</mat-icon>
                 
                             </div>
                             </ng-container>

@@ -7,6 +7,15 @@
     width: 100%;
 }
 
+textarea{
+    resize: none;
+}
+
+.disabled{
+    pointer-events: none;
+    user-select: none;
+    opacity: 0.5;
+}
 .w-100 {
     width: 100%;
 }

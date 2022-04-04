@@ -102,12 +102,6 @@ export class CategoryFormComponent implements OnInit {
       deleteCategory(index){
           if(!this.checkCategoryDelete()){
             let arr = this.categoriesForm.get('categories') as FormArray;
-            // let item  = arr.at(index);
-            // console.log("item",item);
-            
-            // item.get('isDeleted').setValue(true);
-            // console.log("item",item);
-
             arr.removeAt(index);
             }
       }
@@ -135,21 +129,14 @@ export class CategoryFormComponent implements OnInit {
         this.location.back()
       }
       submitForm(){
-        this.addCategories();
-        //  this.updateCategory()
+        this.manageCategories();
       }
     
-      addCategories(){
+      manageCategories(){
         const categories = this.categoriesForm.value.categories;
         this._category.manageCategory(categories).subscribe(res=>{
           this.cancel();
         })
-      }
-
-      updateCategory(){
-        const categorId = this._category.categories.getValue().id;
-        const categories = this.categoriesForm.value.categories;
-        this._category.updateCategory(categorId,categories).subscribe(res=>{})
       }
 
       checkDisable(){
