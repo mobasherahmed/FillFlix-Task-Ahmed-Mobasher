@@ -34,33 +34,39 @@
                           <div class="col-md-4">
                             <em class="text-danger">*</em>
                             <label for="category">{{'Category' | translate}}</label>
-                            <select class="form-control"
+                            <!-- <select class="form-control"
                             id="category"
                             placeholder="Enter Category"
                             formControlName="category">
                             <option value="" disabled selected hidden>{{'SelectCategory' | translate}}</option>
                             <option [value]="category.id" *ngFor="let category of categories">{{category.name}}</option>
-                          </select>
-                          </div>
-                         
-                          <div class="btn-group" dropdown #dropdown="bs-dropdown" [autoClose]="true">
-                            <button id="button-basic" dropdownToggle type="button" 
-                               class="btn btn-light dropdown-toggle"
-                               aria-controls="dropdown-basic">
-                               select Category
-                            </button>
-                            <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
-                               role="menu" aria-labelledby="button-basic">
-                              <li [value]="category.id" *ngFor="let category of categories">
-                                {{category.name}}
-                                
-                                <ul *ngFor="let sub of category.sub">
-                                  <li>{{sub.name}}</li>
-                                </ul>
-                              </li>
-
+                          </select> -->
+                          
+                           <div class="btn-group" dropdown #dropdown="bs-dropdown" [autoClose]="false">
+                             <button id="button-basic" dropdownToggle type="button" 
+                                class="btn btn-light dropdown-toggle"
+                                aria-controls="dropdown-basic">
+                                <span>{{selectedCategory}}</span> 
+                             </button>
+                             <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
+                                role="menu" aria-labelledby="button-basic">
+                               <li (click)="setParentSelectedCategory(p,category)" *ngFor="let category of categories">
+                                 <mat-icon class="ltr-mat-icon" *ngIf="category.sub" (click)="category.collapsed=true" [hidden]="category.collapsed">keyboard_arrow_right</mat-icon>
+                                <mat-icon *ngIf="category.sub && category.collapsed"  (click)="category.collapsed=false" >keyboard_arrow_down</mat-icon>
+                                <span class="name"> {{category.name}}</span> 
+                                 <div *ngIf="category.sub && category.collapsed">
+                                   <ul *ngFor="let sub of category.sub" >
+                                     <li (click)="setSelectedCategory(p,sub,$event)"> <span class="name"> {{sub.name}}</span> 
+                                     </li>
+                                   </ul>
+ 
+                                 </div>
+                               </li>
+ 
+                              
+                             </ul>
                              
-                            </ul>
+                           </div>
                           </div>
                           <div class="col-md-2 buttons">
                                  <mat-icon (click)="addProject(projectIndex+1)" class="addIcon">add_circle</mat-icon> 

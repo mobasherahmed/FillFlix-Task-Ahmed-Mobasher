@@ -18,6 +18,7 @@ export class ProjectFormComponent implements OnInit {
     AccountType: string;
     AccountId: string;
     categories:any
+    selectedCategory:string='Select Category'
 
     constructor(
         private _project:ProjectsService,
@@ -38,11 +39,33 @@ export class ProjectFormComponent implements OnInit {
     getCategories(){
       this._category.getCategories().subscribe(res=>{
         this.categories = res.Value;
+         this.categories.forEach(el=>{
+          el.collapsed = false;
+          if(el.sub){
+            el.sub.forEach(sub => {
+              sub.collapsed = false;
+            });
+          }
+        });
         console.log("cccc",this.categories);
         
       })
     }
 
+    setSelectedCategory(p,value,event){
+      console.log("ava",value);
+      console.log("p",p);
+      event.stopPropagation()
+      p.value.category = value.id;
+      this.selectedCategory = value.name;
+    }
+    setParentSelectedCategory(p,value){
+      console.log("ava",value);
+      console.log("p",p);
+      
+      p.value.category = value.id;
+      this.selectedCategory = value.name;
+    }
     setValues(){
         this._project.projects.subscribe(project=>{
           console.log("caa",project);

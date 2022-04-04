@@ -1,141 +1,74 @@
 
 
 
-    <div class="card">
+    <div class="card"> 
         <div class="card-header">
             <strong>{{'TaskForm' | translate}}</strong>
         </div>
         <div class="card-body">
-            <form [formGroup]="Form">
-                <div class="form-row">
-                    <div class="col-md-12 my-1">
-                        <label for=""> <em class="text-danger">*</em>{{'Title' | translate}}</label>
-                        <input type="text" formControlName="taskTitle" class="form-control"  
-                        [ngClass]="{
-                            'input-error':
-                              Form.controls.taskTitle.touched &&
-                              Form.controls.taskTitle.invalid
-                          }">
-                        <em
-                        *ngIf="
-                          Form.controls.taskTitle.touched &&
-                          Form.controls.taskTitle.errors?.required
-                        "
-                        class="text-danger"
-                      >
-                      {{'requiredMsg' | translate}}
-                        </em>
-                    </div>
-                    <div class="col-md-6 my-1">
-                        <label for=""> <em class="text-danger">*</em>{{'TaskCategory' | translate}}</label>
-                       
-                        <select class="form-control" name="TaskCategory" id="TaskCategory" formControlName="taskCategory">
-                            <option value="" disabled selected hidden>{{'select' | translate}}</option>
-                            <option [value]="item.id" *ngFor="let item of categories">{{item.name}}</option>
-                        </select>
-                        <em
-                        *ngIf="
-                        Form.controls.taskCategory.touched &&
-                        Form.controls.taskCategory.errors?.required
-                        "
-                        class="text-danger"
-                      >
-                      {{'requiredMsg' | translate}}
-                        </em>
-                    </div>    
-                    <div class="col-md-6 my-1">
-                        <label for=""> <em class="text-danger">*</em>{{'Project' | translate}}</label>
-                        <select class="form-control" name="role" id="project" formControlName="project">
-                            <option value="" disabled selected hidden>{{'select' | translate}}</option>
-                            <option [value]="item.id" *ngFor="let item of projects">{{item.name}}</option>
-                        </select>
-                        <em
-                        *ngIf="
-                        Form.controls.project.touched &&
-                        Form.controls.project.errors?.required
-                        "
-                        class="text-danger"
-                      >
-                      {{'requiredMsg' | translate}}
-                        </em>
-                    </div>    
-                    <div class="col-md-3 my-1">
-                         <mat-form-field appearance="fill">
-                          <mat-label>Start date</mat-label>
-                          <input matInput [matDatepicker]="startDate" formControlName="startDate" 
-                          [min]="getToday()" [max]="getEndDate()">
-                          <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
-                          <mat-datepicker #startDate></mat-datepicker>
-                        </mat-form-field>
-                        <em
-                        *ngIf="
-                        Form.controls.startDate.touched &&
-                        Form.controls.startDate.errors?.required
-                        "
-                        class="text-danger"
-                      >
-                      {{'requiredMsg' | translate}}
-                        </em>
-                    </div>    
-                    <div class="col-md-3 my-1">
-                        <mat-form-field appearance="fill">
-                          <mat-label>End date</mat-label>
-                          <input matInput [matDatepicker]="endDate" formControlName="endDate"  [min]="getStartDate()">
-                          <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
-                          <mat-datepicker #endDate></mat-datepicker>
-                        </mat-form-field>
-                        <em
-                        *ngIf="
-                        Form.controls.endDate.touched &&
-                        Form.controls.endDate.errors?.required
-                        "
-                        class="text-danger"
-                      >
-                      {{'requiredMsg' | translate}}
-                        </em>
-                    </div> 
-
-                  <!-- <mat-checkbox class="example-margin">Without Due Date</mat-checkbox>  -->
-
-              
-                    <div class="col-md-3 my-1">
-                      <label for=""> <em class="text-danger">*</em>{{'AssignedTo' | translate}}</label>
-                      <select class="form-control" name="assignedTo" id="assignedTo" formControlName="assignedTo">
-                          <option value="" disabled selected hidden>{{'select' | translate}}</option>
-                          <option [value]="item.id" *ngFor="let item of categories">{{item.name}}</option>
-                      </select>
-                      <em
-                      *ngIf="
-                      Form.controls.assignedTo.touched &&
-                      Form.controls.assignedTo.errors?.required
-                      "
-                      class="text-danger"
-                    >
-                    {{'requiredMsg' | translate}}
-                      </em>
-                  </div>     
-                  
-
-                    <div class="col-md-12 my-1">
-                      <mat-form-field class="example-full-width" appearance="fill">
-                        <mat-label>Enter description</mat-label>
-                        <textarea matInput placeholder="Ex. It makes me feel..." formControlName="description"></textarea>
-                      </mat-form-field>
-                      <em
-                      *ngIf="
-                      Form.controls.description.touched &&
-                      Form.controls.description.errors?.required
-                      "
-                      class="text-danger"
-                    >
-                    {{'requiredMsg' | translate}}
-                      </em>
-                  </div>       
-  
-                  
-            
+            <form [formGroup]="taskForm">
+              <ng-container formArrayName="tasks">
+                <section class="col-md-10 categories-grid"  *ngFor="let task of tasks().controls; let taskIndex=index">
+                    <div class="row">
+                        <ng-container [formGroupName]="taskIndex">
+                          <div class="counter">
+                            <strong>{{taskIndex+1}}</strong>
+                          </div>
+                          <div class="col-md-9 my-1">
+                            <label for=""> <em class="text-danger">*</em>{{'Title' | translate}}</label>
+                            <input type="text" formControlName="taskTitle" class="form-control">
+                        </div>
+                        <div class="col-md-3 buttons">
+                          <mat-icon (click)="addTask()" class="addIcon">add_circle</mat-icon> 
                     
-               </div>
+                          <mat-icon  (click)="deleteTask(taskIndex)" [class.disabled]="task.value.id !== null" class="deleteIcon">delete_forever</mat-icon>
+      
+                        </div>
+               
+                        <div class="col-md-6 my-1">
+                            <label for="project">{{'Project' | translate}}</label>
+                            <select class="form-control" name="project" id="project" formControlName="project">
+                                <option value="" disabled selected hidden>{{'select' | translate}}</option>
+                                <option [value]="item.id" *ngFor="let item of projects">{{item.name}}</option>
+                            </select>
+                     
+                        </div>    
+                        <div class="col-md-6 my-1">
+                          <label for="assignedTo">{{'AssignedTo' | translate}}</label>
+                          <select class="form-control" name="assignedTo" id="assignedTo" formControlName="assignedTo">
+                              <option value="" disabled selected hidden>{{'select' | translate}}</option>
+                              <option [value]="item.id" *ngFor="let item of projects">{{item.name}}</option>
+                          </select>
+                        </div>   
+                        <div class="col-md-6 my-1">
+                             <mat-form-field appearance="fill">
+                              <mat-label>Start date</mat-label>
+                              <input matInput [matDatepicker]="startDate" formControlName="startDate" 
+                              [min]="getToday()" [max]="task.value.endDate">
+                              <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
+                              <mat-datepicker #startDate></mat-datepicker>
+                            </mat-form-field>
+                        </div>    
+                        <div class="col-md-6 my-1">
+                            <mat-form-field appearance="fill">
+                              <mat-label>End date</mat-label>
+                              <input matInput [matDatepicker]="endDate" formControlName="endDate"  [min]="task.value.startDate">
+                              <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+                              <mat-datepicker #endDate></mat-datepicker>
+                            </mat-form-field>
+
+                        </div>
+                        <div class="col-md-12 my-1">
+                          <label for="description">{{'Description' | translate}}</label>
+                          <textarea placeholder="Ex. It makes me feel..."  class="form-control" id="description"
+                          formControlName="description" cols="30" rows="10"></textarea>
+                         </div>       
+      
+                        
+                        </ng-container>
+                    </div>
+                </section>
+              </ng-container>
                <div class="form-row action-btn-container">
                 <button mat-raised-button color="primary" class="w-30"
                 (click)="cancel()">

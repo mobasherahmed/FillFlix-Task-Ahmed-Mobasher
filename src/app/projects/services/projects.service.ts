@@ -15,7 +15,7 @@ export class ProjectsService {
     return this.http.post('manageProject',project).pipe(take(1))
   }
   getProjects():Observable<any>{
-    return this.http.get('getAllProjecta').pipe(take(1))
+    return this.http.get('getAllProjects').pipe(take(1))
   }
   deleteProject(id):Observable<any>{
     return this.http.delete('deleteProject/'+id).pipe(take(1))

@@ -43,6 +43,19 @@
         top: -10px;
         left: -12px;
         }
+        .dropdown-menu{
+            max-height: 150px;
+            overflow-y: auto;
+            cursor: pointer;
+            li .name:hover{
+                    background-color: aliceblue;
+                    color: #3f51b5;
+            }
+        }
+        #button-basic,#dropdown-basic{
+            min-width: 200px;
+            max-width: 200px;
+        }
 }
 
 
