@@ -32,8 +32,9 @@
                             </mat-tree-node>
                         </mat-tree> -->
                           <div class="col-md-4">
+                            <label for="category" class="d-block">
                             <em class="text-danger">*</em>
-                            <label for="category">{{'Category' | translate}}</label>
+                              {{'Category' | translate}}</label>
                             <!-- <select class="form-control"
                             id="category"
                             placeholder="Enter Category"
@@ -51,7 +52,7 @@
                              <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
                                 role="menu" aria-labelledby="button-basic">
                                <li (click)="setParentSelectedCategory(p,category)" *ngFor="let category of categories">
-                                 <mat-icon class="ltr-mat-icon" *ngIf="category.sub" (click)="category.collapsed=true" [hidden]="category.collapsed">keyboard_arrow_right</mat-icon>
+                                 <mat-icon class="ltr-mat-icon" [class.visibity-none]="category.sub.length === 0"  (click)="category.collapsed=true" [hidden]="category.collapsed">keyboard_arrow_right</mat-icon>
                                 <mat-icon *ngIf="category.sub && category.collapsed"  (click)="category.collapsed=false" >keyboard_arrow_down</mat-icon>
                                 <span class="name"> {{category.name}}</span> 
                                  <div *ngIf="category.sub && category.collapsed">

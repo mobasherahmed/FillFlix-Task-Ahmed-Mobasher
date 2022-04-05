@@ -38,7 +38,7 @@
                  {{'Edit' | translate}}
                 </button>
                 <button mat-raised-button color="accent" class="w-30 " 
-                (click)="openDeleteDialog(category.id)" *ngIf="share.getBtnGuard('CategoriesList','Delete')">
+                (click)="openDeleteDialog(category.id,'parent',null)" *ngIf="share.getBtnGuard('CategoriesList','Delete')">
                     <mat-icon> cancel_presentation</mat-icon>
                     {{'Delete' | translate}}
                    </button>
@@ -52,7 +52,7 @@
                 </span>
               </mat-panel-title>
               <mat-panel-title>
-                   <mat-icon color="accent" (click)="openDeleteDialog(sub.id)" *ngIf="share.getBtnGuard('CategoriesList','Delete')" > cancel_presentation</mat-icon>
+                   <mat-icon color="accent" (click)="openDeleteDialog(sub.id,'sub',category.id)" *ngIf="share.getBtnGuard('CategoriesList','Delete')" > cancel_presentation</mat-icon>
 
             </mat-panel-title> 
             </mat-expansion-panel-header>

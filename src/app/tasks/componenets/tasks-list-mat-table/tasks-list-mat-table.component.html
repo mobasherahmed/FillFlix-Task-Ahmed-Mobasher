@@ -5,30 +5,29 @@
     </ng-container>
     <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef> Name </th>
-        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.taskTitle}} </td>
     </ng-container>
-    <ng-container matColumnDef="email">
-        <th mat-header-cell *matHeaderCellDef> Email </th>
-        <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+    <ng-container matColumnDef="startDate">
+        <th mat-header-cell *matHeaderCellDef> Start Date </th>
+        <td mat-cell *matCellDef="let element"> {{element.startDate | date:'medium'}} </td>
     </ng-container>
-    <ng-container matColumnDef="phoneNumber">
-        <th mat-header-cell *matHeaderCellDef> Phone number </th>
-        <td mat-cell *matCellDef="let element"> {{element.phoneNumber}} </td>
+    <ng-container matColumnDef="endDate">
+        <th mat-header-cell *matHeaderCellDef> End Date </th>
+        <td mat-cell *matCellDef="let element"> {{element.endDate | date:'medium'}} </td>
     </ng-container>
-    <ng-container matColumnDef="role" >
-        <th mat-header-cell *matHeaderCellDef> Role </th>
+    <ng-container matColumnDef="Description" >
+        <th mat-header-cell *matHeaderCellDef> Description </th>
         <td mat-cell *matCellDef="let element">
-             {{element.roleName }} 
-            <span class="badge badge-danger" *ngIf="!element.roleName">Don't have role yet !!</span>
+             {{element.description }} 
 
         </td>
     </ng-container>
     <ng-container matColumnDef="status">
         <th mat-header-cell *matHeaderCellDef> Status </th>
         <td mat-cell *matCellDef="let element">
-            <span class="badge badge-primary" *ngIf="element.status==5">Pending</span>
-            <span class="badge badge-danger" *ngIf="element.status==4">Rejected</span>
-            <span class="badge badge-success" *ngIf="element.status==3">Aprroved</span>
+            <span class="badge badge-primary">Pending</span>
+            <!-- <span class="badge badge-danger" *ngIf="element.status==4">Rejected</span>
+            <span class="badge badge-success" *ngIf="element.status==3">Aprroved</span> -->
         </td>
     </ng-container>
     <ng-container matColumnDef="actions">
@@ -36,27 +35,29 @@
         <td mat-cell *matCellDef="let element" class="text-center">    
         
             <button mat-raised-button color="primary" class="w-30 mx-2" 
-            (click)="editUser(element)" *ngIf="share.getBtnGuard('UsersList','Update') && element.status ==3">
+            (click)="editTask(element)" *ngIf="share.getBtnGuard('TasksList','Update')">
+            
             <mat-icon>edit</mat-icon>
              {{'Edit' | translate}}
             </button>
-            <button mat-raised-button color="accent" class="w-30 mx-2" 
-            (click)="addRoleToUserBeforeApprove(element.id,Enum.approved)" *ngIf="share.getBtnGuard('UsersList','Approve') && element.status ==5">
+            <!-- <button mat-raised-button color="accent" class="w-30 mx-2" 
+            (click)="addRoleToUserBeforeApprove(element.id,Enum.approved)" *ngIf="share.getBtnGuard('TasksList','Approve') && element.status ==5">
             <mat-icon>check_circle</mat-icon>
              {{'Approve' | translate}}
             </button>
             <button mat-raised-button color="warn" class="w-30 mx-2"  
-            (click)="updateUserStatus(element.id,Enum.rejected)" *ngIf="share.getBtnGuard('UsersList','Reject') && element.status ==5">
+            (click)="updateUserStatus(element.id,Enum.rejected)" *ngIf="share.getBtnGuard('TasksList','Reject') && element.status ==5">
                 <mat-icon>delete_forever</mat-icon>
              {{'Reject' | translate}}
             </button>
             <button mat-raised-button color="primary" class="w-30 mx-2" 
-            (click)="updateUserStatus(element.id,Enum.pending)" *ngIf="share.getBtnGuard('UsersList','Undo') && element.status ==4">
+            (click)="updateUserStatus(element.id,Enum.pending)" *ngIf="share.getBtnGuard('TasksList','Undo') && element.status ==4">
             <mat-icon>history</mat-icon>
              {{'Undo' | translate}}
-            </button>
+            </button> -->
             <button mat-raised-button color="accent" class="w-30 " 
-            (click)="openDeleteDialog(element.id)" *ngIf="share.getBtnGuard('UsersList','Delete') && element.status ==3">
+            (click)="openDeleteDialog(element.id)" *ngIf="share.getBtnGuard('TasksList','Delete')">
+            
                 <mat-icon> cancel_presentation</mat-icon>
                 {{'Delete' | translate}}
                </button>

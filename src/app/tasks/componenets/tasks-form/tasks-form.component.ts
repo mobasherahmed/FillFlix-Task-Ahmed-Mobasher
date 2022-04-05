@@ -1,10 +1,9 @@
 import { Location } from '@angular/common';
+import { HttpBackend, HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { CountryISO, PhoneNumberFormat, SearchCountryField } from 'ngx-intl-tel-input';
-import { FeatureService } from 'src/app/features/services/feature.service';
-import { ManagementSystemService } from 'src/app/management-system/services/management-system.service';
 import { SharedDataService } from 'src/app/shared/services/shared-data.service';
 import { ValidationService } from 'src/app/shared/services/validation.service';
 import { TasksService } from '../../services/tasks.service';
@@ -24,7 +23,9 @@ export class TasksFormComponent implements OnInit {
     start: new FormControl(),
     end: new FormControl(),
   });
-  constructor(private fb:FormBuilder,private translate:TranslateService,private validation:ValidationService,
+  Files:any=[];
+  token: string ='';
+  constructor(private fb:FormBuilder,private router:Router,public handler: HttpBackend,
     private _task:TasksService,private location:Location,private share:SharedDataService) { 
    
     this.taskForm = fb.group({
@@ -114,8 +115,48 @@ export class TasksFormComponent implements OnInit {
           })
         }
 
+        checkUploadFilesDisabled(index){
+          let taskTitle = this.tasks().at(index).value.taskTitle;
+          let startDate = this.tasks().at(index).value.startDate;
+          if(taskTitle && startDate){
+            return false;
+          }else{
+            return true;
+          }
+        }
+        getFiles(event,index){
+          let Files = event.target.files;
+          let taskTitle = this.tasks().at(index).value.taskTitle;
+          let startDate = this.tasks().at(index).value.startDate;
+          if(Files.length > 0){
+            let object = {taskTitle,startDate,Files}
+            this.Files.push(object);
+          }
+        }
+      
+        uploadTasksFiles() {
+          const Data = new FormData();
+          Data.append('Files', this.Files)
+          let headers = new HttpHeaders();
+          headers.append('Content-Type', 'multipart/form-data');
+          var http = new HttpClient(this.handler);
+          const req = new HttpRequest('PUT', `https://admin.xwar.app:2052/web/uploadTasksFiles`, Data, {
+            headers: headers.set('authorization', `${this.token}`)
+          });
+          http.request(req).subscribe((success: any) => {
+          if (success.type === 4) {
+            this.router.navigate(['/tasks/TasksList'])
+            }
+          })
+        }
+      
         submitForm(){
-         
+         console.log("form",this.taskForm.value);
+         console.log("Files", this.Files);
+         const tasks = this.taskForm.value.tasks;
+         this._task.manageTasks(tasks).subscribe(res=>{
+           this.uploadTasksFiles();
+         });
         }
 
       checkDisable(){

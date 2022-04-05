@@ -42,7 +42,7 @@
                         </div>   
                         <div class="col-md-6 my-1">
                              <mat-form-field appearance="fill">
-                              <mat-label>Start date</mat-label>
+                              <mat-label><em class="text-danger">*</em> Start date</mat-label>
                               <input matInput [matDatepicker]="startDate" formControlName="startDate" 
                               [min]="getToday()" [max]="task.value.endDate">
                               <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
@@ -61,7 +61,12 @@
                         <div class="col-md-12 my-1">
                           <label for="description">{{'Description' | translate}}</label>
                           <textarea placeholder="Ex. It makes me feel..."  class="form-control" id="description"
-                          formControlName="description" cols="30" rows="10"></textarea>
+                          formControlName="description" cols="30" rows="3"></textarea>
+                         </div>       
+                        <div class="col-md-12 my-1">
+                           <input type="file" name="files" id="files" class="form-control p-2" 
+                           [disabled]="checkUploadFilesDisabled(taskIndex)" multiple
+                           (change)="getFiles($event,taskIndex)" >
                          </div>       
       
                         

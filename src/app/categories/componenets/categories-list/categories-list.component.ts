@@ -32,7 +32,7 @@ export class CategoriesListComponent implements OnInit {
     this.router.navigate(['/categories/CategoryForm'])
   }
   
-  openDeleteDialog(categoryId:number){
+  openDeleteDialog(categoryId:number,type:string,parentId:number){
     const dialogRef = this.dialog.open(ModalConfirmationComponent, {
       data: {
           message: "Are you sure want to delete?",
@@ -46,6 +46,11 @@ export class CategoriesListComponent implements OnInit {
       if (confirmed) {
         this._category.deleteCategory(categoryId).subscribe(res=>{
          this.categories = this.categories.filter(item=>item.id !== categoryId);
+        //  if(type === 'sub'){
+        //    let parent = this.categories.find(item=>item.id === parentId)
+        //    this.categories = parent.sub.filter(item=>item.id !== categoryId);
+
+        //  }
         })
       }
   });

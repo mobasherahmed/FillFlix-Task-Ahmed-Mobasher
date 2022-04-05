@@ -13,14 +13,15 @@ export class TasksService {
   constructor(private http:HttpClient) { }
 
   getAllTasks():Observable<any>{
-    return this.http.get('web/getAllTasks').pipe(take(1))
+    return this.http.get('getAllTasks').pipe(take(1))
   }
-  addTask(task:AddTaskRequestDTO):Observable<any>{
-    return this.http.post('web/createTask',task).pipe(take(1))
+  deleteTask(id):Observable<any>{
+    return this.http.delete('deleteTask/'+id).pipe(take(1))
   }
-  updatask(taskId:number,task:AddTaskRequestDTO):Observable<any>{
-    return this.http.put('web/updateTask'+taskId,task).pipe(take(1))
+  manageTasks(tasks):Observable<any>{
+    return this.http.post('manageTasks',tasks).pipe(take(1))
   }
+
   getProjects():Observable<any>{
     // return this.http.get('getAllProjects').pipe(take(1))
     let obj = [
