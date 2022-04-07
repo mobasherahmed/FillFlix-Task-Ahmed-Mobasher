@@ -1,8 +1,11 @@
 import { Location } from '@angular/common';
+import { HttpBackend, HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CategoryService } from 'src/app/categories/services/category.service';
+import { TasksService } from 'src/app/tasks/services/tasks.service';
 import { ProjectsService } from '../../services/projects.service';
 
 @Component({
@@ -19,12 +22,18 @@ export class ProjectFormComponent implements OnInit {
     AccountId: string;
     categories:any
     selectedCategory:string='Select Category'
+    token: any;
+    Files: any=[];
+    projectsArr: any[];
 
     constructor(
         private _project:ProjectsService,
         private _category:CategoryService,
         private fb:FormBuilder,
         private location:Location,
+        private router:Router,
+        public handler: HttpBackend,
+        private _task:TasksService
     ) {
         this.projectsForm = fb.group({
             projects: fb.array([])
@@ -34,6 +43,7 @@ export class ProjectFormComponent implements OnInit {
     ngOnInit() { 
         this.setValues();
         this.getCategories();
+        this.getProjects();
     }
 
     getCategories(){
@@ -52,19 +62,21 @@ export class ProjectFormComponent implements OnInit {
       })
     }
 
-    setSelectedCategory(p,value,event){
-      console.log("ava",value);
-      console.log("p",p);
+    getProjects(){
+      this._task.getProjects().subscribe(res=>{
+        this.projectsArr = res; 
+      })
+    }
+    setSelectedCategory(p,value,event,index){
       event.stopPropagation()
       p.value.category = value.id;
-      this.selectedCategory = value.name;
+      this.projects().at(index).get('categoryName').setValue(value.name);
+      this.projects().at(index).get('category').setValue(value.id);
     }
-    setParentSelectedCategory(p,value){
-      console.log("ava",value);
-      console.log("p",p);
-      
+    setParentSelectedCategory(p,value,index){
       p.value.category = value.id;
-      this.selectedCategory = value.name;
+      this.projects().at(index).get('categoryName').setValue(value.name);
+      this.projects().at(index).get('category').setValue(value.id);
     }
     setValues(){
         this._project.projects.subscribe(project=>{
@@ -73,19 +85,23 @@ export class ProjectFormComponent implements OnInit {
             if(project.id){
                     let elFormGroup = this.fb.group({
                         name:[project.name,Validators.required],
+                        category:[project.category,,Validators.required],
                         description:[project.description],
-                        category:[project.category],
                         id:[project.id],
                         isDeleted:[false],
                         tasks:this.fb.array([])
                     })
                     this.projects().push(elFormGroup);
-                    project.tasks.forEach(tasks=>{
+                    project.tasks.forEach(task=>{
                        let tasksForm = this.fb.group({
-                            name:[tasks.name,Validators.required],
-                            description:[tasks.description],
-                            isDeleted:[false],
-                            id:[tasks.id],
+                        taskTitle:  [task.taskTitle,Validators.required],
+                        startDate:  [task.startDate,Validators.required],
+                        endDate:  [task.endDate],
+                        assignedTo:  [task.assignedTo],
+                        description:  [task.description],
+                        project:  [task.description],
+                        id:  [task.id],
+                        isDeleted:[false],
                         })
                     this.tasks(0).push(tasksForm)
                     })
@@ -118,6 +134,7 @@ export class ProjectFormComponent implements OnInit {
         return this.fb.group({
         name:[,Validators.required],
         category:[,Validators.required],
+        categoryName:['selectCategory'],
         description:[],
         id:[null],
         isDeleted:[false],
@@ -127,10 +144,14 @@ export class ProjectFormComponent implements OnInit {
 
     newTask(): FormGroup {
         return this.fb.group({
-         name:[,Validators.required],
-         description:[],
-         id:[null],
-         isDeleted:[false],
+          taskTitle:  ['',Validators.required],
+          startDate:  ['',Validators.required],
+          endDate:  [''],
+          assignedTo:  [''],
+          description:  [''],
+          project:  [''],
+          id:[null],
+          isDeleted:[false],
         });
     }
     
@@ -142,9 +163,9 @@ export class ProjectFormComponent implements OnInit {
       }
 
       deleteTask(projectIndex:number,tasksIndex:number) {
-          // if(!this.checkTaskDelete(projectIndex)){
+          if(!this.checkTaskDelete(projectIndex)){
               this.tasks(projectIndex).removeAt(tasksIndex);
-          // }
+          }
       }
 
       checkProjectDelete(){
@@ -161,7 +182,7 @@ export class ProjectFormComponent implements OnInit {
 
 
       cancel(){
-        this.location.back()
+        this.router.navigate(['/projects/ProjectsList']);
       }
       submitForm(){
         this.manageProject();
@@ -170,8 +191,45 @@ export class ProjectFormComponent implements OnInit {
       manageProject(){
         const projects = this.projectsForm.value.projects;
         this._project.manageProject(projects).subscribe(res=>{
-          this.cancel();
+          this.uploadTasksFiles();
         })
+      }
+
+      
+      checkUploadFilesDisabled(taskTitle,startDate){
+        if(taskTitle && startDate){
+          return false;
+        }else{
+          return true;
+        }
+      }
+      getFiles(event,taskTitle,startDate){
+        let Files = event.target.files;
+        if(Files.length > 0){
+          let object = {taskTitle,startDate,Files}
+          this.Files.push(object);
+        }
+      }
+    
+      uploadTasksFiles() {
+        const Data = new FormData();
+        Data.append('Files', this.Files)
+        let headers = new HttpHeaders();
+        headers.append('Content-Type', 'multipart/form-data');
+        var http = new HttpClient(this.handler);
+        const req = new HttpRequest('PUT', `https://admin.xwar.app:2052/web/uploadTasksFiles`, Data, {
+          headers: headers.set('authorization', `${this.token}`)
+        });
+        http.request(req).subscribe((success: any) => {
+        if (success.type === 4) {
+          this.router.navigate(['/projects/ProjectsList'])
+          }
+        })
+      }
+
+      getToday(){
+        let today = new Date();
+        return today;
       }
 
       checkDisable(){

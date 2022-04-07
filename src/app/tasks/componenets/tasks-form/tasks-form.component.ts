@@ -53,7 +53,7 @@ export class TasksFormComponent implements OnInit {
                     description:  [task.description],
                     project:  [task.description],
                     id:  [task.id],
-                    isDeleted:[false],
+                    isDeleted:[false], 
                   })
                   this.tasks().push(elFormGroup);
                   this.taskForm.updateValueAndValidity();

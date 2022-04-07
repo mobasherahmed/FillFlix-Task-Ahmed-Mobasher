@@ -1,1 +1,10 @@
-<p>projects-list works!</p>
+<div class="d-flex justify-content-between align-items-center my-3 header">
+    <strong>{{"Projects" | translate}}</strong>
+    <button mat-raised-button color="primary" class="w-30"
+    *ngIf="share.getBtnGuard('ProjectsList','Insert')"
+    routerLink="/tasks/TaskForm" >
+    <mat-icon>add_circle</mat-icon> 
+    {{'AddNewProject' | translate}}
+    </button>
+</div>
+<app-projects-list-mat-table></app-projects-list-mat-table>

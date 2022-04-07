@@ -8,11 +8,13 @@ import { MaterialModule } from '../shared/modules/material/material.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { ProjectsListMatTableComponent } from './componenets/projects-list-mat-table/projects-list-mat-table.component';
 
 
 
 @NgModule({
-  declarations: [ProjectsListComponent, ProjectFormComponent],
+  declarations: [ProjectsListComponent, ProjectFormComponent, ProjectsListMatTableComponent],
   imports: [
     CommonModule,
     ProjectsRoutingModule,
@@ -20,6 +22,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
     MaterialModule,
     TranslateModule,
     ReactiveFormsModule,
+    MatDatepickerModule,
     BsDropdownModule
   ]
 })

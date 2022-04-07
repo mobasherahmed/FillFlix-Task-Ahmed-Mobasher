@@ -23,41 +23,25 @@
                               formControlName="name"
                             />
                           </div>
-                          <!-- <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
-                            <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
-                              <button mat-icon-button disabled></button>
-                              <mat-checkbox class="checklist-leaf-node"
-                                            [checked]="checklistSelection.isSelected(node)"
-                                            (change)="todoLeafItemSelectionToggle(node)">{{node.item}}</mat-checkbox>
-                            </mat-tree-node>
-                        </mat-tree> -->
                           <div class="col-md-4">
                             <label for="category" class="d-block">
                             <em class="text-danger">*</em>
                               {{'Category' | translate}}</label>
-                            <!-- <select class="form-control"
-                            id="category"
-                            placeholder="Enter Category"
-                            formControlName="category">
-                            <option value="" disabled selected hidden>{{'SelectCategory' | translate}}</option>
-                            <option [value]="category.id" *ngFor="let category of categories">{{category.name}}</option>
-                          </select> -->
-                          
                            <div class="btn-group" dropdown #dropdown="bs-dropdown" [autoClose]="false">
                              <button id="button-basic" dropdownToggle type="button" 
                                 class="btn btn-light dropdown-toggle"
                                 aria-controls="dropdown-basic">
-                                <span>{{selectedCategory}}</span> 
+                                <span>{{ p.value.categoryName}}</span> 
                              </button>
-                             <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
+                             <ul  id="dropdown-basic" *dropdownMenu class="dropdown-menu" 
                                 role="menu" aria-labelledby="button-basic">
-                               <li (click)="setParentSelectedCategory(p,category)" *ngFor="let category of categories">
+                               <li (click)="setParentSelectedCategory(p,category,projectIndex)" *ngFor="let category of categories">
                                  <mat-icon class="ltr-mat-icon" [class.visibity-none]="category.sub.length === 0"  (click)="category.collapsed=true" [hidden]="category.collapsed">keyboard_arrow_right</mat-icon>
                                 <mat-icon *ngIf="category.sub && category.collapsed"  (click)="category.collapsed=false" >keyboard_arrow_down</mat-icon>
                                 <span class="name"> {{category.name}}</span> 
                                  <div *ngIf="category.sub && category.collapsed">
                                    <ul *ngFor="let sub of category.sub" >
-                                     <li (click)="setSelectedCategory(p,sub,$event)"> <span class="name"> {{sub.name}}</span> 
+                                     <li (click)="setSelectedCategory(p,sub,$event,projectIndex)"> <span class="name"> {{sub.name}}</span> 
                                      </li>
                                    </ul>
  
@@ -82,7 +66,7 @@
                             <label for="description">{{'Description' | translate}}</label>
                             <textarea
                              class="my-1"
-                              rows="5"
+                              rows="3"
                               cols="30"
                               type="text"
                               class="form-control"
@@ -92,44 +76,73 @@
                           </div>
                         </div>
                      </section>
-                  <ng-container formArrayName="tasks">
-                    <section class="col-md-10 child"  *ngFor="let task of tasks(projectIndex).controls; let taskIndex=index">
-                        <div class="row">
-                            <ng-container [formGroupName]="taskIndex">
-                              <div class="counter">
-                                <strong>{{taskIndex+1}}</strong>
+                     <ng-container formArrayName="tasks">
+                      <section class="col-md-10 child"  *ngFor="let task of tasks(projectIndex).controls; let taskIndex=index">
+                          <div class="row">
+                              <ng-container [formGroupName]="taskIndex">
+                                <div class="counter">
+                                  <strong>{{taskIndex+1}}</strong>
+                                </div>
+                                <div class="col-md-9 my-1">
+                                  <label for=""> <em class="text-danger">*</em>{{'Title' | translate}}</label>
+                                  <input type="text" formControlName="taskTitle" class="form-control">
                               </div>
-                            <div class="col-md-4">
-                              <em class="text-danger">*</em>
-                              <label for="name">{{'Name' | translate}}</label>
-                              <input
-                                type="text"
-                                class="form-control"
-                                id="name"
-                                placeholder="Enter task name"
-                                formControlName="name"
-                              />
-                            </div>
-                            <div class="col-md-4">
-                              <label for="description">{{'Description' | translate}}</label>
-                              <input
-                                type="text"
-                                class="form-control"
-                                id="description"
-                                placeholder="Enter task description"
-                                formControlName="description"
-                              />
-                            </div>
-                            <div class="col-md-3 buttons">
-                                    <mat-icon (click)="addTask(projectIndex)" class="addIcon">add_circle</mat-icon> 
+                              <div class="col-md-3 buttons">
+                                <mat-icon (click)="addTask(projectIndex)" class="addIcon">add_circle</mat-icon> 
+                          
+                                <mat-icon  (click)="deleteTask(projectIndex,taskIndex)" [class.disabled]="task.value.id !== null" class="deleteIcon">delete_forever</mat-icon>
+            
+                              </div>
+                     
+                              <div class="col-md-6 my-1">
+                                  <label for="project">{{'Project' | translate}}</label>
+                                  <select class="form-control" name="project" id="project" formControlName="project">
+                                      <option value="" disabled selected hidden>{{'select' | translate}}</option>
+                                      <option [value]="item.id" *ngFor="let item of projectsArr">{{item.name}}</option>
+                                  </select>
+                           
+                              </div>    
+                              <div class="col-md-6 my-1">
+                                <label for="assignedTo">{{'AssignedTo' | translate}}</label>
+                                <select class="form-control" name="assignedTo" id="assignedTo" formControlName="assignedTo">
+                                    <option value="" disabled selected hidden>{{'select' | translate}}</option>
+                                    <option [value]="item.id" *ngFor="let item of projectsArr">{{item.name}}</option>
+                                </select>
+                              </div>   
+                              <div class="col-md-6 my-1">
+                                   <mat-form-field appearance="fill">
+                                    <mat-label><em class="text-danger">*</em> Start date</mat-label>
+                                    <input matInput [matDatepicker]="startDate" formControlName="startDate" 
+                                    [min]="getToday()" [max]="task.value.endDate">
+                                    <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
+                                    <mat-datepicker #startDate></mat-datepicker>
+                                  </mat-form-field>
+                              </div>    
+                              <div class="col-md-6 my-1">
+                                  <mat-form-field appearance="fill">
+                                    <mat-label>End date</mat-label>
+                                    <input matInput [matDatepicker]="endDate" formControlName="endDate"  [min]="task.value.startDate">
+                                    <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+                                    <mat-datepicker #endDate></mat-datepicker>
+                                  </mat-form-field>
+      
+                              </div>
+                              <div class="col-md-12 my-1">
+                                <label for="description">{{'Description' | translate}}</label>
+                                <textarea placeholder="Ex. It makes me feel..."  class="form-control" id="description"
+                                formControlName="description" cols="30" rows="3"></textarea>
+                               </div>       
+                              <div class="col-md-12 my-1">
+                                 <input type="file" name="files" id="files" class="form-control p-2" 
+                                 [disabled]="checkUploadFilesDisabled(task.value.taskTitle,task.value.startDate)" multiple
+                                 (change)="getFiles($event,task.value.taskTitle,task.value.startDate)" >
+                               </div>       
+            
                               
-                                    <mat-icon  (click)="deleteTask(projectIndex,taskIndex)" [class.disabled]="task.value.id !== null" class="deleteIcon">delete_forever</mat-icon>
-                
-                            </div>
-                            </ng-container>
-                        </div>
-                    </section>
-                  </ng-container>
+                              </ng-container>
+                          </div>
+                      </section>
+                    </ng-container>
                 </ng-container>
               </section>
           </ng-container>
