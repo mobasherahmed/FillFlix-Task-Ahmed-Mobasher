@@ -69,14 +69,14 @@ export class ProjectFormComponent implements OnInit {
     }
     setSelectedCategory(p,value,event,index){
       event.stopPropagation()
-      p.value.category = value.id;
+      p.value.categoryId = value.id;
       this.projects().at(index).get('categoryName').setValue(value.name);
-      this.projects().at(index).get('category').setValue(value.id);
+      this.projects().at(index).get('categoryId').setValue(value.id);
     }
     setParentSelectedCategory(p,value,index){
-      p.value.category = value.id;
+      p.value.categoryId = value.id;
       this.projects().at(index).get('categoryName').setValue(value.name);
-      this.projects().at(index).get('category').setValue(value.id);
+      this.projects().at(index).get('categoryId').setValue(value.id);
     }
     setValues(){
         this._project.projects.subscribe(project=>{
@@ -84,8 +84,8 @@ export class ProjectFormComponent implements OnInit {
           
             if(project.id){
                     let elFormGroup = this.fb.group({
-                        name:[project.name,Validators.required],
-                        category:[project.category,Validators.required],
+                        projectName:[project.projectName,Validators.required],
+                        categoryId:[project.categoryId,Validators.required],
                         description:[project.description],
                         id:[project.id],
                         isDeleted:[false],
@@ -132,8 +132,8 @@ export class ProjectFormComponent implements OnInit {
   
     newProject(): FormGroup {
         return this.fb.group({
-        name:[,Validators.required],
-        category:[,Validators.required],
+        projectName:[,Validators.required],
+        categoryId:[,Validators.required],
         categoryName:['selectCategory'],
         description:[],
         id:[null],
@@ -191,7 +191,9 @@ export class ProjectFormComponent implements OnInit {
       manageProject(){
         const projects = this.projectsForm.value.projects;
         this._project.manageProject(projects).subscribe(res=>{
-          this.uploadTasksFiles();
+          if(this.Files.length > 0){
+            this.uploadTasksFiles();
+          }
         })
       }
 
@@ -213,6 +215,7 @@ export class ProjectFormComponent implements OnInit {
     
       uploadTasksFiles() {
         const Data = new FormData();
+        console.log("this.Files",this.Files);
         Data.append('Files', this.Files)
         let headers = new HttpHeaders();
         headers.append('Content-Type', 'multipart/form-data');

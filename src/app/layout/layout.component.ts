@@ -32,6 +32,6 @@ export class LayoutComponent implements OnInit {
      }
 
      ngOnDestroy(){
-         this.share.showLoader.unsubscribe();
+        //  this.share.showLoader.unsubscribe();
      }
 }

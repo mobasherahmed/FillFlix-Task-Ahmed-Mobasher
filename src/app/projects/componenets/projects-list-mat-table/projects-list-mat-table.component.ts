@@ -34,7 +34,7 @@ export class ProjectsListMatTableComponent implements OnInit {
     this.router.navigate(['/projects/ProjectForm'])
   }
 
-  openDeleteDialog(id:number){
+  openDeleteDialog(id:number,type:string){
     const dialogRef = this.dialog.open(ModalConfirmationComponent, {
       data: {
           message: "Are you sure want to delete?",
@@ -46,7 +46,7 @@ export class ProjectsListMatTableComponent implements OnInit {
   });
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
       if (confirmed) {
-        this._project.deleteProject(id).subscribe(res=>{
+        this._project.deleteProject(id,type).subscribe(res=>{
          this.projects = this.projects.filter(item=>item.id !== id);
         })
       }

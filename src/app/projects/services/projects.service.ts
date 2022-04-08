@@ -12,63 +12,63 @@ export class ProjectsService {
   constructor(private http:HttpClient) { }
 
   manageProject(project):Observable<any>{
-    return this.http.post('manageProject',project).pipe(take(1))
+    return this.http.post('manageProjects',project).pipe(take(1))
   }
   getProjects():Observable<any>{
-    // return this.http.get('getAllProjects').pipe(take(1))
-    let arr ={
-      Value:[
-    {
-      id:1,
-      name:"project1",
-      category:"programming",
-      tasks:[
-        {
-          taskTitle:"task1",
-          startDate:"4/20/2022",
-          endDate:"4/20/2022",
-        },
-        {
-          taskTitle:"task1",
-          startDate:"4/20/2022",
-          endDate:"4/20/2022",
-        },
-        {
-          taskTitle:"task1",
-          startDate:"4/20/2022",
-          endDate:"4/20/2022",
-        }
-      ]
-    },
-    {
-      id:2,
-      name:"project2",
-      category:"Design",
-      tasks:[
-        {
-          taskTitle:"task2",
-          startDate:"4/20/2022",
-          endDate:"4/20/2022",
-        },
-        {
-          taskTitle:"task3",
-          startDate:"4/20/2022",
-          endDate:"4/20/2022",
-        },
-        {
-          taskTitle:"task5",
-          startDate:"4/20/2022",
-          endDate:"4/20/2022",
-        }
-      ]
-    },
-      ]
-   }
-    let resObs = of(arr);
-    return resObs;
+    return this.http.get('getAllProjects').pipe(take(1))
+  //   let arr ={
+  //     Value:[
+  //   {
+  //     id:1,
+  //     name:"project1",
+  //     category:"programming",
+  //     tasks:[
+  //       {
+  //         taskTitle:"task1",
+  //         startDate:"4/20/2022",
+  //         endDate:"4/20/2022",
+  //       },
+  //       {
+  //         taskTitle:"task1",
+  //         startDate:"4/20/2022",
+  //         endDate:"4/20/2022",
+  //       },
+  //       {
+  //         taskTitle:"task1",
+  //         startDate:"4/20/2022",
+  //         endDate:"4/20/2022",
+  //       }
+  //     ]
+  //   },
+  //   {
+  //     id:2,
+  //     name:"project2",
+  //     category:"Design",
+  //     tasks:[
+  //       {
+  //         taskTitle:"task2",
+  //         startDate:"4/20/2022",
+  //         endDate:"4/20/2022",
+  //       },
+  //       {
+  //         taskTitle:"task3",
+  //         startDate:"4/20/2022",
+  //         endDate:"4/20/2022",
+  //       },
+  //       {
+  //         taskTitle:"task5",
+  //         startDate:"4/20/2022",
+  //         endDate:"4/20/2022",
+  //       }
+  //     ]
+  //   },
+  //     ]
+  //  }
+  //   let resObs = of(arr);
+  //   return resObs;
   }
-  deleteProject(id):Observable<any>{
-    return this.http.delete('deleteProject/'+id).pipe(take(1))
+  deleteProject(id,type):Observable<any>{
+    return this.http.delete(`deleteProject/${type}/${id}`).pipe(take(1))
   }
   addProject(project):Observable<any>{
     return this.http.post('createProject',project).pipe(take(1))
