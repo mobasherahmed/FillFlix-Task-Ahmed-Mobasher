@@ -16,6 +16,7 @@ export class SharedDataService {
 	urls:BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
 	buttons:BehaviorSubject<any> = new BehaviorSubject<any>([]);
 	token:BehaviorSubject<any> = new BehaviorSubject<any>('');
+	showLoader:BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   public dropdownSettings:dropdownSettings = {
     singleSelection: false,

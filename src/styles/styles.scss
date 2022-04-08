@@ -3,6 +3,34 @@
 @import 'utils';
 @import 'responsive';
 
+.loader{
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    background-color: aliceblue;
+    top: 0;
+    bottom: 0;
+    z-index: 10;
+    align-items: center;
+    left: 0;
+    right: 0;
+    opacity: 0.5;
+  }
+  
+.mat-expansion-panel-header-title{
+    align-items: center;
+    min-width: 250px;
+    max-width: 250px;
+    span{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    }
+}
+.badge-primary {
+    background-color: #3f51b5 !important;
+}
+
 .iti{
     width: 100%;
 }

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { take } from 'rxjs/operators';
 
 @Injectable({
@@ -15,7 +15,57 @@ export class ProjectsService {
     return this.http.post('manageProject',project).pipe(take(1))
   }
   getProjects():Observable<any>{
-    return this.http.get('getAllProjects').pipe(take(1))
+    // return this.http.get('getAllProjects').pipe(take(1))
+    let arr ={
+      Value:[
+    {
+      id:1,
+      name:"project1",
+      category:"programming",
+      tasks:[
+        {
+          taskTitle:"task1",
+          startDate:"4/20/2022",
+          endDate:"4/20/2022",
+        },
+        {
+          taskTitle:"task1",
+          startDate:"4/20/2022",
+          endDate:"4/20/2022",
+        },
+        {
+          taskTitle:"task1",
+          startDate:"4/20/2022",
+          endDate:"4/20/2022",
+        }
+      ]
+    },
+    {
+      id:2,
+      name:"project2",
+      category:"Design",
+      tasks:[
+        {
+          taskTitle:"task2",
+          startDate:"4/20/2022",
+          endDate:"4/20/2022",
+        },
+        {
+          taskTitle:"task3",
+          startDate:"4/20/2022",
+          endDate:"4/20/2022",
+        },
+        {
+          taskTitle:"task5",
+          startDate:"4/20/2022",
+          endDate:"4/20/2022",
+        }
+      ]
+    },
+      ]
+   }
+    let resObs = of(arr);
+    return resObs;
   }
   deleteProject(id):Observable<any>{
     return this.http.delete('deleteProject/'+id).pipe(take(1))

@@ -85,7 +85,7 @@ export class ProjectFormComponent implements OnInit {
             if(project.id){
                     let elFormGroup = this.fb.group({
                         name:[project.name,Validators.required],
-                        category:[project.category,,Validators.required],
+                        category:[project.category,Validators.required],
                         description:[project.description],
                         id:[project.id],
                         isDeleted:[false],
@@ -99,7 +99,7 @@ export class ProjectFormComponent implements OnInit {
                         endDate:  [task.endDate],
                         assignedTo:  [task.assignedTo],
                         description:  [task.description],
-                        project:  [task.description],
+                        // project:  [task.description],
                         id:  [task.id],
                         isDeleted:[false],
                         })
@@ -149,7 +149,7 @@ export class ProjectFormComponent implements OnInit {
           endDate:  [''],
           assignedTo:  [''],
           description:  [''],
-          project:  [''],
+          // project:  [''],
           id:[null],
           isDeleted:[false],
         });
