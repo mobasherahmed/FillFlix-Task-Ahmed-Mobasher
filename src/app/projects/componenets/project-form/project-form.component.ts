@@ -1,4 +1,4 @@
-import { Location } from '@angular/common';
+import { DatePipe, Location } from '@angular/common';
 import { HttpBackend, HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { CategoryService } from 'src/app/categories/services/category.service';
 import { TasksService } from 'src/app/tasks/services/tasks.service';
 import { ProjectsService } from '../../services/projects.service';
+
 
 @Component({
   selector: 'app-project-form',
@@ -22,9 +23,10 @@ export class ProjectFormComponent implements OnInit {
     AccountId: string;
     categories:any
     selectedCategory:string='Select Category'
-    token: any;
+    token: string='';
     Files: any=[];
     projectsArr: any[];
+  File: any;
 
     constructor(
         private _project:ProjectsService,
@@ -33,7 +35,9 @@ export class ProjectFormComponent implements OnInit {
         private location:Location,
         private router:Router,
         public handler: HttpBackend,
-        private _task:TasksService
+        private _task:TasksService,
+        private datePipe: DatePipe,
+        private toaster:ToastrService
     ) {
         this.projectsForm = fb.group({
             projects: fb.array([])
@@ -72,11 +76,14 @@ export class ProjectFormComponent implements OnInit {
       p.value.categoryId = value.id;
       this.projects().at(index).get('categoryName').setValue(value.name);
       this.projects().at(index).get('categoryId').setValue(value.id);
+      // document.getElementById('dropdown-basic').classList.remove('show')
+
     }
     setParentSelectedCategory(p,value,index){
       p.value.categoryId = value.id;
       this.projects().at(index).get('categoryName').setValue(value.name);
       this.projects().at(index).get('categoryId').setValue(value.id);
+      // document.getElementById('dropdown-basic').classList.remove('show')
     }
     setValues(){
         this._project.projects.subscribe(project=>{
@@ -86,6 +93,7 @@ export class ProjectFormComponent implements OnInit {
                     let elFormGroup = this.fb.group({
                         projectName:[project.projectName,Validators.required],
                         categoryId:[project.categoryId,Validators.required],
+                        categoryName:[project.categoryName],
                         description:[project.description],
                         id:[project.id],
                         isDeleted:[false],
@@ -189,14 +197,41 @@ export class ProjectFormComponent implements OnInit {
       }
     
       manageProject(){
+        if(this.Files.length > 0){        
+          if(this.checkFilesSize()){
+          this.callManageProjectsApi();
+          }
+        }else{
+          this.callManageProjectsApi();
+        }
+      }
+
+      callManageProjectsApi(){
         const projects = this.projectsForm.value.projects;
         this._project.manageProject(projects).subscribe(res=>{
-          if(this.Files.length > 0){
-            this.uploadTasksFiles();
-          }
+        if(this.Files.length > 0){        
+          this.uploadTasksFiles();
+        }
         })
       }
 
+      checkFilesSize(){
+        let size=0;
+        for (let i = 0; i < this.Files.length; i++) {
+          for(let j=0;j<this.Files[i].attachments.length;j++){
+            size += this.Files[i].attachments[j].size;
+          }
+          console.log("Size",size);
+            // 10 MB (this size is in bytes)
+          if(size > 10485760){
+            this.toaster.error(`Uploaded Files Size is too large ${size}`,' Maximum size is 10MB');
+            return false;
+          }else{
+            return true;
+          }
+          
+        }
+      }
       
       checkUploadFilesDisabled(taskTitle,startDate){
         if(taskTitle && startDate){
@@ -206,21 +241,30 @@ export class ProjectFormComponent implements OnInit {
         }
       }
       getFiles(event,taskTitle,startDate){
-        let Files = event.target.files;
-        if(Files.length > 0){
-          let object = {taskTitle,startDate,Files}
+        // this.Files = event.target.files;
+        let attachments = event.target.files;
+        startDate = this.datePipe.transform(startDate, "yyyy-MM-dd");
+        if(attachments.length > 0){
+          let object = {taskTitle,startDate,attachments}
           this.Files.push(object);
         }
       }
     
       uploadTasksFiles() {
         const Data = new FormData();
-        console.log("this.Files",this.Files);
-        Data.append('Files', this.Files)
+        console.log("files",this.Files);
+        for (let i = 0; i < this.Files.length; i++) {
+          for(let j=0;j<this.Files[i].attachments.length;j++){
+            const key = this.Files[i].taskTitle +'-'+ this.Files[i].startDate;
+            Data.append(key,this.Files[i].attachments[j])
+          }
+        }
+    
+      
         let headers = new HttpHeaders();
         headers.append('Content-Type', 'multipart/form-data');
         var http = new HttpClient(this.handler);
-        const req = new HttpRequest('PUT', `https://admin.xwar.app:2052/web/uploadTasksFiles`, Data, {
+        const req = new HttpRequest('POST', `https://admin.xwar.app:2052/web/uploadTasksFiles`, Data, {
           headers: headers.set('authorization', `${this.token}`)
         });
         http.request(req).subscribe((success: any) => {

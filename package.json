@@ -33,6 +33,7 @@
     "firebase": "^8.10.0",
     "google-libphonenumber": "^3.2.27",
     "intl-tel-input": "^17.0.3",
+    "mat-tree-select-input": "^1.1.7",
     "ng-multiselect-dropdown": "^0.3.8",
     "ng2-charts": "2.3.0",
     "ngx-bootstrap": "^6.2.0",

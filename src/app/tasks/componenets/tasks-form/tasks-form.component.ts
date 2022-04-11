@@ -1,9 +1,10 @@
-import { Location } from '@angular/common';
+import { DatePipe, Location } from '@angular/common';
 import { HttpBackend, HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { ToastrService } from 'ngx-toastr';
 import { SharedDataService } from 'src/app/shared/services/shared-data.service';
 import { ValidationService } from 'src/app/shared/services/validation.service';
 import { TasksService } from '../../services/tasks.service';
@@ -26,6 +27,7 @@ export class TasksFormComponent implements OnInit {
   Files:any=[];
   token: string ='';
   constructor(private fb:FormBuilder,private router:Router,public handler: HttpBackend,
+    private toaster:ToastrService, private datePipe: DatePipe,
     private _task:TasksService,private location:Location,private share:SharedDataService) { 
    
     this.taskForm = fb.group({
@@ -125,22 +127,46 @@ export class TasksFormComponent implements OnInit {
           }
         }
         getFiles(event,index){
-          let Files = event.target.files;
+          let attachments = event.target.files;
           let taskTitle = this.tasks().at(index).value.taskTitle;
           let startDate = this.tasks().at(index).value.startDate;
-          if(Files.length > 0){
-            let object = {taskTitle,startDate,Files}
+          startDate = this.datePipe.transform(startDate, "yyyy-MM-dd");
+
+          if(attachments.length > 0){
+            let object = {taskTitle,startDate,attachments}
             this.Files.push(object);
           }
-        }
+        } 
       
+        checkFilesSize(){
+          let size=0;
+          for (let i = 0; i < this.Files.length; i++) {
+            for(let j=0;j<this.Files[i].attachments.length;j++){
+              size += this.Files[i].attachments[j].size;
+            }
+            console.log("Size",size);
+              // 10 MB (this size is in bytes)
+            if(size > 10485760){
+              this.toaster.error(`Uploaded Files Size is too large ${size}`,' Maximum size is 10MB');
+              return false;
+            }else{
+              return true;
+            }
+            
+          }
+        }
         uploadTasksFiles() {
           const Data = new FormData();
-          Data.append('Files', this.Files)
+          for (let i = 0; i < this.Files.length; i++) {
+            for(let j=0;j<this.Files[i].attachments.length;j++){
+              const key = this.Files[i].taskTitle +'-'+ this.Files[i].startDate;
+              Data.append(key,this.Files[i].attachments[j])
+            }
+          }
           let headers = new HttpHeaders();
           headers.append('Content-Type', 'multipart/form-data');
           var http = new HttpClient(this.handler);
-          const req = new HttpRequest('PUT', `https://admin.xwar.app:2052/web/uploadTasksFiles`, Data, {
+          const req = new HttpRequest('POST', `https://admin.xwar.app:2052/web/uploadTasksFiles`, Data, {
             headers: headers.set('authorization', `${this.token}`)
           });
           http.request(req).subscribe((success: any) => {
@@ -151,13 +177,24 @@ export class TasksFormComponent implements OnInit {
         }
       
         submitForm(){
-         console.log("form",this.taskForm.value);
-         console.log("Files", this.Files);
-         const tasks = this.taskForm.value.tasks;
-         this._task.manageTasks(tasks).subscribe(res=>{
-           this.uploadTasksFiles();
-         });
+          if(this.Files.length > 0){        
+            if(this.checkFilesSize()){
+            this.callManageTasksApi();
+            }
+          }else{
+            this.callManageTasksApi();
+          }
         }
+
+      callManageTasksApi(){
+        const tasks = this.taskForm.value.tasks;
+        this._task.manageTasks(tasks).subscribe(res=>{
+        if(this.Files.length > 0){        
+          this.uploadTasksFiles();
+        }
+        })
+      }
+
 
       checkDisable(){
           if(this.taskForm.invalid) return true

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { TasksListComponent } from './componenets/tasks-list/tasks-list.component';
 import { TasksFormComponent } from './componenets/tasks-form/tasks-form.component';
 import { TasksListMatTableComponent } from './componenets/tasks-list-mat-table/tasks-list-mat-table.component';
@@ -25,6 +25,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     
     TranslateModule.forChild(),
     TasksRoutingModule
-  ]
+  ],
+  providers:[DatePipe],
+
 })
 export class TasksModule { }

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { ProjectsListComponent } from './componenets/projects-list/projects-list.component';
 import { ProjectFormComponent } from './componenets/project-form/project-form.component';
 import { ProjectsRoutingModule } from './projects-routing.module';
@@ -10,6 +10,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { ProjectsListMatTableComponent } from './componenets/projects-list-mat-table/projects-list-mat-table.component';
+// import { MatTreeSelectInputModule } from 'mat-tree-select-input';
+// import { MatTreeModule } from '@angular/material/tree';
 
 
 
@@ -23,7 +25,11 @@ import { ProjectsListMatTableComponent } from './componenets/projects-list-mat-t
     TranslateModule,
     ReactiveFormsModule,
     MatDatepickerModule,
-    BsDropdownModule
-  ]
+    BsDropdownModule,
+    // MatTreeSelectInputModule,
+    // MatTreeModule
+  ],
+  providers:[DatePipe],
+
 })
 export class ProjectsModule { }
