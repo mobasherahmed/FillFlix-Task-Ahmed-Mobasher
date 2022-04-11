@@ -191,6 +191,8 @@ export class TasksFormComponent implements OnInit {
         this._task.manageTasks(tasks).subscribe(res=>{
         if(this.Files.length > 0){        
           this.uploadTasksFiles();
+        }else{
+          this.router.navigate(['/tasks/TasksList'])
         }
         })
       }

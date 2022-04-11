@@ -26,6 +26,8 @@ export class MatTableComponent implements OnInit {
    this.management.getRoles().subscribe(res=>{
      this.roles = res.Value;
       this.dataSource = new MatTableDataSource(res.Value);
+      this.dataSource.paginator = this.paginator;
+
     })
   }
   

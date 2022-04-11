@@ -26,6 +26,7 @@ export class ProjectsListMatTableComponent implements OnInit {
   listProjects(){
     this._project.getProjects().subscribe(res=>{
     this.projects = res.Value;
+    
    })
   }
 

@@ -45,6 +45,7 @@ export class UsersListMatTableComponent implements OnInit {
   this._feature.listUsers().subscribe(res=>{
   this.users = res.Value;
   this.dataSource = new MatTableDataSource(res.Value);
+  this.dataSource.paginator = this.paginator;
   this.filterUsers();
 
  })

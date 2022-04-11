@@ -211,6 +211,8 @@ export class ProjectFormComponent implements OnInit {
         this._project.manageProject(projects).subscribe(res=>{
         if(this.Files.length > 0){        
           this.uploadTasksFiles();
+        }else{
+          this.router.navigate(['/projects/ProjectsList'])
         }
         })
       }

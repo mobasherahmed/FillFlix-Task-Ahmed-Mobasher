@@ -25,12 +25,14 @@ export class TasksListMatTableComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
   }
 
   listTasks(){
     this._task.getAllTasks().subscribe(res=>{
     this.tasks = res.Value;
     this.dataSource = new MatTableDataSource(res.Value);
+    this.dataSource.paginator = this.paginator;
 
    })
   }
