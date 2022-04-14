@@ -1,0 +1,67 @@
+<div class="card">
+    <div class="card-header">
+        <strong>{{"AddSurveyAndItsquestions" | translate }}</strong>
+    </div>
+    <div class="card-body">
+        <form [formGroup]="SurveyForm">
+                    <div class="col-md-12">
+                        <em class="text-danger">*</em>
+                        <label for="name">{{'SurveyName' | translate}}</label>
+                        <input
+                        type="text"
+                        class="form-control"
+                        id="name"
+                        placeholder="Enter survey name"
+                        formControlName="name"
+                        />
+                    </div>
+                     <ng-container formArrayName="questions">
+                      <section class="col-md-10"  *ngFor="let question of Questions().controls; let questionIndex=index">
+                          <div class="row">
+                              <ng-container [formGroupName]="questionIndex">
+                                <div class="counter">
+                                  <strong>{{questionIndex+1}}- </strong>
+                                </div>
+                                <div class="col-md-8 my-1">
+                                  <label for=""> <em class="text-danger">*</em>{{'Quesion' | translate}}</label>
+                                  <textarea class="form-control" formControlName="question" name="question" id="" cols="30" rows="2" placeholder="Ex. It makes me feel..." ></textarea>
+                              </div>
+                                <div class="col-md-3 my-1">
+                                  <label for="answerType"> <em class="text-danger">*</em>{{'AnswerType' | translate}}</label>
+                                <select class="form-control" name="answerType" id="answerType" formControlName="answerType">
+                                    <option value="" disabled selected hidden>{{'select' | translate}}</option>
+                                    <option [value]="item.id" *ngFor="let item of answerTypes">{{item.lookupDetailName}}</option>
+                                </select></div>
+
+                              <div class="col-md-1 buttons">
+                                <mat-icon (click)="addQuestion()" class="addIcon">add_circle</mat-icon> 
+                          
+                                <mat-icon  (click)="deleteQuestion(questionIndex)" [class.disabled]="question.value.id !== null" class="deleteIcon">delete_forever</mat-icon>
+            
+                              </div>
+                     
+
+                              
+                              </ng-container>
+                          </div>
+                      </section>
+                    </ng-container>
+              
+          <div class="form-row action-btn-container">
+            <button mat-raised-button color="primary" class="w-30"
+            (click)="cancel()">
+            <mat-icon> cancel_presentation</mat-icon>
+            {{'Cancel' | translate}}
+           </button>
+            <button mat-raised-button color="primary" class="w-30"
+             (click)="submitForm()" [disabled]="checkDisable()">
+             <mat-icon>add_circle</mat-icon> 
+             {{'Save' | translate}}
+            </button>
+        
+           </div>
+            </form>
+    </div>
+</div>
+
+    

@@ -1,0 +1,75 @@
+<div class="d-flex justify-content-between align-items-center my-3 header">
+    <strong>{{"Survey" | translate}}</strong>
+    <button mat-raised-button color="primary" class="w-30"
+    routerLink="/surveies/SurveiesForm" >
+    <!-- *ngIf="share.getBtnGuard('ProjectsList','Insert')" -->
+    <mat-icon>add_circle</mat-icon> 
+    {{'AddNewSurvey' | translate}}
+    </button>
+</div>
+<div class="mb-20" flFlex flexLayout="row" flexLayout.lt-md="column">
+    <mat-accordion>
+        <mat-expansion-panel hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{"SurveyName" | translate}}
+            </mat-panel-title>
+            <mat-panel-title>
+              {{"Actions" | translate}}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+        </mat-expansion-panel>
+        <mat-expansion-panel *ngFor="let survey of surveies">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <span class="badge badge-primary">
+                {{survey.name}}
+              </span>
+            </mat-panel-title>
+            <mat-panel-title>
+                <button mat-raised-button color="primary" class="w-30 mx-2" 
+                (click)="editSurvey(survey)" >
+                <!-- *ngIf="share.getBtnGuard('ProjectsList','Update')" -->
+                <mat-icon>edit</mat-icon>
+                 {{'Edit' | translate}}
+                </button>
+                <button mat-raised-button color="accent" class="w-30 " 
+                (click)="openDeleteDialog(survey.id,'survey')" >
+                <!-- *ngIf="share.getBtnGuard('ProjectsList','Delete')" -->
+                    <mat-icon> cancel_presentation</mat-icon>
+                    {{'Delete' | translate}}
+                   </button>
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-expansion-panel hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{"Question" | translate}}
+            </mat-panel-title>
+            <mat-panel-title>
+              {{"AnswerType" | translate}}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+        </mat-expansion-panel>
+        <mat-expansion-panel hideToggle *ngFor="let question of survey.questions">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <span class="badge badge-primary">
+                  {{question.question}}
+                </span>
+              </mat-panel-title>
+              <mat-panel-title>
+                <span class="badge badge-danger">
+                  {{question.answerType}}
+                </span>
+              </mat-panel-title>
+              <mat-panel-title>
+                <!-- *ngIf="share.getBtnGuard('ProjectsList','Delete')"  -->
+                   <mat-icon color="accent" (click)="openDeleteDialog(question.id,'question')" > cancel_presentation</mat-icon>
+            </mat-panel-title> 
+            </mat-expansion-panel-header>
+          </mat-expansion-panel>
+        
+        </mat-expansion-panel>
+      </mat-accordion>
+</div>
