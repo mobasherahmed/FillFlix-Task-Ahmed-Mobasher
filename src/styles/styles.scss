@@ -3,6 +3,12 @@
 @import 'utils';
 @import 'responsive';
 
+.w-100px{
+    width: 100px !important;
+}
+.m-auto{
+    margin: auto;
+}
 .loader{
     display: flex;
     justify-content: center;

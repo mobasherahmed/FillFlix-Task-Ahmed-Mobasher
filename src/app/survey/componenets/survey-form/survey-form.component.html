@@ -16,36 +16,75 @@
                         />
                     </div>
                      <ng-container formArrayName="questions">
-                      <section class="col-md-10"  *ngFor="let question of Questions().controls; let questionIndex=index">
+                      <div class="col-md-12 my-1 text-secondary font-weight-bold ">
+                        <p>Enter number of questions 
+                          you want for this survey : <input type="number" #questionsCount class="form-control d-inline-block w-100px" 
+                           value="1" min="1" (keyup)="addMuliQuestions(questionsCount.value)">
+                        </p>
+                      </div>
+                      <section class="col-md-10 child"  *ngFor="let question of Questions().controls; let questionIndex=index">
                           <div class="row">
                               <ng-container [formGroupName]="questionIndex">
                                 <div class="counter">
                                   <strong>{{questionIndex+1}}- </strong>
                                 </div>
                                 <div class="col-md-8 my-1">
-                                  <label for=""> <em class="text-danger">*</em>{{'Quesion' | translate}}</label>
+                                  <label for=""> <em class="text-danger">*</em>{{'Question' | translate}}</label>
                                   <textarea class="form-control" formControlName="question" name="question" id="" cols="30" rows="2" placeholder="Ex. It makes me feel..." ></textarea>
                               </div>
                                 <div class="col-md-3 my-1">
                                   <label for="answerType"> <em class="text-danger">*</em>{{'AnswerType' | translate}}</label>
-                                <select class="form-control" name="answerType" id="answerType" formControlName="answerType">
+                                <select (ngModelChange)="getSelectedAnswerType($event,questionIndex)" class="form-control" name="answerType" id="answerType" formControlName="answerType">
                                     <option value="" disabled selected hidden>{{'select' | translate}}</option>
                                     <option [value]="item.id" *ngFor="let item of answerTypes">{{item.lookupDetailName}}</option>
                                 </select></div>
 
                               <div class="col-md-1 buttons">
-                                <mat-icon (click)="addQuestion()" class="addIcon">add_circle</mat-icon> 
+                                <!-- <mat-icon (click)="addQuestion()" class="addIcon">add_circle</mat-icon>  -->
                           
                                 <mat-icon  (click)="deleteQuestion(questionIndex)" [class.disabled]="question.value.id !== null" class="deleteIcon">delete_forever</mat-icon>
             
                               </div>
                      
+                              <ng-container formArrayName="answers">
+                                <div class="col-md-12 my-1 text-secondary font-weight-bold " *ngIf="question.value.alert">
+                                  <p class="mb-0">Enter number of answers 
+                                    you want for this question : <input type="number" #answersCount class="form-control d-inline-block w-100px" 
+                                     value="1" min="1" (keyup)="addMuliAnswers(questionIndex,answersCount.value)">
+                                  </p>
+                                </div>
+                                <section class="col-md-5 child"  *ngFor="let answer of Answers(questionIndex).controls; let answerIndex=index">
+                                    <div class="row">
+                                        <ng-container [formGroupName]="answerIndex">
+                                          <div class="counter">
+                                            <strong>{{answerIndex+1}}- </strong>
+                                          </div>
+                                          <div class="col-md-10 my-1">
+                                            <label for="answer"> <em class="text-danger">*</em>{{'Answer' | translate}}</label>
+                                            <input class="form-control" formControlName="answer" name="answer" id="answer" 
+                                             placeholder="Ex. It makes me feel..." type="text"/>
+                                        </div>
+                                      
+                                        <div class="col-md-1 buttons">
+                                          <!-- <input type="number" #answersCount class=" w-20" min="1" (keyup)="addMuliAnswers(questionIndex,answersCount.value)">
+                                          <mat-icon (click)="addAnswer(questionIndex)" class="addIcon">add_circle</mat-icon>  -->
+                                          <mat-icon  (click)="deleteAnswer(questionIndex,answerIndex)" [class.disabled]="answer.value.id !== null" class="deleteIcon">delete_forever</mat-icon>
+                      
+                                        </div>
+                               
+          
+                                        
+                                        </ng-container>
+                                    </div>
+                                </section>
+                              </ng-container>
 
                               
                               </ng-container>
                           </div>
                       </section>
                     </ng-container>
+                 
               
           <div class="form-row action-btn-container">
             <button mat-raised-button color="primary" class="w-30"

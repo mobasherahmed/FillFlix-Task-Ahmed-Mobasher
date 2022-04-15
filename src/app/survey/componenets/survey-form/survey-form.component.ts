@@ -14,6 +14,7 @@ export class SurveyFormComponent implements OnInit  {
     SurveyForm:FormGroup;
     questionIndex: any;
     answerTypes:any
+  showAlert: boolean = false;
 
     constructor(
         private _survey:SurveyService,
@@ -47,16 +48,27 @@ export class SurveyFormComponent implements OnInit  {
                     this.survey().get('name').setValue(survey.name);
                     this.survey().get('id').setValue(survey.id);
                     // this.survey().get('questions').setValue(this.fb.array([]));
-                    survey.questions.forEach(question=>{
+                    survey.questions.forEach((question,index)=>{
                        let questionForm = this.fb.group({
                         question:  [question.question,Validators.required],
                         answerType:  [question.answerTypeId,Validators.required],
-                        id:  [question.id]
+                        id:  [question.id],
+                        alert:  [false],
+                        answers: this.fb.array([])
+
                         })
-                        console.log("this.Questions()",this.Questions());
-                        
-                    this.Questions().push(questionForm)
+                       this.Questions().push(questionForm);
+                       if(question.answers?.length>0){
+                         question.answers.forEach(answer=>{
+                           let answerForm = this.fb.group({
+                            answer:  [answer.answer,Validators.required],
+                            id:[answer.id]
+                           })
+                           this.Answers(index).push(answerForm);
+                         })
+                       }
                     })
+                  
                  
                     this.SurveyForm.updateValueAndValidity();
             }else{
@@ -81,10 +93,53 @@ export class SurveyFormComponent implements OnInit  {
       return this.survey().get("questions") as FormArray;
      }
 
+     Answers(index){
+      let arr = this.survey().get("questions") as FormArray;
+      return arr.at(index).get('answers') as FormArray;
+     }
 
+    getSelectedAnswerType(type,questionIndex){
+      if(type == 6){
+        this.addAnswer(questionIndex);
+        this.showAlert=true;
+        this.Questions().at(questionIndex).get('alert').setValue(true);
+      }else{
+        this.Answers(questionIndex).clear();
+        this.showAlert=false;
+        this.Questions().at(questionIndex).get('alert').setValue(false);
+
+      }
+    }
   
     addQuestion() {
         this.Questions().push(this.newQuestion());
+      }
+
+    addAnswer(index) {
+    
+       this.Answers(index).push(this.newAnswer());
+      }
+
+      addMuliAnswers(questionIndex,Count) {
+        this.Answers(questionIndex).clear();
+      if(Count>1){
+        for(let i=0;i<Count;i++){
+          this.addAnswer(questionIndex);
+        }
+      }else{
+        this.addAnswer(questionIndex);
+      }
+      }
+    
+      addMuliQuestions(Count) {
+        this.Questions().clear();
+      if(Count>1){
+        for(let i=0;i<Count;i++){
+          this.addQuestion();
+        }
+      }else{
+        this.addQuestion();
+      }
       }
   
 
@@ -93,6 +148,15 @@ export class SurveyFormComponent implements OnInit  {
           question:  ['',Validators.required],
           answerType:  ['',Validators.required],
           id:[null],
+          alert:[false],
+          answers: this.fb.array([])
+        });
+    }
+   
+    newAnswer(): FormGroup {
+        return this.fb.group({
+          answer:  ['',Validators.required],
+          id:[null]
         });
     }
     
@@ -104,9 +168,23 @@ export class SurveyFormComponent implements OnInit  {
           }
       }
 
+      deleteAnswer(questionIndex:number,answerIndex:number) {
+          if(!this.checkAnswerDelete(questionIndex)){
+              this.Answers(questionIndex).removeAt(answerIndex);
+          }
+      }
+
 
       checkQuestionDelete(){
         let arr = this.survey().get("questions") as FormArray;
+       if(arr.length == 1) return true;
+       return false;
+      }
+
+      checkAnswerDelete(questionIndex){
+        let arr = this.Answers(questionIndex) as FormArray;
+        console.log("answers",arr);
+        
        if(arr.length == 1) return true;
        return false;
       }
