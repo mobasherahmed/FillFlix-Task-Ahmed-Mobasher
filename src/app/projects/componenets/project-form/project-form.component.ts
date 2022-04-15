@@ -108,6 +108,9 @@ export class ProjectFormComponent implements OnInit {
                         assignedTo:  [task.assignedTo],
                         description:  [task.description],
                         // project:  [task.description],
+                        currency:  [task.currency],
+                        price:  [task.price],
+                        type:  [task.type],
                         id:  [task.id],
                         isDeleted:[false],
                         })
@@ -154,6 +157,9 @@ export class ProjectFormComponent implements OnInit {
         return this.fb.group({
           taskTitle:  ['',Validators.required],
           startDate:  ['',Validators.required],
+          currency:['',Validators.required],
+          price:['',Validators.required],
+          type:['',Validators.required],
           endDate:  [''],
           assignedTo:  [''],
           description:  [''],

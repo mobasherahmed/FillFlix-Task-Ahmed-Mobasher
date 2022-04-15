@@ -55,6 +55,9 @@ export class TasksFormComponent implements OnInit {
                     description:  [task.description],
                     project:  [task.description],
                     id:  [task.id],
+                    currency:  [task.currency],
+                    price:  [task.price],
+                    type:  [task.type],
                     isDeleted:[false], 
                   })
                   this.tasks().push(elFormGroup);
@@ -77,12 +80,16 @@ export class TasksFormComponent implements OnInit {
           return this.fb.group({
           taskTitle:  ['',Validators.required],
           startDate:  ['',Validators.required],
+          currency:['',Validators.required],
+          price:['',Validators.required],
+          type:['',Validators.required],
           endDate:  [''],
           assignedTo:  [''],
           description:  [''],
           project:  [''],
           id:[null],
           isDeleted:[false],
+        
           });
         }
 

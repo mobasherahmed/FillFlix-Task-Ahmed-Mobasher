@@ -102,7 +102,28 @@
                                   </select>
                            
                               </div>     -->
-                              <div class="col-md-9 my-1">
+
+                              <div class="col-md-6 my-1">
+                                <label for="type"><em class="text-danger">*</em> {{'Type' | translate}}</label>
+                                <select class="form-control" name="type" id="type" formControlName="type">
+                                    <option value="" disabled selected hidden>{{'select' | translate}}</option>
+                                    <option [value]="item.id" *ngFor="let item of projects">{{item.name}}</option>
+                                </select>
+                         
+                            </div>    
+                            <div class="col-md-6 my-1">
+                                <label for="currency"> <em class="text-danger">*</em> {{'Currency' | translate}}</label>
+                                <select class="form-control" name="currency" id="currency" formControlName="currency">
+                                    <option value="" disabled selected hidden>{{'select' | translate}}</option>
+                                    <option [value]="item.id" *ngFor="let item of projects">{{item.name}}</option>
+                                </select>
+                         
+                            </div>    
+                            <div class="col-md-6 my-1">
+                                <label for="price"> <em class="text-danger">*</em> {{'Price' | translate}}</label>
+                                <input type="number" class="form-control" name="price" id="price" formControlName="price">
+                            </div>
+                              <div class="col-md-6 my-1">
                                 <label for="assignedTo">{{'AssignedTo' | translate}}</label>
                                 <select class="form-control" name="assignedTo" id="assignedTo" formControlName="assignedTo">
                                     <option value="" disabled selected hidden>{{'select' | translate}}</option>
