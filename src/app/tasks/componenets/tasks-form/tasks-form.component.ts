@@ -29,6 +29,7 @@ export class TasksFormComponent implements OnInit {
   token: string ='';
   types: any;
   currencies: any;
+  survies: any;
   constructor(private fb:FormBuilder,private router:Router,public handler: HttpBackend,
     private toaster:ToastrService, private datePipe: DatePipe,public num:EnumService,
     private _task:TasksService,private location:Location,private share:SharedDataService) { 
@@ -43,6 +44,7 @@ export class TasksFormComponent implements OnInit {
     this.getProjects();
     this.getTypes();
     this.getCurrencies();
+    this.getSurvies();
     this.setValues()
   }
 
@@ -63,6 +65,7 @@ export class TasksFormComponent implements OnInit {
                     currency:  [task.currencyId],
                     price:  [task.price],
                     type:  [task.typeId],
+                    surveyId:  [task.surveyId],
                     isDeleted:[false], 
                   })
                   this.tasks().push(elFormGroup);
@@ -92,6 +95,7 @@ export class TasksFormComponent implements OnInit {
           assignedTo:  [''],
           description:  [''],
           project:  [''],
+          surveyId:  [''],
           id:[null],
           isDeleted:[false],
         
@@ -138,6 +142,11 @@ export class TasksFormComponent implements OnInit {
         getCurrencies(){
           this._task.getCurrencies(this.num.currecies).subscribe(res=>{
             this.currencies = res.Value; 
+          })
+        }
+        getSurvies(){
+          this._task.getSurvey().subscribe(res=>{
+            this.survies = res.Value; 
           })
         }
 

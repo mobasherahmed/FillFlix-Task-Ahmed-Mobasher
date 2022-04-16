@@ -34,5 +34,8 @@ export class TasksService {
   getCurrencies(id):Observable<any>{
     return this.http.get(`getLookupDetailBasedMaster/${id}`).pipe(take(1))
   }
+  getSurvey():Observable<any>{
+    return this.http.get('getAllSurvies').pipe(take(1))
+  }
   
 }

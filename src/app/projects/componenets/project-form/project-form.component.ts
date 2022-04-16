@@ -30,6 +30,7 @@ export class ProjectFormComponent implements OnInit {
   File: any;
   types: any;
   currencies: any;
+  survies: any;
 
     constructor(
         private _project:ProjectsService,
@@ -53,6 +54,7 @@ export class ProjectFormComponent implements OnInit {
         this.getCategories();
         this.getProjects();
         this.getTypes();
+        this.getSurvies();
         this.getCurrencies();
     }
 
@@ -86,6 +88,12 @@ export class ProjectFormComponent implements OnInit {
     getCurrencies(){
       this._task.getCurrencies(this.num.currecies).subscribe(res=>{
         this.currencies = res.Value; 
+      })
+    }
+
+    getSurvies(){
+      this._task.getSurvey().subscribe(res=>{
+        this.survies = res.Value; 
       })
     }
     setSelectedCategory(p,value,event,index){
@@ -126,6 +134,7 @@ export class ProjectFormComponent implements OnInit {
                         description:  [task.description],
                         // project:  [task.description],
                         currency:  [task.currencyId],
+                        surveyId:  [task.surveyId],
                         price:  [task.price],
                         type:  [task.typeId],
                         id:  [task.id],
@@ -177,6 +186,7 @@ export class ProjectFormComponent implements OnInit {
           currency:['',Validators.required],
           price:['',Validators.required],
           type:['',Validators.required],
+          surveyId:  [''],
           endDate:  [''],
           assignedTo:  [''],
           description:  [''],

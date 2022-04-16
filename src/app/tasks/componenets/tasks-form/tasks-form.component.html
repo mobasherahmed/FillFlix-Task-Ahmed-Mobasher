@@ -41,13 +41,22 @@
                             </select>
                      
                         </div>    
+                        <div class="col-md-6 my-1" *ngIf="task.value.type == 11">
+                            <label for="surveyId"><em class="text-danger" *ngIf="task.value.type == 11">*</em> {{'Survey' | translate}}</label>
+                            <select class="form-control" name="surveyId" id="surveyId" formControlName="surveyId"
+                            [required]="task.value.type == 11">
+                                <option value="" disabled selected hidden>{{'select' | translate}}</option>
+                                <option [value]="item.id" *ngFor="let item of survies">{{item.name}}</option>
+                            </select>
+                     
+                        </div>    
                         <div class="col-md-6 my-1">
                             <label for="currency"> <em class="text-danger">*</em> {{'Currency' | translate}}</label>
                             <select class="form-control" name="currency" id="currency" formControlName="currency">
                                 <option value="" disabled selected hidden>{{'select' | translate}}</option>
                                 <option [value]="item.id" *ngFor="let item of currencies">{{item.lookupDetailName}}</option>
                             </select>
-                     
+          
                         </div>    
                         <div class="col-md-6 my-1">
                             <label for="price"> <em class="text-danger">*</em> {{'Price' | translate}}</label>
