@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { EnumService } from 'src/app/shared/services/enum.service';
 import { SurveyService } from '../../sevices/survey.service';
 
 @Component({
@@ -20,7 +21,8 @@ export class SurveyFormComponent implements OnInit  {
         private _survey:SurveyService,
         private fb:FormBuilder,
         private router:Router,
-        private toaster:ToastrService
+        private toaster:ToastrService,
+        public num:EnumService
     ) {
         this.SurveyForm = fb.group({
             name:['',Validators.required],
@@ -35,7 +37,7 @@ export class SurveyFormComponent implements OnInit  {
     }
 
     getanswerTypes(){
-      this._survey.getanswerTypes(3).subscribe(res=>{
+      this._survey.getanswerTypes(this.num.answerTypes).subscribe(res=>{
         this.answerTypes = res.Value;
       })
     }

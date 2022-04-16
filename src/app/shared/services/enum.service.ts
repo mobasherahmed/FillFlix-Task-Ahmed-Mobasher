@@ -11,4 +11,7 @@ export class EnumService {
   approved = 3;
   rejected = 4;
   pending = 5;
+  taskTypes = 4;
+  currecies=5;
+  answerTypes=3;
 }

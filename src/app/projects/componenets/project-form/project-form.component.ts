@@ -5,6 +5,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CategoryService } from 'src/app/categories/services/category.service';
+import { EnumService } from 'src/app/shared/services/enum.service';
 import { TasksService } from 'src/app/tasks/services/tasks.service';
 import { ProjectsService } from '../../services/projects.service';
 
@@ -27,6 +28,8 @@ export class ProjectFormComponent implements OnInit {
     Files: any=[];
     projectsArr: any[];
   File: any;
+  types: any;
+  currencies: any;
 
     constructor(
         private _project:ProjectsService,
@@ -37,7 +40,8 @@ export class ProjectFormComponent implements OnInit {
         public handler: HttpBackend,
         private _task:TasksService,
         private datePipe: DatePipe,
-        private toaster:ToastrService
+        private toaster:ToastrService,
+        private num:EnumService
     ) {
         this.projectsForm = fb.group({
             projects: fb.array([])
@@ -48,6 +52,8 @@ export class ProjectFormComponent implements OnInit {
         this.setValues();
         this.getCategories();
         this.getProjects();
+        this.getTypes();
+        this.getCurrencies();
     }
 
     getCategories(){
@@ -68,7 +74,18 @@ export class ProjectFormComponent implements OnInit {
 
     getProjects(){
       this._task.getProjects().subscribe(res=>{
-        this.projectsArr = res; 
+        this.projectsArr = res.Value; 
+      })
+    }
+
+    getTypes(){
+      this._task.getTaskTypes(this.num.taskTypes).subscribe(res=>{
+        this.types = res.Value; 
+      })
+    }
+    getCurrencies(){
+      this._task.getCurrencies(this.num.currecies).subscribe(res=>{
+        this.currencies = res.Value; 
       })
     }
     setSelectedCategory(p,value,event,index){
@@ -108,9 +125,9 @@ export class ProjectFormComponent implements OnInit {
                         assignedTo:  [task.assignedTo],
                         description:  [task.description],
                         // project:  [task.description],
-                        currency:  [task.currency],
+                        currency:  [task.currencyId],
                         price:  [task.price],
-                        type:  [task.type],
+                        type:  [task.typeId],
                         id:  [task.id],
                         isDeleted:[false],
                         })

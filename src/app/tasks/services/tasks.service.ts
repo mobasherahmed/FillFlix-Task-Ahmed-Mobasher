@@ -23,34 +23,16 @@ export class TasksService {
   }
 
   getProjects():Observable<any>{
-    // return this.http.get('getAllProjects').pipe(take(1))
-    let obj = [
-      {
-        id:1,
-        name:"test"
-      },
-      {
-        id:2,
-        name:"test2"
-      },
-    ]
-
-    let obs = of(obj);
-    return obs;
+    return this.http.get('getAllProjects').pipe(take(1))
   }
   getcategories():Observable<any>{
-    let obj = [
-      {
-        id:1,
-        name:"test"
-      },
-      {
-        id:2,
-        name:"test2"
-      },
-    ]
-
-    let obs = of(obj);
-    return obs;
+    return this.http.get('getAllCategories').pipe(take(1))
   }
+  getTaskTypes(id):Observable<any>{
+    return this.http.get(`getLookupDetailBasedMaster/${id}`).pipe(take(1))
+  }
+  getCurrencies(id):Observable<any>{
+    return this.http.get(`getLookupDetailBasedMaster/${id}`).pipe(take(1))
+  }
+  
 }

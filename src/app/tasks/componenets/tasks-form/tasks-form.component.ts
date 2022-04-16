@@ -5,6 +5,7 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
+import { EnumService } from 'src/app/shared/services/enum.service';
 import { SharedDataService } from 'src/app/shared/services/shared-data.service';
 import { ValidationService } from 'src/app/shared/services/validation.service';
 import { TasksService } from '../../services/tasks.service';
@@ -26,8 +27,10 @@ export class TasksFormComponent implements OnInit {
   });
   Files:any=[];
   token: string ='';
+  types: any;
+  currencies: any;
   constructor(private fb:FormBuilder,private router:Router,public handler: HttpBackend,
-    private toaster:ToastrService, private datePipe: DatePipe,
+    private toaster:ToastrService, private datePipe: DatePipe,public num:EnumService,
     private _task:TasksService,private location:Location,private share:SharedDataService) { 
    
     this.taskForm = fb.group({
@@ -38,6 +41,8 @@ export class TasksFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.getProjects();
+    this.getTypes();
+    this.getCurrencies();
     this.setValues()
   }
 
@@ -55,9 +60,9 @@ export class TasksFormComponent implements OnInit {
                     description:  [task.description],
                     project:  [task.description],
                     id:  [task.id],
-                    currency:  [task.currency],
+                    currency:  [task.currencyId],
                     price:  [task.price],
-                    type:  [task.type],
+                    type:  [task.typeId],
                     isDeleted:[false], 
                   })
                   this.tasks().push(elFormGroup);
@@ -118,9 +123,21 @@ export class TasksFormComponent implements OnInit {
         getEndDate(index){
           return this.taskForm.controls.endDate.value;
         }
+
         getProjects(){
           this._task.getProjects().subscribe(res=>{
-            this.projects = res; 
+            this.projects = res.Value; 
+          })
+        }
+
+        getTypes(){
+          this._task.getTaskTypes(this.num.taskTypes).subscribe(res=>{
+            this.types = res.Value; 
+          })
+        }
+        getCurrencies(){
+          this._task.getCurrencies(this.num.currecies).subscribe(res=>{
+            this.currencies = res.Value; 
           })
         }
 

@@ -29,7 +29,7 @@
                             <label for="project">{{'Project' | translate}}</label>
                             <select class="form-control" name="project" id="project" formControlName="project">
                                 <option value="" disabled selected hidden>{{'select' | translate}}</option>
-                                <option [value]="item.id" *ngFor="let item of projects">{{item.name}}</option>
+                                <option [value]="item.id" *ngFor="let item of projects">{{item.projectName}}</option>
                             </select>
                      
                         </div>    
@@ -37,7 +37,7 @@
                             <label for="type"><em class="text-danger">*</em> {{'Type' | translate}}</label>
                             <select class="form-control" name="type" id="type" formControlName="type">
                                 <option value="" disabled selected hidden>{{'select' | translate}}</option>
-                                <option [value]="item.id" *ngFor="let item of projects">{{item.name}}</option>
+                                <option [value]="item.id" *ngFor="let item of types">{{item.lookupDetailName}}</option>
                             </select>
                      
                         </div>    
@@ -45,7 +45,7 @@
                             <label for="currency"> <em class="text-danger">*</em> {{'Currency' | translate}}</label>
                             <select class="form-control" name="currency" id="currency" formControlName="currency">
                                 <option value="" disabled selected hidden>{{'select' | translate}}</option>
-                                <option [value]="item.id" *ngFor="let item of projects">{{item.name}}</option>
+                                <option [value]="item.id" *ngFor="let item of currencies">{{item.lookupDetailName}}</option>
                             </select>
                      
                         </div>    
@@ -57,7 +57,7 @@
                           <label for="assignedTo">{{'AssignedTo' | translate}}</label>
                           <select class="form-control" name="assignedTo" id="assignedTo" formControlName="assignedTo">
                               <option value="" disabled selected hidden>{{'select' | translate}}</option>
-                              <option [value]="item.id" *ngFor="let item of projects">{{item.name}}</option>
+                              <option [value]="item.id" *ngFor="let item of projects">{{item.projectName}}</option>
                           </select>
                         </div>   
                         <div class="col-md-6 my-1">
