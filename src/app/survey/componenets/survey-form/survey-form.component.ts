@@ -31,7 +31,7 @@ export class SurveyFormComponent implements OnInit  {
         })
     }
 
-    ngOnInit() { 
+    ngOnInit() {
         this.setValues();
         this.getanswerTypes();
     }
@@ -45,7 +45,7 @@ export class SurveyFormComponent implements OnInit  {
     setValues(){
         this._survey.survey.subscribe(survey=>{
           console.log("caa",survey);
-          
+
             if(survey.id){
                     this.survey().get('name').setValue(survey.name);
                     this.survey().get('id').setValue(survey.id);
@@ -70,8 +70,8 @@ export class SurveyFormComponent implements OnInit  {
                          })
                        }
                     })
-                  
-                 
+
+
                     this.SurveyForm.updateValueAndValidity();
             }else{
              this.addQuestion();
@@ -101,7 +101,7 @@ export class SurveyFormComponent implements OnInit  {
      }
 
     getSelectedAnswerType(type,questionIndex){
-      if(type == 6){
+      if(type == 10){
         this.addAnswer(questionIndex);
         this.showAlert=true;
         this.Questions().at(questionIndex).get('alert').setValue(true);
@@ -112,13 +112,13 @@ export class SurveyFormComponent implements OnInit  {
 
       }
     }
-  
+
     addQuestion() {
         this.Questions().push(this.newQuestion());
       }
 
     addAnswer(index) {
-    
+
        this.Answers(index).push(this.newAnswer());
       }
 
@@ -132,7 +132,7 @@ export class SurveyFormComponent implements OnInit  {
         this.addAnswer(questionIndex);
       }
       }
-    
+
       addMuliQuestions(Count) {
         this.Questions().clear();
       if(Count>1){
@@ -143,7 +143,7 @@ export class SurveyFormComponent implements OnInit  {
         this.addQuestion();
       }
       }
-  
+
 
       newQuestion(): FormGroup {
         return this.fb.group({
@@ -154,15 +154,15 @@ export class SurveyFormComponent implements OnInit  {
           answers: this.fb.array([])
         });
     }
-   
+
     newAnswer(): FormGroup {
         return this.fb.group({
           answer:  ['',Validators.required],
           id:[null]
         });
     }
-    
- 
+
+
 
       deleteQuestion(questionIndex:number) {
           if(!this.checkQuestionDelete()){
@@ -186,7 +186,7 @@ export class SurveyFormComponent implements OnInit  {
       checkAnswerDelete(questionIndex){
         let arr = this.Answers(questionIndex) as FormArray;
         console.log("answers",arr);
-        
+
        if(arr.length == 1) return true;
        return false;
       }
@@ -195,16 +195,16 @@ export class SurveyFormComponent implements OnInit  {
       cancel(){
         this.router.navigate(['/surveies/SurveiesList']);
       }
-      
+
       submitForm(){
         this.managesurvey();
       }
-    
+
       managesurvey(){
         const survey = this.SurveyForm.value;
         this._survey.manageSurvey(survey).subscribe(res=>{
        this.router.navigate(['/surveies/SurveiesList'])
-        
+
         })
       }
 
