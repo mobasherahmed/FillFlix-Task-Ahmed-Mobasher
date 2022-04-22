@@ -47,7 +47,7 @@ export class SurveyFormComponent implements OnInit  {
           console.log("caa",survey);
 
             if(survey.id){
-                    this.survey().get('name').setValue(survey.surveyName);
+                    this.survey().get('name').setValue(survey.name);
                     this.survey().get('id').setValue(survey.id);
                     // this.survey().get('questions').setValue(this.fb.array([]));
                     survey.questions.forEach((question,index)=>{
