@@ -69,7 +69,8 @@ export function HttpLoaderFactory(http: HttpClient) {
             },
           }),
         ToastrModule.forRoot(),
-        NgxIntlTelInputModule
+        NgxIntlTelInputModule,
+        
     ],
     providers: [XappApiService,
       { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true }],

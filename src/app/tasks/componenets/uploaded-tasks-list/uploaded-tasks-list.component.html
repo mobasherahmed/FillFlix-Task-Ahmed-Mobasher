@@ -1,0 +1,114 @@
+<div class="d-flex justify-content-between align-items-center my-3 header">
+    <strong>{{"UploadedTasks" | translate}}</strong>
+</div>
+<div class="mb-20" flFlex flexLayout="row" flexLayout.lt-md="column">
+    <mat-accordion>
+        <mat-expansion-panel hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{"TaskName" | translate}}
+            </mat-panel-title>
+            <mat-panel-title>
+              {{"Price" | translate}}
+            </mat-panel-title>
+            <mat-panel-title>
+              {{"StartDate" | translate}}
+            </mat-panel-title>
+            <mat-panel-title>
+              {{"EndDate" | translate}}
+            </mat-panel-title>
+       
+          </mat-expansion-panel-header>
+        </mat-expansion-panel>
+        <mat-expansion-panel *ngFor="let task of tasks">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+                {{task.taskTitle}}
+            </mat-panel-title>
+            <mat-panel-title>
+              <span class="badge badge-danger">
+                {{task.price}}
+              </span>
+            </mat-panel-title>
+            <mat-panel-title>
+                <span class="badge badge-primary">
+                  {{task.startDate | date:'medium'}}
+                </span>
+              </mat-panel-title>
+              <mat-panel-title>
+                <span class="badge badge-primary">
+                  {{task.endDate | date:'medium'}}
+                </span>
+              </mat-panel-title>
+      
+        </mat-expansion-panel-header>
+        <mat-expansion-panel hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{"CustomerName" | translate}}
+            </mat-panel-title>
+            <mat-panel-title>
+              {{"Email" | translate}}
+            </mat-panel-title>
+            <mat-panel-title>
+              {{"PhoneNumber" | translate}}
+            </mat-panel-title>
+            <mat-panel-title>
+                {{"Actions" | translate}}
+              </mat-panel-title>
+          </mat-expansion-panel-header>
+        </mat-expansion-panel>
+        <mat-expansion-panel  *ngFor="let customer of task.customers">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <span class="badge badge-primary">
+                  {{customer.name}}
+                </span>
+              </mat-panel-title>
+              <mat-panel-title>
+                  {{customer.email}}
+              </mat-panel-title>
+              <mat-panel-title>
+                  {{customer.phoneNumber}}
+              </mat-panel-title>
+              <mat-panel-title>
+                <button mat-raised-button color="primary" class="w-30 mx-2" 
+                (click)="changeUploadedTaskStatus(task.id,customer.id,num.approved)" >
+                <!-- *ngIf="share.getBtnGuard('uploadedTasksList','Approve')" -->
+                <mat-icon>done_all</mat-icon>
+                 {{'Approve' | translate}}
+                </button>
+                <button mat-raised-button color="accent" class="w-30 " 
+                (click)="openDeleteDialog(task.id,customer.id,num.rejected)" >
+                <!-- *ngIf="share.getBtnGuard('uploadedTasksList','Reject')" -->
+                    <mat-icon> cancel_presentation</mat-icon>
+                    {{'Reject' | translate}}
+                   </button>
+            </mat-panel-title>
+            </mat-expansion-panel-header>
+            <mat-expansion-panel hideToggle>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    {{"Question" | translate}}
+                  </mat-panel-title>
+                  <mat-panel-title>
+                    {{"Answer" | translate}}
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+              </mat-expansion-panel>
+              <mat-expansion-panel  *ngFor="let answer of customer.answers" hideToggle>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                      {{answer.question}}
+                  </mat-panel-title>
+                  <mat-panel-title>
+                      {{answer.answer}}
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+              </mat-expansion-panel> 
+          </mat-expansion-panel>
+      
+        
+        </mat-expansion-panel>
+      </mat-accordion>
+</div>

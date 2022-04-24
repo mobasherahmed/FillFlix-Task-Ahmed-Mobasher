@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '../shared/guard';
 import { TasksFormComponent } from './componenets/tasks-form/tasks-form.component';
 import { TasksListComponent } from './componenets/tasks-list/tasks-list.component';
+import { UploadedTasksListComponent } from './componenets/uploaded-tasks-list/uploaded-tasks-list.component';
 
 const routes: Routes = [
     {
@@ -15,7 +16,12 @@ const routes: Routes = [
         path: 'TaskForm',
         component: TasksFormComponent,
         canActivate:[AuthGuard]
-    }
+    },
+    {
+        path: 'UploadedTasksList',
+        component: UploadedTasksListComponent,
+        canActivate:[AuthGuard]
+    },
 ];
 
 @NgModule({

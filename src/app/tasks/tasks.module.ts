@@ -10,10 +10,11 @@ import { MaterialModule } from '../shared/modules/material/material.module';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TasksRoutingModule } from './tasks-routing.module';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { UploadedTasksListComponent } from './componenets/uploaded-tasks-list/uploaded-tasks-list.component';
 
 
 @NgModule({
-  declarations: [TasksListComponent, TasksFormComponent, TasksListMatTableComponent],
+  declarations: [TasksListComponent, TasksFormComponent, TasksListMatTableComponent, UploadedTasksListComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -22,7 +23,6 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MaterialModule,
     MatDatepickerModule,
     BsDropdownModule,
-    
     TranslateModule.forChild(),
     TasksRoutingModule
   ],
