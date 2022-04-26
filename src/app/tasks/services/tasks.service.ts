@@ -36,86 +36,10 @@ export class TasksService {
     return this.http.get('getAllSurvies').pipe(take(1))
   }
   getUploadedTasks():Observable<any>{
-    // return this.http.get('getUploadedTasks').pipe(take(1))
-    let res = {
-      Value:[
-        {
-          id:1,
-          taskTitle:"test",
-          price:'EGP 500',
-          startDate:"7/7/2022",
-          endDate:"7/9/2022",
-          customers:[
-            {
-              id:2,
-              name:"Mobasher",
-              email:"a@a.com",
-              phoneNumber:"001022320329",
-              answers:[
-                {
-                  question:"test question",
-                  answer:"sjskjjs"
-                },
-                {
-                  question:"test question",
-                  answer:"sjskjjs"
-                },
-              ]
-            },
-            {
-              name:"Mobasher2",
-              email:"a22@a.com",
-              phoneNumber:"34341022320329",
-              answers:[
-                {
-                  question:"test skks",
-                  answer:"4"
-                }
-              ]
-            },
-          ]
-        },
-        {
-          taskTitle:"test",
-          price:'EGP 500',
-          startDate:"7/7/2022",
-          endDate:"7/9/2022",
-          customers:[
-            {
-              name:"Mobasher",
-              email:"a@a.com",
-              phoneNumber:"001022320329",
-              answers:[
-                {
-                  question:"test question",
-                  answer:"sjskjjs"
-                },
-                {
-                  question:"test question",
-                  answer:"sjskjjs"
-                },
-              ]
-            },
-            {
-              name:"Mobasher2",
-              email:"a22@a.com",
-              phoneNumber:"34341022320329",
-              answers:[
-                {
-                  question:"test skks",
-                  answer:"4"
-                }
-              ]
-            },
-          ]
-        },
-      ]
-    }
-    let resObs = of(res);
-    return resObs
+    return this.http.get('getUploadedTasks').pipe(take(1))
   }
-  changeUploadedTaskStatus(body):Observable<any>{
-    return this.http.post('changeUploadedTaskStatus',body).pipe(take(1))
+  changeUploadedTaskStatus(body,status):Observable<any>{
+    return this.http.put('changeUploadedTaskStatus/'+status,body).pipe(take(1))
   }
 
   

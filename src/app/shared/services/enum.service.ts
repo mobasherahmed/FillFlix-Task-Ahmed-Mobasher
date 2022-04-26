@@ -14,4 +14,7 @@ export class EnumService {
   taskTypes = 4;
   currecies=5;
   answerTypes=3;
+  approveUploadedTask = 39;
+  rejectUploadedTask = 40;
+
 }

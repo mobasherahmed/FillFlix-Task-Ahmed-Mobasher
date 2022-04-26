@@ -73,13 +73,13 @@
               </mat-panel-title>
               <mat-panel-title>
                 <button mat-raised-button color="primary" class="w-30 mx-2" 
-                (click)="changeUploadedTaskStatus(task.id,customer.id,num.approved)" >
+                (click)="changeUploadedTaskStatus(task.id,customer.customerId,num.approveUploadedTask)" >
                 <!-- *ngIf="share.getBtnGuard('uploadedTasksList','Approve')" -->
                 <mat-icon>done_all</mat-icon>
                  {{'Approve' | translate}}
                 </button>
                 <button mat-raised-button color="accent" class="w-30 " 
-                (click)="openDeleteDialog(task.id,customer.id,num.rejected)" >
+                (click)="openDeleteDialog(task.id,customer.customerId,num.rejectUploadedTask)" >
                 <!-- *ngIf="share.getBtnGuard('uploadedTasksList','Reject')" -->
                     <mat-icon> cancel_presentation</mat-icon>
                     {{'Reject' | translate}}

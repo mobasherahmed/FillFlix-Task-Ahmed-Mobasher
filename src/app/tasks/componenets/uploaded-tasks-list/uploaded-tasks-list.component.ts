@@ -28,12 +28,12 @@ export class UploadedTasksListComponent implements OnInit {
    })
   }
 
-  changeUploadedTaskStatus(taskId:number,customerId:number,type:number){
-  const body = {taskId,customerId,type}
-    this._task.changeUploadedTaskStatus(body).subscribe(res=>{})
+  changeUploadedTaskStatus(taskId:number,customerId:number,status:number){
+  const body = {taskId,customerId}
+    this._task.changeUploadedTaskStatus(body,status).subscribe(res=>{})
   }
 
-  openDeleteDialog(taskId:number,customerId:number,type:number){
+  openDeleteDialog(taskId:number,customerId:number,status:number){
     const dialogRef = this.dialog.open(ModalConfirmationComponent, {
       data: {
           message: "Are you sure want to reject customer answers for this task ?",
@@ -46,7 +46,7 @@ export class UploadedTasksListComponent implements OnInit {
   });
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
       if (confirmed) {
-        this.changeUploadedTaskStatus(taskId,customerId,type);
+        this.changeUploadedTaskStatus(taskId,customerId,status);
       }
   });
   }
