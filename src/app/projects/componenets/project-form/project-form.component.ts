@@ -8,6 +8,7 @@ import { CategoryService } from 'src/app/categories/services/category.service';
 import { EnumService } from 'src/app/shared/services/enum.service';
 import { TasksService } from 'src/app/tasks/services/tasks.service';
 import { ProjectsService } from '../../services/projects.service';
+import { Data } from './data';
 
 
 @Component({
@@ -31,7 +32,16 @@ export class ProjectFormComponent implements OnInit {
   types: any;
   currencies: any;
   survies: any;
+  items: any;
+  public data = Data;
 
+  public simpleSelected =  {
+    id: 'CI',
+    name: 'Ivory Coast',
+    capital: 'Yamoussoukro',
+    phone: '225',
+    currency: 'XOF'
+    }
     constructor(
         private _project:ProjectsService,
         private _category:CategoryService,
@@ -56,13 +66,16 @@ export class ProjectFormComponent implements OnInit {
         this.getTypes();
         this.getSurvies();
         this.getCurrencies();
+        this.items = this.process(this.data);
+        console.log('Final', this.items);
     }
 
     getCategories(){
       this._category.getCategories().subscribe(res=>{
         this.categories = res.Value;
-         this.categories.forEach(el=>{
+        this.categories.forEach(el=>{
           el.collapsed = false;
+          el.childern = el.sub;
           if(el.sub){
             el.sub.forEach(sub => {
               sub.collapsed = false;
@@ -70,10 +83,29 @@ export class ProjectFormComponent implements OnInit {
           }
         });
         console.log("cccc",this.categories);
+        // this.items = this.process(this.categories);
+        // console.log('Final', this.items);
         
       })
     }
 
+    private process(data): any {
+      let result = [];
+      result = data.map((item) => {
+        return this.toTreeNode(item);
+      });
+      return result;
+    }
+  
+    private toTreeNode(node, parent = null) {
+      console.log(node, parent);
+      if (node && node.children) {
+        node.children.map(item => {
+          return this.toTreeNode(item, node);
+        });
+      }
+      return node;
+    }
     getProjects(){
       this._task.getProjects().subscribe(res=>{
         this.projectsArr = res.Value; 
@@ -101,7 +133,10 @@ export class ProjectFormComponent implements OnInit {
       p.value.categoryId = value.id;
       this.projects().at(index).get('categoryName').setValue(value.name);
       this.projects().at(index).get('categoryId').setValue(value.id);
-      // document.getElementById('dropdown-basic').classList.remove('show')
+      // document.getElementById('button-basic').setAttribute("aria-expanded", 'false')
+      // document.getElementsByClassName('btn-group')[0].classList.remove('open','show')
+      // document.getElementById('dropdown-basic').style.left= '0px'; 
+      // document.getElementById('dropdown-basic').style.right='auto';; 
 
     }
     setParentSelectedCategory(p,value,index){
@@ -109,6 +144,12 @@ export class ProjectFormComponent implements OnInit {
       this.projects().at(index).get('categoryName').setValue(value.name);
       this.projects().at(index).get('categoryId').setValue(value.id);
       // document.getElementById('dropdown-basic').classList.remove('show')
+      // document.getElementById('button-basic').setAttribute("aria-expanded", 'false')
+      // document.getElementsByClassName('btn-group')[0].classList.remove('open','show')
+      // document.getElementById('dropdown-basic').style.left= '0px'; 
+      // document.getElementById('dropdown-basic').style.right='auto';; 
+
+
     }
     setValues(){
         this._project.projects.subscribe(project=>{
@@ -136,6 +177,7 @@ export class ProjectFormComponent implements OnInit {
                         currency:  [task.currencyId],
                         surveyId:  [task.surveyId],
                         price:  [task.price],
+                        count:  [task.count],
                         type:  [task.typeId],
                         id:  [task.id],
                         isDeleted:[false],
@@ -185,6 +227,7 @@ export class ProjectFormComponent implements OnInit {
           startDate:  ['',Validators.required],
           currency:['',Validators.required],
           price:['',Validators.required],
+          count:['',Validators.required],
           type:['',Validators.required],
           surveyId:  [''],
           endDate:  [''],

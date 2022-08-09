@@ -65,6 +65,7 @@ export class InterceptorService implements HttpInterceptor {
             },
             (err: HttpErrorResponse) => {
               this._notify.handleError(err);
+              this.share.showLoader.next(false);
               if(err.error.message === 'Please, confirm your email'){
                 this.router.navigate(['/authentication/activateEmail'])
               }

@@ -60,9 +60,13 @@
                         </div>    
                         <div class="col-md-6 my-1">
                             <label for="price"> <em class="text-danger">*</em> {{'Price' | translate}}</label>
-                            <input type="number" class="form-control" name="price" id="price" formControlName="price">
+                            <input type="number" class="form-control" min="1" name="price" id="price" formControlName="price">
                         </div>    
-                        <div class="col-md-12 my-1">
+                        <div class="col-md-6 my-1">
+                            <label for="count"> <em class="text-danger">*</em> {{'Task Count' | translate}}</label>
+                            <input type="number" class="form-control" min="1" name="count" id="count" formControlName="count">
+                        </div>    
+                        <div class="col-md-6 my-1">
                           <label for="assignedTo">{{'AssignedTo' | translate}}</label>
                           <select class="form-control" name="assignedTo" id="assignedTo" formControlName="assignedTo">
                               <option value="" disabled selected hidden>{{'select' | translate}}</option>

@@ -61,8 +61,10 @@ export class UsersFormComponent implements OnInit {
   }
 
   submitForm(){
-    if(Object.keys(this.share.updateItem).length === 0) this.addUser();
-    this.updateUser()
+    console.log(" Object.keys(this.share.updateItem)", Object.keys(this.share.updateItem.getValue()));
+    console.log(" Object.keys(this.share.updateItem).length === 0", Object.keys(this.share.updateItem.getValue()).length === 0);
+    
+    Object.keys(this.share.updateItem.getValue()).length === 0 ? this.addUser() : this.updateUser()
   }
   addUser(){
     const body = this.Form.value;

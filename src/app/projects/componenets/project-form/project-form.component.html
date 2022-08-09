@@ -3,6 +3,7 @@
         <strong>{{"AddProjectAndItsTasks" | translate }}</strong>
     </div>
     <div class="card-body">
+      <!-- <tree-select name="simpleSelect" [items]="items" idField="id" textField="name" childrenField="children" ></tree-select> -->
         <form [formGroup]="projectsForm">
             <ng-container formArrayName="projects">
               <section class="col-md-10 categories-grid" *ngFor="let p of projects().controls ; let projectIndex = index">
@@ -24,6 +25,7 @@
                             />
                           </div>
                           <div class="col-md-4">
+                            
                             <label for="category" class="d-block">
                             <em class="text-danger">*</em>
                               {{'Category' | translate}}</label>
@@ -130,8 +132,13 @@
                             </div>    
                             <div class="col-md-6 my-1">
                                 <label for="price"> <em class="text-danger">*</em> {{'Price' | translate}}</label>
-                                <input type="number" class="form-control" name="price" id="price" formControlName="price">
+                                <input type="number" min="1" class="form-control" name="price" id="price" formControlName="price">
                             </div>
+                            <div class="col-md-6 my-1">
+                              <label for="count"> <em class="text-danger">*</em> {{'Task Count' | translate}}</label>
+                              <input type="number" class="form-control" min="1" name="count" id="count" formControlName="count">
+                          </div>   
+                          
                               <div class="col-md-6 my-1">
                                 <label for="assignedTo">{{'AssignedTo' | translate}}</label>
                                 <select class="form-control" name="assignedTo" id="assignedTo" formControlName="assignedTo">
@@ -193,4 +200,3 @@
     </div>
 </div>
 
-    
