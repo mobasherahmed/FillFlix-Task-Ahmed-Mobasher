@@ -42,6 +42,7 @@ export class ProjectFormComponent implements OnInit {
     phone: '225',
     currency: 'XOF'
     }
+  showList: boolean;
     constructor(
         private _project:ProjectsService,
         private _category:CategoryService,
@@ -133,6 +134,7 @@ export class ProjectFormComponent implements OnInit {
       p.value.categoryId = value.id;
       this.projects().at(index).get('categoryName').setValue(value.name);
       this.projects().at(index).get('categoryId').setValue(value.id);
+      this.toggleList(false);
       // document.getElementById('button-basic').setAttribute("aria-expanded", 'false')
       // document.getElementsByClassName('btn-group')[0].classList.remove('open','show')
       // document.getElementById('dropdown-basic').style.left= '0px'; 
@@ -143,6 +145,8 @@ export class ProjectFormComponent implements OnInit {
       p.value.categoryId = value.id;
       this.projects().at(index).get('categoryName').setValue(value.name);
       this.projects().at(index).get('categoryId').setValue(value.id);
+      this.toggleList(false);
+
       // document.getElementById('dropdown-basic').classList.remove('show')
       // document.getElementById('button-basic').setAttribute("aria-expanded", 'false')
       // document.getElementsByClassName('btn-group')[0].classList.remove('open','show')
@@ -362,6 +366,9 @@ export class ProjectFormComponent implements OnInit {
         return false;
       }
 
+      toggleList(val:boolean){
+        this.showList = val;
+      }
     ngOnDestroy(){
       this._project.projects.next({});
       // this._project.projects.untasksscribe();
