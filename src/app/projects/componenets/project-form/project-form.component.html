@@ -36,9 +36,10 @@
                              </button>
                              <ng-container>
                                <ul  id="dropdown-basic" *dropdownMenu class="dropdown-menu" 
-                                  role="menu" aria-labelledby="button-basic">
+                                  role="menu" aria-labelledby="button-basic" [class.ar]="lang == 'ar'">
                                  <li (click)="setParentSelectedCategory(p,category,projectIndex,dropdown)" *ngFor="let category of categories">
-                                   <mat-icon class="ltr-mat-icon" [class.visibity-none]="category.sub.length === 0"  (click)="changeCollapse(category,$event)" [hidden]="category.collapsed">keyboard_arrow_right</mat-icon>
+                                   <mat-icon *ngIf="lang == 'en'" class="ltr-mat-icon" [class.visibity-none]="category.sub.length === 0"  (click)="changeCollapse(category,$event)" [hidden]="category.collapsed">keyboard_arrow_right</mat-icon>
+                                   <mat-icon *ngIf="lang == 'ar'" class="ltr-mat-icon" [class.visibity-none]="category.sub.length === 0"  (click)="changeCollapse(category,$event)" [hidden]="category.collapsed">keyboard_arrow_left</mat-icon>
                                   <mat-icon *ngIf="category.sub && category.collapsed"  (click)="changeCollapse(category,$event)" >keyboard_arrow_down</mat-icon>
                                   <span class="name"> {{category.name}}</span> 
                                    <div *ngIf="category.sub && category.collapsed">

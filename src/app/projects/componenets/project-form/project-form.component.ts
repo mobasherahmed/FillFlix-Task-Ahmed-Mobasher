@@ -3,7 +3,10 @@ import { HttpBackend, HttpClient, HttpHeaders, HttpRequest } from '@angular/comm
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { CategoryService } from 'src/app/categories/services/category.service';
 import { EnumService } from 'src/app/shared/services/enum.service';
 import { TasksService } from 'src/app/tasks/services/tasks.service';
@@ -33,16 +36,10 @@ export class ProjectFormComponent implements OnInit {
   currencies: any;
   survies: any;
   items: any;
-  public data = Data;
-
-  public simpleSelected =  {
-    id: 'CI',
-    name: 'Ivory Coast',
-    capital: 'Yamoussoukro',
-    phone: '225',
-    currency: 'XOF'
-    }
   showList: boolean;
+  lang: string='en';
+  onDestroy$:Subject<boolean>=new Subject();
+
     constructor(
         private _project:ProjectsService,
         private _category:CategoryService,
@@ -53,7 +50,8 @@ export class ProjectFormComponent implements OnInit {
         private _task:TasksService,
         private datePipe: DatePipe,
         private toaster:ToastrService,
-        private num:EnumService
+        private num:EnumService,
+        private translate:TranslateService
     ) {
         this.projectsForm = fb.group({
             projects: fb.array([])
@@ -67,8 +65,19 @@ export class ProjectFormComponent implements OnInit {
         this.getTypes();
         this.getSurvies();
         this.getCurrencies();
-        this.items = this.process(this.data);
-        console.log('Final', this.items);
+        this.checkCurrentLang();
+    }
+
+    checkCurrentLang(){
+      
+       this.translate.onLangChange.pipe(
+        takeUntil(this.onDestroy$)
+       )
+       .subscribe(lang=>{
+        console.log("lang",lang);
+        
+        this.lang = lang.lang;
+      })
     }
 
     getCategories(){
@@ -148,7 +157,10 @@ export class ProjectFormComponent implements OnInit {
       category.collapsed = !category.collapsed
     }
     setValues(){
-        this._project.projects.subscribe(project=>{
+        this._project.projects.pipe(
+          takeUntil(this.onDestroy$)
+         )
+        .subscribe(project=>{
           console.log("caa",project);
           
             if(project.id){
@@ -363,6 +375,7 @@ export class ProjectFormComponent implements OnInit {
       }
     ngOnDestroy(){
       this._project.projects.next({});
+      this.onDestroy$.next(true);
       // this._project.projects.untasksscribe();
     }
 
