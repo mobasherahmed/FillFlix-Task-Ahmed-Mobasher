@@ -3,7 +3,6 @@
         <strong>{{"AddProjectAndItsTasks" | translate }}</strong>
     </div>
     <div class="card-body">
-      <!-- <tree-select name="simpleSelect" [items]="items" idField="id" textField="name" childrenField="children" ></tree-select> -->
         <form [formGroup]="projectsForm">
             <ng-container formArrayName="projects">
               <section class="col-md-10 categories-grid" *ngFor="let p of projects().controls ; let projectIndex = index">
@@ -38,13 +37,13 @@
                              <ng-container>
                                <ul  id="dropdown-basic" *dropdownMenu class="dropdown-menu" 
                                   role="menu" aria-labelledby="button-basic">
-                                 <li (click)="setParentSelectedCategory(p,category,projectIndex)" *ngFor="let category of categories">
-                                   <mat-icon class="ltr-mat-icon" [class.visibity-none]="category.sub.length === 0"  (click)="category.collapsed=true" [hidden]="category.collapsed">keyboard_arrow_right</mat-icon>
-                                  <mat-icon *ngIf="category.sub && category.collapsed"  (click)="category.collapsed=false" >keyboard_arrow_down</mat-icon>
+                                 <li (click)="setParentSelectedCategory(p,category,projectIndex,dropdown)" *ngFor="let category of categories">
+                                   <mat-icon class="ltr-mat-icon" [class.visibity-none]="category.sub.length === 0"  (click)="changeCollapse(category,$event)" [hidden]="category.collapsed">keyboard_arrow_right</mat-icon>
+                                  <mat-icon *ngIf="category.sub && category.collapsed"  (click)="changeCollapse(category,$event)" >keyboard_arrow_down</mat-icon>
                                   <span class="name"> {{category.name}}</span> 
                                    <div *ngIf="category.sub && category.collapsed">
                                      <ul *ngFor="let sub of category.sub" >
-                                       <li (click)="setSelectedCategory(p,sub,$event,projectIndex)"> <span class="name"> {{sub.name}}</span> 
+                                       <li (click)="setSelectedCategory(p,sub,$event,projectIndex,dropdown)"> <span class="name"> {{sub.name}}</span> 
                                        </li>
                                      </ul>
    
@@ -202,4 +201,3 @@
             </form>
     </div>
 </div>
-

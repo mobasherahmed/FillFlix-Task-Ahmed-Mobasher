@@ -10,9 +10,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { ProjectsListMatTableComponent } from './componenets/projects-list-mat-table/projects-list-mat-table.component';
-// import { NgxTreeSelectModule } from 'ngx-tree-select';
-// import { MatTreeSelectInputModule } from 'mat-tree-select-input';
-// import { MatTreeModule } from '@angular/material/tree';
 
 
 
@@ -28,18 +25,6 @@ import { ProjectsListMatTableComponent } from './componenets/projects-list-mat-t
     FormsModule,
     MatDatepickerModule,
     BsDropdownModule,
-    // MatTreeSelectInputModule,
-    // MatTreeModule
-    // NgxTreeSelectModule.forRoot({
-    //   allowFilter: true,
-    //   filterPlaceholder: 'Type your filter here...',
-    //   maxVisibleItemCount: 5,
-    //   idField: 'id',
-    //   textField: 'name',
-    //   childrenField: 'children',
-    //   allowParentSelection: true,
-    //   expandMode:'all'
-    // })
   ],
   providers:[DatePipe],
 

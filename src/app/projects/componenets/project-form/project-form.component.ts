@@ -129,31 +129,23 @@ export class ProjectFormComponent implements OnInit {
         this.survies = res.Value; 
       })
     }
-    setSelectedCategory(p,value,event,index){
+    setSelectedCategory(p,value,event,index,dropdown){
       event.stopPropagation()
       p.value.categoryId = value.id;
       this.projects().at(index).get('categoryName').setValue(value.name);
       this.projects().at(index).get('categoryId').setValue(value.id);
-      this.toggleList(false);
-      // document.getElementById('button-basic').setAttribute("aria-expanded", 'false')
-      // document.getElementsByClassName('btn-group')[0].classList.remove('open','show')
-      // document.getElementById('dropdown-basic').style.left= '0px'; 
-      // document.getElementById('dropdown-basic').style.right='auto';; 
-
+      dropdown.isOpen = !dropdown.isOpen
     }
-    setParentSelectedCategory(p,value,index){
+    setParentSelectedCategory(p,value,index,dropdown){
       p.value.categoryId = value.id;
       this.projects().at(index).get('categoryName').setValue(value.name);
       this.projects().at(index).get('categoryId').setValue(value.id);
-      this.toggleList(false);
+      dropdown.isOpen = !dropdown.isOpen
+    }
 
-      // document.getElementById('dropdown-basic').classList.remove('show')
-      // document.getElementById('button-basic').setAttribute("aria-expanded", 'false')
-      // document.getElementsByClassName('btn-group')[0].classList.remove('open','show')
-      // document.getElementById('dropdown-basic').style.left= '0px'; 
-      // document.getElementById('dropdown-basic').style.right='auto';; 
-
-
+    changeCollapse(category,event){
+      event.stopPropagation();
+      category.collapsed = !category.collapsed
     }
     setValues(){
         this._project.projects.subscribe(project=>{
