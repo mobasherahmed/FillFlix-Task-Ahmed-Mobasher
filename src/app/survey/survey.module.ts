@@ -6,7 +6,7 @@ import { SurveyRoutingModule } from './survey-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { MaterialModule } from '../shared/modules/material/material.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -19,6 +19,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     MaterialModule,
     TranslateModule,
     ReactiveFormsModule,
+    FormsModule
   ]
 })
 export class SurveyModule { }

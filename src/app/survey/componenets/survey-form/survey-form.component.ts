@@ -14,7 +14,9 @@ export class SurveyFormComponent implements OnInit  {
 
     SurveyForm:FormGroup;
     questionIndex: any;
-    answerTypes:any
+    answerTypes:any;
+    answerss:number = 1;
+    questions:number = 1;
   showAlert: boolean = false;
 
     constructor(

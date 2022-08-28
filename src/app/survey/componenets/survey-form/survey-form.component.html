@@ -19,7 +19,7 @@
                       <div class="col-md-12 my-1 text-secondary font-weight-bold ">
                         <p>Enter number of questions 
                           you want for this survey : <input type="number" #questionsCount class="form-control d-inline-block w-100px" 
-                           value="1" min="1" (keyup)="addMuliQuestions(questionsCount.value)">
+                           value="1" min="1" [ngModelOptions]="{standalone: true}" [(ngModel)]="questions" (ngModelChange)="addMuliQuestions(questionsCount.value)">
                         </p>
                       </div>
                       <section class="col-md-10 child"  *ngFor="let question of Questions().controls; let questionIndex=index">
@@ -50,7 +50,7 @@
                                 <div class="col-md-12 my-1 text-secondary font-weight-bold " *ngIf="question.value.alert">
                                   <p class="mb-0">Enter number of answers 
                                     you want for this question : <input type="number" #answersCount class="form-control d-inline-block w-100px" 
-                                     value="1" min="1" (keyup)="addMuliAnswers(questionIndex,answersCount.value)">
+                                     value="1" min="1" [ngModelOptions]="{standalone: true}" [(ngModel)]="answerss" (ngModelChange)="addMuliAnswers(questionIndex,answersCount.value)">
                                   </p>
                                 </div>
                                 <section class="col-md-5 child"  *ngFor="let answer of Answers(questionIndex).controls; let answerIndex=index">
