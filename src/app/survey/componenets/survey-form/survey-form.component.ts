@@ -1,9 +1,11 @@
+import { HttpBackend, HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { EnumService } from 'src/app/shared/services/enum.service';
 import { SurveyService } from '../../sevices/survey.service';
+import * as uuid from "uuid";
 
 @Component({
   selector: 'app-survey-form',
@@ -17,14 +19,18 @@ export class SurveyFormComponent implements OnInit  {
     answerTypes:any;
     answerss:number = 1;
     questions:number = 1;
-  showAlert: boolean = false;
+    showAlert: boolean = false;
+    answerType: any;
+    token: any;
+  Files: any[]=[];
 
     constructor(
         private _survey:SurveyService,
         private fb:FormBuilder,
         private router:Router,
         private toaster:ToastrService,
-        public num:EnumService
+        public num:EnumService,
+        public handler: HttpBackend
     ) {
         this.SurveyForm = fb.group({
             name:['',Validators.required],
@@ -102,19 +108,64 @@ export class SurveyFormComponent implements OnInit  {
       return arr.at(index).get('answers') as FormArray;
      }
 
+     resertNumOfAnsAndQues(){
+      this.answerss=1;
+      this.questions=1;
+     }
     getSelectedAnswerType(type,questionIndex){
-      if(type == 10){
+      console.log("type",type);
+      
+      if(type == 10 || type == 23){
+        this.Answers(questionIndex).clear();
         this.addAnswer(questionIndex);
         this.showAlert=true;
+        this.answerType=type;
         this.Questions().at(questionIndex).get('alert').setValue(true);
+        if(type ==23){
+          let uuid = this.generateUUId();
+          this.Questions().at(questionIndex).get('uuid').setValue(uuid);
+        }
       }else{
         this.Answers(questionIndex).clear();
         this.showAlert=false;
+        this.answerType=type;
         this.Questions().at(questionIndex).get('alert').setValue(false);
 
       }
     }
 
+    getFiles(event,questionIndex){
+      let file = event.target.files[0];
+      if(file){
+        let uuid = this.Questions().at(questionIndex).get('uuid').value;
+        let object = {uuid,file}
+        this.Files.push(object);
+      }
+    } 
+
+    generateUUId(){
+    return uuid.v4();
+    }
+
+    uploadQuestionImages() {
+      const Data = new FormData();
+      for (let i = 0; i < this.Files.length; i++) {
+          const key = this.Files[i].uuid;
+          Data.append(key,this.Files[i].file)
+      }
+      let headers = new HttpHeaders();
+      headers.append('Content-Type', 'multipart/form-data');
+      var http = new HttpClient(this.handler);
+      const req = new HttpRequest('POST', `https://admin.xwar.app:2052/web/uploadImageChoice`, Data, {
+        headers: headers.set('authorization', `${this.token}`)
+      });
+      http.request(req).subscribe((success: any) => {
+        console.log("s",success);
+        if(success.type ==4){
+        this.router.navigate(['/surveies/SurveiesList'])
+        }
+      })
+    }
     addQuestion() {
         this.Questions().push(this.newQuestion());
       }
@@ -152,6 +203,7 @@ export class SurveyFormComponent implements OnInit  {
           question:  ['',Validators.required],
           answerType:  ['',Validators.required],
           id:[null],
+          uuid:[null],
           alert:[false],
           answers: this.fb.array([])
         });
@@ -204,9 +256,10 @@ export class SurveyFormComponent implements OnInit  {
 
       managesurvey(){
         const survey = this.SurveyForm.value;
-        this._survey.manageSurvey(survey).subscribe(res=>{
-       this.router.navigate(['/surveies/SurveiesList'])
+        this.uploadQuestionImages();
 
+        this._survey.manageSurvey(survey).subscribe(res=>{
+          this.uploadQuestionImages();
         })
       }
 

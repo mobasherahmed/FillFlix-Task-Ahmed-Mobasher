@@ -62,7 +62,10 @@
                                           <div class="col-md-10 my-1">
                                             <label for="answer"> <em class="text-danger">*</em>{{'Answer' | translate}}</label>
                                             <input class="form-control" formControlName="answer" name="answer" id="answer" 
-                                             placeholder="Ex. It makes me feel..." type="text"/>
+                                             placeholder="Ex. It makes me feel..." type="text" *ngIf="answerType==10"/>
+                                         
+                                             <input class="form-control" formControlName="answer" name="answer" id="answer" 
+                                              type="file" *ngIf="answerType==23" (change)="getFiles($event,questionIndex)" />
                                         </div>
                                       
                                         <div class="col-md-1 buttons">
