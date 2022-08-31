@@ -256,8 +256,6 @@ export class SurveyFormComponent implements OnInit  {
 
       managesurvey(){
         const survey = this.SurveyForm.value;
-        this.uploadQuestionImages();
-
         this._survey.manageSurvey(survey).subscribe(res=>{
           this.uploadQuestionImages();
         })
